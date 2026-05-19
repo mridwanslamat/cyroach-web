@@ -630,9 +630,13 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
         devices[data.device_id].battery = data.battery ?? 0;
         devices[data.device_id].signal_strength = data.signal_strength ?? 0;
         devices[data.device_id].distance_total_m = data.distance_total_m ?? 0;
-        devices[data.device_id].timestamp = new Date().toLocaleTimeString(
-            "id-ID",
-        );
+        devices[data.device_id].timestamp = new Date().toLocaleTimeString("id-ID");
+        devices[data.device_id].thermal          = data.thermal;
+        devices[data.device_id].suhu_max         = data.suhu_max;
+        devices[data.device_id].suhu_min         = data.suhu_min;
+        devices[data.device_id].pitch            = data.pitch;
+        devices[data.device_id].roll             = data.roll;
+        devices[data.device_id].yaw              = data.yaw;
     }
 
     if (data.suhu_max >= 37.5) {
