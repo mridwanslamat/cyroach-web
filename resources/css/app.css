@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+/* ===== LIGHT MODE ===== */
+.light-mode body {
+    background-color: #f0f0f0;
+    color: #111111;
+}
+
+/* Konten cards & background */
+.light-mode .bg-neutral-950 { background-color: #e5e5e5 !important; }
+.light-mode .bg-neutral-900 { background-color: #ffffff !important; }
+.light-mode .bg-neutral-800 { background-color: #e0e0e0 !important; }
+.light-mode .border-neutral-800 { border-color: #d0d0d0 !important; }
+
+/* Teks */
+.light-mode .text-neutral-100 { color: #111111 !important; }
+.light-mode .text-neutral-200 { color: #222222 !important; }
+.light-mode .text-neutral-400 { color: #444444 !important; }
+.light-mode .text-neutral-500 { color: #666666 !important; }
+.light-mode .text-neutral-600 { color: #888888 !important; }
+.light-mode .text-neutral-700 { color: #999999 !important; }
+.light-mode .text-neutral-300 { color: #333333; }
+
+/* Navbar — tetap gelap di light mode */
+.light-mode nav {
+    background-color: #111111 !important;
+    border-bottom-color: #7f1d1d !important;
+}
+.light-mode nav span,
+.light-mode nav a { color: #dddddd !important; }
+.light-mode nav a.bg-red-900 {
+    background-color: #991b1b !important;
+    color: #ffffff !important;
+}
+.light-mode .bg-red-900 { background-color: #991b1b; }
+.light-mode .border-red-700 { border-color: #b91c1c; }
+.light-mode a.bg-red-900,
+.light-mode a[href*="export-pdf"] {
+    background-color: #991b1b !important;
+    border-color: #b91c1c !important;
+    color: #ffffff !important;
+}
