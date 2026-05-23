@@ -134,4 +134,39 @@ class SensorController extends Controller
 
         return response()->json(['message' => 'Data diterima'], 200);
     }
+    
+    public function endMission(Request $request)
+    {
+        $request->validate([
+            'device_id' => 'required|string',
+        ]);
+
+        $deviceId = $request->device_id;
+
+        // Tandai device sebagai offline
+        Device::where('device_id', $deviceId)
+            ->update(['status' => 'offline']);
+
+        // Cek misi yang sedang berlangsung
+        $mission = Mission::where('status', 'berlangsung')->latest()->first();
+
+        if (!$mission) {
+            return response()->json(['message' => 'Tidak ada misi yang berlangsung'], 200);
+        }
+
+        // Cek apakah semua device di misi ini sudah offline
+        $allOffline = Device::where('status', 'online')->count() === 0;
+
+        if ($allOffline) {
+            $mission->update([
+                'status'   => 'selesai',
+                'ended_at' => now(),
+            ]);
+
+            return response()->json(['message' => 'Misi selesai'], 200);
+        }
+
+        return response()->json(['message' => 'Device selesai, menunggu kecoa lain'], 200);
+    }
+
 }

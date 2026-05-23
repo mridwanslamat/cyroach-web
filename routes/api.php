@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 // Endpoint untuk menerima data dari ESP32
 Route::post('/sensor-data', [SensorController::class, 'store']);
+Route::post('/end-mission', [SensorController::class, 'endMission']);
 
 // Endpoint untuk frontend
 Route::get('/devices/live', [DeviceController::class, 'live']);
