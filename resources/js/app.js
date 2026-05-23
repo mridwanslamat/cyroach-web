@@ -625,12 +625,11 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
             timestamp: new Date().toLocaleTimeString("id-ID"),
         };
     } else {
-        // Device sudah ada — hanya update field dari Pusher yang tidak di-override ESP32 WS
-        devices[data.device_id].online = true;
-        devices[data.device_id].battery = data.battery ?? 0;
-        devices[data.device_id].signal_strength = data.signal_strength ?? 0;
+        devices[data.device_id].online           = true;
+        devices[data.device_id].battery          = data.battery ?? 0;
+        devices[data.device_id].signal_strength  = data.signal_strength ?? 0;
         devices[data.device_id].distance_total_m = data.distance_total_m ?? 0;
-        devices[data.device_id].timestamp = new Date().toLocaleTimeString("id-ID");
+        devices[data.device_id].timestamp        = new Date().toLocaleTimeString("id-ID");
         devices[data.device_id].thermal          = data.thermal;
         devices[data.device_id].suhu_max         = data.suhu_max;
         devices[data.device_id].suhu_min         = data.suhu_min;
