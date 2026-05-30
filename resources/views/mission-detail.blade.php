@@ -401,7 +401,7 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
             <div class="rounded-lg overflow-hidden border cyroach-border mb-3" style="background-color:#0a0a0a;">
                 <canvas class="trajectory-canvas block w-full" data-device="${deviceId}" style="height:200px;"></canvas>
             </div>
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-5 gap-2">
                 <div class="cy-card-raised p-2.5">
                     <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Pitch Awal</div>
                     <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.pitch??0).toFixed(1)}°</div>
@@ -420,6 +420,10 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
                     <div class="w-full rounded-full h-1" style="background-color:var(--bg-hover);">
                         <div class="h-1 rounded-full" style="width:${Math.min(sigVal,100)}%;background-color:${sigColor};"></div>
                     </div>
+                </div>
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Total Jarak</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${dist}</div>
                 </div>
             </div>
         </div>`;

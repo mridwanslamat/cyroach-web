@@ -7,22 +7,23 @@
 <div class="overflow-y-auto h-full">
 
     {{-- HERO BANNER --}}
-    <div class="relative mx-6 mt-6 rounded-xl overflow-hidden" style="height:200px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0a0a 50%,#0a0a0a 100%);">
-        <div class="absolute inset-0 flex flex-col justify-end p-6" style="background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);">
-            <div class="text-xs font-mono px-2 py-1 rounded mb-2 inline-block w-fit" style="background-color:var(--accent);color:white;">
+    <div class="relative mx-6 mt-6 rounded-xl overflow-hidden" style="height:220px;background:linear-gradient(135deg,#0f0f0f 0%,#1a0505 60%,#0f0f0f 100%);">
+        {{-- Grid pattern --}}
+        <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,#fff 30px,#fff 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px);"></div>
+        {{-- Content over gradient --}}
+        <div class="absolute inset-0 flex flex-col justify-end p-7" style="background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);">
+            <div class="text-xs px-2.5 py-1 rounded-full mb-3 inline-block w-fit font-medium" style="background-color:var(--accent);color:#fff;font-family:var(--font-mono);letter-spacing:0.08em;">
                 MISSION CRITICAL RESEARCH
             </div>
-            <h2 class="text-2xl font-display font-bold cyroach-text mb-1">CyRoach: Bio-Hybrid Robotics for Disaster Rescue</h2>
-            <p class="text-xs font-mono cyroach-muted">Menciptakan jembatan antara organisme biologis dan kontrol digital untuk navigasi di medan bencana.</p>
+            <h2 class="text-2xl font-display font-bold mb-1.5" style="color:#ffffff;text-shadow:0 2px 12px rgba(0,0,0,0.8);">CyRoach: Bio-Hybrid Robotics for Disaster Rescue</h2>
+            <p class="text-sm" style="color:rgba(255,255,255,0.7);font-family:var(--font-mono);">Menciptakan jembatan antara organisme biologis dan kontrol digital untuk navigasi di medan bencana.</p>
         </div>
-        {{-- Grid pattern overlay --}}
-        <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,#fff 30px,#fff 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px);"></div>
     </div>
 
-    <div class="p-6 grid grid-cols-3 gap-5 max-w-6xl">
+    <div class="p-6 grid gap-5" style="grid-template-columns:1fr 300px;max-width:1200px;">
 
-        {{-- KOLOM KIRI (2/3) --}}
-        <div class="col-span-2 flex flex-col gap-5">
+        {{-- KOLOM KIRI --}}
+        <div class="flex flex-col gap-5">
 
             {{-- PROJECT OVERVIEW --}}
             <div class="cy-card p-5">
@@ -30,129 +31,107 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text">
                         <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
                     </svg>
-                    <span class="text-xs font-mono cyroach-accent-text uppercase tracking-widest font-semibold">Project Overview</span>
+                    <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
                 </div>
                 <p class="text-sm cyroach-text leading-relaxed mb-3">
-                    <!-- Isi konten di sini -->
-                    Proyek ini merupakan Tugas Akhir yang berfokus pada pengembangan sistem monitoring hibrida menggunakan kecoa (<em>Periplaneta americana</em>) sebagai platform robotika biologis.
+                    Proyek ini merupakan Tugas Akhir yang berfokus pada pengembangan sistem monitoring hibrida menggunakan kecoa (<em>Periplaneta americana</em>) sebagai platform robotika biologis. Dipilih karena ketahanannya yang luar biasa terhadap radiasi, tekanan fisik, dan kemampuan manuver di celah sempit.
                 </p>
                 <p class="text-sm cyroach-text leading-relaxed">
-                    <!-- Isi konten di sini -->
-                    Inti dari penelitian ini adalah integrasi sensor termal dan sistem kendali saraf nirkabel yang memungkinkan operator untuk mengarahkan serangga menuju sumber panas yang terdeteksi, mengidentifikasi korban manusia di bawah reruntuhan atau area berbahaya.
+                    Inti dari penelitian ini adalah integrasi sensor termal dan sistem kendali saraf nirkabel yang memungkinkan operator untuk mengarahkan serangga menuju sumber panas yang terdeteksi, mengidentifikasi korban manusia di bawah reruntuhan atau area yang berbahaya bagi tim SAR.
                 </p>
             </div>
 
             {{-- FEATURE CARDS --}}
             <div class="grid grid-cols-3 gap-3">
                 <div class="cy-card p-4">
-                    <div class="w-8 h-8 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
+                    <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
                             <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
                         </svg>
                     </div>
-                    <div class="text-xs font-semibold cyroach-text mb-1">Bio-Hybrid Control</div>
-                    <div class="text-xs cyroach-muted leading-relaxed">
-                        <!-- Isi deskripsi fitur di sini -->
-                        Neural interfacing untuk navigasi presisi melalui stimulasi antena serangga secara artifisial.
-                    </div>
+                    <div class="text-sm font-semibold cyroach-text mb-1.5">Bio-Hybrid Control</div>
+                    <div class="text-xs cyroach-muted leading-relaxed">Neural interfacing untuk navigasi presisi melalui stimulasi antena serangga secara artifisial.</div>
                 </div>
                 <div class="cy-card p-4">
-                    <div class="w-8 h-8 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8">
+                    <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8">
                             <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
                         </svg>
                     </div>
-                    <div class="text-xs font-semibold cyroach-text mb-1">Thermal Imaging</div>
-                    <div class="text-xs cyroach-muted leading-relaxed">
-                        <!-- Isi deskripsi fitur di sini -->
-                        Deteksi panas tubuh real-time dengan algoritma filtering untuk membedakan manusia dari objek lain.
-                    </div>
+                    <div class="text-sm font-semibold cyroach-text mb-1.5">Thermal Imaging</div>
+                    <div class="text-xs cyroach-muted leading-relaxed">Deteksi panas tubuh real-time dengan algoritma filtering untuk membedakan manusia dari objek lain.</div>
                 </div>
                 <div class="cy-card p-4">
-                    <div class="w-8 h-8 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8">
+                    <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8">
                             <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
                             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
                         </svg>
                     </div>
-                    <div class="text-xs font-semibold cyroach-text mb-1">Trajectory Analysis</div>
-                    <div class="text-xs cyroach-muted leading-relaxed">
-                        <!-- Isi deskripsi fitur di sini -->
-                        Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir di bawah reruntuhan.
-                    </div>
+                    <div class="text-sm font-semibold cyroach-text mb-1.5">Trajectory Analysis</div>
+                    <div class="text-xs cyroach-muted leading-relaxed">Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir di bawah reruntuhan.</div>
                 </div>
             </div>
 
             {{-- SYSTEM PURPOSE --}}
             <div class="cy-card p-5">
-                <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-3">System Purpose</div>
-                <blockquote class="text-sm font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
-                    <!-- Isi quote di sini -->
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
+                <blockquote class="text-base font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
                     "Solusi biaya rendah dengan kemampuan manuver tinggi untuk tim Search and Rescue (SAR)."
                 </blockquote>
             </div>
 
         </div>
 
-        {{-- KOLOM KANAN (1/3) --}}
-        <div class="flex flex-col gap-4">
+        {{-- KOLOM KANAN --}}
+        <div class="flex flex-col gap-4 h-full">
 
             {{-- THERMAL ANALYTICS PANEL --}}
-            <div class="cy-card p-4">
-                <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5">
+            <div class="cy-card p-4 flex-1 flex flex-col">
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                     Thermal Analytics
                 </div>
-                <div class="rounded-lg overflow-hidden border cyroach-border mb-2" style="background:#0a0a0a;height:120px;display:flex;align-items:center;justify-content:center;">
-                    <canvas id="about-thermal" width="180" height="100" style="display:block;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border mb-2 flex-1" style="background:#000;min-height:200px;">
+                    <canvas id="about-thermal" style="display:block;width:100%;height:100%;min-height:200px;"></canvas>
                 </div>
-                <div class="text-xs font-mono cyroach-muted text-center">1:1 THERMAL FEED ACCURACY</div>
+                <div class="text-xs cyroach-muted text-center" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
             </div>
 
-            {{-- STATS --}}
+            {{-- ENGINEERING PROFILE --}}
             <div class="cy-card p-4">
-                <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-3">Engineering Profile</div>
-                <div class="flex flex-col gap-2">
-                    <div class="flex justify-between items-center py-1.5 border-b cyroach-border">
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">Engineering Profile</div>
+                <div class="flex flex-col gap-0">
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Platform</span>
-                        <span class="text-xs font-mono cyroach-text">ESP32 + AMG8833</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">ESP32 + AMG8833</span>
                     </div>
-                    <div class="flex justify-between items-center py-1.5 border-b cyroach-border">
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Komunikasi</span>
-                        <span class="text-xs font-mono cyroach-text">2.4GHz ACTIVE</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">2.4GHz ACTIVE</span>
                     </div>
-                    <div class="flex justify-between items-center py-1.5 border-b cyroach-border">
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Sensor Grid</span>
-                        <span class="text-xs font-mono cyroach-text">8×8 = 64 pixel</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">8×8 = 64 pixel</span>
                     </div>
-                    <div class="flex justify-between items-center py-1.5 border-b cyroach-border">
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Threshold</span>
-                        <span class="text-xs font-mono text-red-400">37.5°C</span>
+                        <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
                     </div>
-                    <div class="flex justify-between items-center py-1.5">
+                    <div class="flex justify-between items-center py-2">
                         <span class="text-xs cyroach-muted">Backend</span>
-                        <span class="text-xs font-mono cyroach-text">Laravel + Pusher</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Laravel + Pusher</span>
                     </div>
                 </div>
             </div>
 
-            {{-- ID PANEL --}}
+            {{-- PROJECT ID --}}
             <div class="cy-card p-3 text-center">
-                <div class="text-xs font-mono cyroach-muted mb-1">Project ID</div>
-                <div class="text-xs font-mono cyroach-accent-text font-semibold">TA-2024-ERX</div>
+                <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:10px;">Project ID</div>
+                <div class="text-sm font-semibold cyroach-accent-text" style="font-family:var(--font-mono);">TA-2024-ERX</div>
             </div>
 
         </div>
-    </div>
-
-    {{-- FOOTER --}}
-    <div class="mx-6 mb-6 flex items-center justify-between border-t cyroach-border pt-4">
-        <div class="flex items-center gap-4 text-xs font-mono cyroach-muted">
-            <span>● Neural: CALIBRATED</span>
-            <span>● PCB: &lt;500mg</span>
-            <span>● Comm: 2.4GHz ACTIVE</span>
-        </div>
-        <div class="text-xs font-mono cyroach-muted">CYROACH V1.0.4-BETA // DISASTER RELIEF PROTOCOL</div>
     </div>
 
 </div>
@@ -160,7 +139,6 @@
 
 @push('scripts')
 <script>
-// Demo thermal heatmap di panel About
 function ironColor(ratio) {
     const r = Math.max(0, Math.min(1, ratio));
     const stops = [
@@ -175,21 +153,21 @@ function ironColor(ratio) {
     return lo[1].map((v,i)=>Math.round(v+(hi[1][i]-v)*t));
 }
 
-// Generate demo grid — panas di tengah seperti deteksi manusia
 const demoGrid = Array.from({length:8},(_,r)=>
     Array.from({length:8},(_,c)=>{
         const dx=c-3.5,dy=r-3.5;
         const d=Math.sqrt(dx*dx+dy*dy);
-        return 25+Math.max(0,(3.5-d)/3.5)*15+Math.random()*1.5;
+        return 25+Math.max(0,(3.5-d)/3.5)*15+Math.random()*1.2;
     })
 );
 
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const W=canvas.width,H=canvas.height;
-    canvas.style.width=W+'px';
-    canvas.style.height=H+'px';
+    const rect=canvas.getBoundingClientRect();
+    const W=Math.round(rect.width)||280;
+    const H=Math.round(rect.height)||210;
+    canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
     const imgData=canvas.getContext('2d').createImageData(8,8);
@@ -202,9 +180,9 @@ requestAnimationFrame(()=>{
     const ctx=canvas.getContext('2d');
     ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
     ctx.drawImage(off,0,0,W,H);
-    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(2,2,40,12);
-    ctx.fillStyle='#ef4444';ctx.font='bold 7px monospace';ctx.textAlign='left';
-    ctx.fillText(`T: ${mx.toFixed(1)}°C`,4,11);
+    ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(2,2,52,14);
+    ctx.fillStyle='#ef4444';ctx.font=`bold 9px 'IBM Plex Mono', monospace`;ctx.textAlign='left';
+    ctx.fillText(`T: ${mx.toFixed(1)}°C`,5,13);
 });
 </script>
 @endpush
