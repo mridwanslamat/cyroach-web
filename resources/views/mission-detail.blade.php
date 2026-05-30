@@ -245,21 +245,23 @@ function drawTrajectoryDetail(canvas, history) {
 // RENDER HEADER
 // =====================
 function renderHeader(m) {
+    const isSelesai = m.status !== 'berlangsung';
+    const badgeStyle = isSelesai
+        ? 'background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.35);'
+        : 'background-color:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.35);';
     document.getElementById('mission-header').innerHTML = `
-        <div class="flex items-start justify-between gap-3 mb-4">
+        <div class="flex items-start justify-between gap-3">
             <div>
                 <div class="text-xl font-display font-bold cyroach-text mb-1">
                     Misi #${padNum(m.mission_number)} · ${formatTanggal(m.started_at)}
                 </div>
-                <div class="text-xs font-mono cyroach-muted">
+                <div class="text-xs cyroach-muted" style="font-family:var(--font-mono);">
                     ${formatJam(m.started_at)} – ${m.ended_at ? formatJam(m.ended_at) : 'sekarang'} (UTC+7)
                 </div>
             </div>
-            <span class="text-xs font-mono px-3 py-1.5 rounded-full shrink-0
-                ${m.status === 'berlangsung'
-                    ? 'bg-amber-900/30 text-amber-400 border border-amber-800'
-                    : 'bg-emerald-900/30 text-emerald-400 border border-emerald-800'}">
-                ${m.status === 'berlangsung' ? '● Berlangsung' : '● Selesai'}
+            <span class="text-xs px-3 py-1.5 rounded-full shrink-0 font-medium"
+                style="font-family:var(--font-mono);${badgeStyle}">
+                ● ${isSelesai ? 'Selesai' : 'Berlangsung'}
             </span>
         </div>
     `;
@@ -269,14 +271,17 @@ function renderHeader(m) {
 // RENDER SUMMARY
 // =====================
 function renderSummary(m) {
+    const isSelesai = m.status !== 'berlangsung';
+    const badgeStyle = isSelesai
+        ? 'background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.35);'
+        : 'background-color:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.35);';
     document.getElementById('sum-durasi').textContent = formatDurasi(m.started_at, m.ended_at);
     document.getElementById('sum-korban').textContent = m.detections?.length ?? 0;
     document.getElementById('sum-status').innerHTML = `
-        <span class="text-sm font-mono px-3 py-1.5 rounded-full
-            ${m.status === 'berlangsung'
-                ? 'bg-amber-900/30 text-amber-400 border border-amber-800'
-                : 'bg-emerald-900/30 text-emerald-400 border border-emerald-800'}">
-            ${m.status === 'berlangsung' ? 'Berlangsung' : '✓ Selesai'}
+        <span class="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full font-medium"
+            style="font-family:var(--font-mono);${badgeStyle}">
+            <span class="w-2 h-2 rounded-full" style="background-color:${isSelesai ? '#34d399' : '#fbbf24'};"></span>
+            ${isSelesai ? 'Selesai' : 'Berlangsung'}
         </span>`;
 }
 
@@ -310,31 +315,35 @@ function renderDetections(detections) {
                     <canvas class="detection-hmap block" data-idx="${idx}" width="180" height="180"></canvas>
                 </div>
                 {{-- Data --}}
-                <div class="flex-1 flex flex-col gap-2 min-w-0">
-                    <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-0.5">Orientasi</div>
-                    <div class="grid grid-cols-3 gap-1.5">
-                        <div class="cy-card-raised p-2 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">PITCH</div>
-                            <div class="text-xs font-mono cyroach-text">${(d.pitch??0).toFixed(1)}°</div>
-                        </div>
-                        <div class="cy-card-raised p-2 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">ROLL</div>
-                            <div class="text-xs font-mono cyroach-text">${(d.roll??0).toFixed(1)}°</div>
-                        </div>
-                        <div class="cy-card-raised p-2 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">YAW</div>
-                            <div class="text-xs font-mono cyroach-text">${(d.yaw??0).toFixed(1)}°</div>
+                <div class="flex-1 flex flex-col gap-2.5 min-w-0">
+                    <div>
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-1.5" style="font-family:var(--font-mono);font-size:9px;">Suhu</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="cy-card-raised p-2.5 text-center">
+                                <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">SUHU MAKS</div>
+                                <div class="text-xl font-display font-bold text-red-400">${(d.suhu_max??0).toFixed(1)}°C</div>
+                            </div>
+                            <div class="cy-card-raised p-2.5 text-center">
+                                <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">SUHU MIN</div>
+                                <div class="text-xl font-display font-bold text-blue-400">${(d.suhu_min??0).toFixed(1)}°C</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mt-1 mb-0.5">Suhu</div>
-                    <div class="grid grid-cols-2 gap-1.5">
-                        <div class="cy-card-raised p-2.5 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MAKS</div>
-                            <div class="text-lg font-display font-bold text-red-400">${(d.suhu_max??0).toFixed(1)}°C</div>
-                        </div>
-                        <div class="cy-card-raised p-2.5 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MIN</div>
-                            <div class="text-lg font-display font-bold text-blue-400">${(d.suhu_min??0).toFixed(1)}°C</div>
+                    <div>
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-1.5" style="font-family:var(--font-mono);font-size:9px;">Orientasi</div>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <div class="cy-card-raised p-2 text-center">
+                                <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">PITCH</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.pitch??0).toFixed(1)}°</div>
+                            </div>
+                            <div class="cy-card-raised p-2 text-center">
+                                <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">ROLL</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.roll??0).toFixed(1)}°</div>
+                            </div>
+                            <div class="cy-card-raised p-2 text-center">
+                                <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">YAW</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.yaw??0).toFixed(1)}°</div>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-auto rounded-lg p-3 flex items-center gap-2"
@@ -392,23 +401,25 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
             <div class="rounded-lg overflow-hidden border cyroach-border mb-3" style="background-color:#0a0a0a;">
                 <canvas class="trajectory-canvas block w-full" data-device="${deviceId}" style="height:200px;"></canvas>
             </div>
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-4 gap-2">
                 <div class="cy-card-raised p-2.5">
-                    <div class="text-xs font-mono cyroach-muted mb-1">Pitch / Roll / Yaw Awal</div>
-                    <div class="text-xs font-mono cyroach-text">
-                        ${(points[0]?.pitch??0).toFixed(1)}° / ${(points[0]?.roll??0).toFixed(1)}° / ${(points[0]?.yaw??0).toFixed(1)}°
-                    </div>
+                    <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Pitch Awal</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.pitch??0).toFixed(1)}°</div>
                 </div>
                 <div class="cy-card-raised p-2.5">
-                    <div class="text-xs font-mono cyroach-muted mb-1">Rata Rata Signal</div>
-                    <div class="text-xs font-mono font-semibold cyroach-text mb-1.5">${avgSig}</div>
+                    <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Roll Awal</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.roll??0).toFixed(1)}°</div>
+                </div>
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Yaw Awal</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.yaw??0).toFixed(1)}°</div>
+                </div>
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Rata Sinyal</div>
+                    <div class="text-xs font-semibold cyroach-text mb-1.5" style="font-family:var(--font-mono);">${avgSig}</div>
                     <div class="w-full rounded-full h-1" style="background-color:var(--bg-hover);">
-                        <div class="h-1 rounded-full transition-all" style="width:${Math.min(sigVal,100)}%;background-color:${sigColor};"></div>
+                        <div class="h-1 rounded-full" style="width:${Math.min(sigVal,100)}%;background-color:${sigColor};"></div>
                     </div>
-                </div>
-                <div class="cy-card-raised p-2.5">
-                    <div class="text-xs font-mono cyroach-muted mb-1">Total Jarak Tempuh</div>
-                    <div class="text-xs font-mono font-semibold cyroach-text">${dist}</div>
                 </div>
             </div>
         </div>`;

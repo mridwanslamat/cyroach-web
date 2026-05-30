@@ -8,34 +8,46 @@
 
     {{-- STAT SUMMARY --}}
     <div class="grid grid-cols-3 gap-3 mb-6">
-        <div class="cy-card p-4">
-            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Total Missions</div>
-            <div class="text-3xl font-display font-bold cyroach-text" id="stat-total-misi">—</div>
-            <div class="mt-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="cyroach-muted">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        <div class="cy-card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background-color:rgba(255,255,255,0.05);border:1px solid var(--border);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="cyroach-muted">
+                    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                    <rect x="9" y="3" width="6" height="4" rx="1"/>
+                    <path d="M9 12h6M9 16h4"/>
                 </svg>
+            </div>
+            <div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Total Missions</div>
+                <div class="text-2xl font-display font-bold cyroach-text leading-none" id="stat-total-misi">—</div>
             </div>
         </div>
-        <div class="cy-card p-4">
-            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Victims Rescued</div>
-            <div class="flex items-end gap-2">
-                <div class="text-3xl font-display font-bold text-red-400" id="stat-total-korban">—</div>
-                <div class="text-xs cyroach-muted mb-1" id="stat-korban-sub">Total detected</div>
-            </div>
-            <div class="mt-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-red-800">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+        <div class="cy-card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background-color:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.6">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
+            </div>
+            <div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Victims Rescued</div>
+                <div class="flex items-baseline gap-1.5">
+                    <div class="text-2xl font-display font-bold text-red-400 leading-none" id="stat-total-korban">—</div>
+                    <div class="text-xs cyroach-muted" id="stat-korban-sub" style="font-family:var(--font-mono);">total detected</div>
+                </div>
             </div>
         </div>
-        <div class="cy-card p-4">
-            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Operating Hours</div>
-            <div class="text-3xl font-display font-bold cyroach-text" id="stat-hours">—</div>
-            <div class="mt-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="cyroach-muted">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        <div class="cy-card p-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background-color:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.6">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
                 </svg>
+            </div>
+            <div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Operating Hours</div>
+                <div class="text-2xl font-display font-bold cyroach-text leading-none" id="stat-hours">—</div>
             </div>
         </div>
     </div>
@@ -184,20 +196,24 @@ function renderTable(missions) {
             </td>
             <td class="px-4 py-3 font-mono cyroach-text">${formatDurasi(m.started_at, m.ended_at)}</td>
             <td class="px-4 py-3 text-center">
-                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold font-mono
-                    ${korban > 0 ? 'bg-red-900/40 text-red-400' : 'cyroach-muted'}">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold"
+                    style="${korban > 0
+                        ? 'background-color:var(--accent);color:#fff;'
+                        : 'background-color:var(--bg-raised);border:1px solid var(--border);color:var(--text-muted);'}">
                     ${korban}
                 </span>
             </td>
             <td class="px-4 py-3 font-mono cyroach-text">${suhuMax}</td>
             <td class="px-4 py-3">
-                <span class="text-xs font-mono px-2 py-1 rounded-full
-                    ${isSelesai
-                        ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-800'
-                        : 'bg-amber-900/30 text-amber-400 border border-amber-800'}">
+                <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-full font-medium"
+                    style="${isSelesai
+                        ? 'background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.35);'
+                        : 'background-color:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.35);'}">
+                    <span class="w-1.5 h-1.5 rounded-full inline-block shrink-0" style="background-color:${isSelesai ? '#34d399' : '#fbbf24'};"></span>
                     ${isSelesai ? 'Selesai' : 'Berlangsung'}
                 </span>
             </td>
+
             <td class="px-4 py-3 text-right">
                 <span class="cyroach-muted group-hover:cyroach-accent-text font-mono">→</span>
             </td>
