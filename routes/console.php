@@ -10,3 +10,7 @@ Artisan::command('inspire', function () {
 use Illuminate\Support\Facades\Schedule;
 
 Schedule::command('mission:check-timeout')->everyMinute();
+
+Schedule::call(function () {
+    \Illuminate\Support\Facades\Log::info('keep-alive ping');
+})->everyMinute();
