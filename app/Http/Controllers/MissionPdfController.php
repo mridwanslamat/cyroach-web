@@ -19,6 +19,13 @@ class MissionPdfController extends Controller
         foreach ($mission->detections as $d) {
             if ($d->thermal_snapshot) {
                 $heatmaps[$d->id] = $this->generateHeatmapBase64($d->thermal_snapshot);
+                // Hitung ulang suhu_min dari thermal_snapshot
+                $flat = array_merge(...(array_map(fn($r) => is_array($r) ? $r : [$r], $d->thermal_snapshot)));
+                $flat = array_filter($flat, fn($v) => is_numeric($v) && $v > 0);
+                if (count($flat) > 0) {
+                    $d->suhu_min = round(min($flat), 1);
+                    $d->suhu_max = round(max($flat), 1);
+                }
             }
         }
 
@@ -55,6 +62,20 @@ class MissionPdfController extends Controller
                 ? round(array_sum($samples) / count($samples), 1)
                 : null;
             unset($telemetryPdf[$deviceId]['signal_samples']);
+        }
+
+        // Konversi waktu ke WIB (UTC+7)
+        $wib = new \DateTimeZone('Asia/Jakarta');
+        if ($mission->started_at) {
+            $mission->started_at = \Carbon\Carbon::parse($mission->started_at)->setTimezone($wib);
+        }
+        if ($mission->ended_at) {
+            $mission->ended_at = \Carbon\Carbon::parse($mission->ended_at)->setTimezone($wib);
+        }
+        foreach ($mission->detections as $d) {
+            if ($d->detected_at) {
+                $d->detected_at = \Carbon\Carbon::parse($d->detected_at)->setTimezone($wib);
+            }
         }
 
         $pdf = Pdf::loadView('pdf.mission-report', [

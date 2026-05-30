@@ -678,20 +678,10 @@ fetch('/api/mission-status')
                     </div>
                 `;
             }
-            // Tetap load notifikasi
-            return fetch('/api/devices/live')
-                .then(r => r.json())
-                .then(data => {
-                    data.notifications?.forEach(n => {
-                        notifications.push({
-                            device_id: n.device_id,
-                            message:   n.message,
-                            time:      new Date(n.notified_at).toLocaleTimeString('id-ID'),
-                            ts:        new Date(n.notified_at).getTime(),
-                        });
-                    });
-                    renderNotifications();
-                });
+            
+            // Tidak ada misi — jangan tampilkan notifikasi lama
+            renderNotifications();
+
         }
 
         // Ada misi berlangsung — load data normal
