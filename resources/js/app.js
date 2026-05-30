@@ -521,6 +521,22 @@ function _populateModal(device) {
         device.suhu_min !== undefined ? device.suhu_min.toFixed(1) + "°C" : "—";
     document.getElementById("modal-ts").textContent = device.timestamp ?? "—";
 
+    const deteksiEl = document.getElementById("modal-deteksi-status");
+    if (deteksiEl) {
+        if (status === "confirmed") {
+            deteksiEl.textContent = "Korban Terdeteksi";
+            deteksiEl.className = "text-xs font-mono cyroach-accent-text";
+        } else {
+            deteksiEl.textContent = "Tidak ada deteksi";
+            deteksiEl.className = "text-xs font-mono cyroach-muted";
+        }
+    }
+
+    const dot = document.getElementById("modal-status-dot");
+    if (dot) {
+        dot.className = `w-2 h-2 rounded-full ${device.online ? "bg-emerald-400" : "bg-neutral-600"}`;
+    }
+
     const bat = device.battery ?? 0;
     const batEl = document.getElementById("modal-battery");
     if (batEl) {
