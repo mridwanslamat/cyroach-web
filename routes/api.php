@@ -13,3 +13,4 @@ Route::post('/end-mission', [SensorController::class, 'endMission']);
 Route::get('/devices/live', [DeviceController::class, 'live']);
 Route::get('/missions', [MissionController::class, 'index']);
 Route::get('/missions/{id}', [MissionController::class, 'show']);
+Route::get('/mission-status', [MissionController::class, 'currentStatus']);

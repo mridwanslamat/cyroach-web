@@ -67,4 +67,14 @@ class MissionController extends Controller
 
         return response()->json($mission);
     }
+
+    public function currentStatus()
+    {
+        $mission = Mission::where('status', 'berlangsung')->latest()->first();
+        return response()->json([
+            'active' => $mission !== null,
+            'mission' => $mission,
+        ]);
+    }
+
 }
