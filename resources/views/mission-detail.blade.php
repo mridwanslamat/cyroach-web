@@ -192,10 +192,13 @@ function drawTrajectoryDetail(canvas, history) {
     }
 
     // Auto-rescale
+    // Pakai roll sebagai X, pitch sebagai Y
     let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
     history.forEach(pt => {
-        if(pt.x<minX)minX=pt.x; if(pt.x>maxX)maxX=pt.x;
-        if(pt.y<minY)minY=pt.y; if(pt.y>maxY)maxY=pt.y;
+        const x = pt.x ?? pt.roll ?? 0;
+        const y = pt.y ?? pt.pitch ?? 0;
+        if(x<minX)minX=x; if(x>maxX)maxX=x;
+        if(y<minY)minY=y; if(y>maxY)maxY=y;
     });
     const range=Math.max(maxX-minX,maxY-minY)||0.01;
     const pad=range*0.18;
@@ -211,18 +214,19 @@ function drawTrajectoryDetail(canvas, history) {
         ctx.strokeStyle=`rgba(239,68,68,${alpha.toFixed(2)})`;
         ctx.lineWidth=1.5; ctx.lineJoin='round'; ctx.lineCap='round';
         ctx.beginPath();
-        const p0=toC(history[i-1].x,history[i-1].y);
-        const p1=toC(history[i].x,history[i].y);
+        const p0=toC(history[i-1].x??history[i-1].roll??0, history[i-1].y??history[i-1].pitch??0);
+        const p1=toC(history[i].x??history[i].roll??0, history[i].y??history[i].pitch??0);
         ctx.moveTo(p0.cx,p0.cy); ctx.lineTo(p1.cx,p1.cy); ctx.stroke();
     }
 
+
     // Start dot
-    const fp=toC(history[0].x,history[0].y);
+    const fp=toC(history[0].x??history[0].roll??0, history[0].y??history[0].pitch??0);
     ctx.fillStyle='#22c55e';
     ctx.beginPath(); ctx.arc(fp.cx,fp.cy,5,0,Math.PI*2); ctx.fill();
 
     // End dot
-    const lp=toC(history[history.length-1].x,history[history.length-1].y);
+    const lp=toC(history[history.length-1].x??history[history.length-1].roll??0, history[history.length-1].y??history[history.length-1].pitch??0);
     ctx.fillStyle='#ef4444';
     ctx.beginPath(); ctx.arc(lp.cx,lp.cy,5,0,Math.PI*2); ctx.fill();
 
@@ -233,8 +237,8 @@ function drawTrajectoryDetail(canvas, history) {
     // Coord label
     const last=history[history.length-1];
     ctx.fillStyle='#525252'; ctx.textAlign='right';
-    ctx.fillText(`LAT: ${last.x.toFixed(4)}`,W-4,12);
-    ctx.fillText(`LNG: ${last.y.toFixed(4)}`,W-4,22);
+    ctx.fillText(`LAT: ${(last.x??last.roll??0).toFixed(4)}`,W-4,12);
+    ctx.fillText(`LNG: ${(last.y??last.pitch??0).toFixed(4)}`,W-4,22);
 }
 
 // =====================
