@@ -410,12 +410,20 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
         </div>`;
     }).join('');
 
-    setTimeout(() => {
-        deviceIds.forEach(deviceId => {
-            const canvas = document.querySelector(`.trajectory-canvas[data-device="${deviceId}"]`);
-            if (canvas) drawTrajectoryDetail(canvas, trajectoryByDevice[deviceId]);
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            deviceIds.forEach(deviceId => {
+                const canvas = document.querySelector(`.trajectory-canvas[data-device="${deviceId}"]`);
+                if (!canvas) return;
+                // Force ukuran sebelum draw
+                canvas.style.display = 'block';
+                const w = canvas.parentElement?.offsetWidth || 800;
+                canvas.width = w;
+                canvas.height = 200;
+                drawTrajectoryDetail(canvas, trajectoryByDevice[deviceId]);
+            });
         });
-    }, 50);
+    });
 }
 
 // =====================
