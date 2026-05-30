@@ -1,6 +1,7 @@
 {
   "php": {
-    "version": "8.4"
+    "version": "8.4",
+    "extensions": ["gd", "pdo", "pdo_mysql", "mbstring", "xml", "curl", "zip", "bcmath"]
   },
   "deploy": {
     "startCommand": "php artisan schedule:work & php artisan serve --host=0.0.0.0 --port=$PORT"
