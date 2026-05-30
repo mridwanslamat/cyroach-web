@@ -1,122 +1,71 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Misi</title>
-    @vite(['resources/css/app.css'])
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#991b1b">
-    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');</script>
-</head>
-<body class="bg-neutral-950 text-neutral-100 min-h-screen font-sans">
+@extends('layouts.app')
 
-{{-- NAVBAR --}}
-<nav class="bg-neutral-900 border-b border-red-900 px-4 h-14 flex items-center justify-between sticky top-0 z-50">
-    <div class="flex items-center gap-2 min-w-0">
-        <div class="w-8 h-8 shrink-0 bg-red-800 rounded-md flex items-center justify-center p-1.5">
-            <div class="w-full h-full border-2 border-neutral-100 rounded-full flex items-center justify-center">
-                <div class="w-2 h-2 bg-neutral-100 rounded-full"></div>
-            </div>
-        </div>
-        <span class="text-sm font-semibold tracking-wide text-neutral-100 hidden sm:block">CyRoach Monitoring Dashboard</span>
-        <span class="text-sm font-semibold text-neutral-100 sm:hidden">CyRoach</span>
-    </div>
-    <div class="flex gap-1 shrink-0">
-        <button id="theme-toggle" onclick="toggleTheme()"
-            class="text-xs px-2 py-1.5 rounded-md border border-neutral-700 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors"
-            title="Toggle tema">
-            <span id="theme-icon">
-                <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </span>
-        </button>
-        <a href="{{ route('dashboard') }}" class="text-xs px-3 py-1.5 rounded-md border border-transparent text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors">Live</a>
-        <a href="{{ route('missions.index') }}" class="text-xs px-3 py-1.5 rounded-md border border-transparent text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors">Misi</a>
-    </div>
-</nav>
+@section('title', 'Mission Details')
+@section('page-title', 'Mission Details')
 
-{{-- BODY --}}
-<div class="p-4 sm:p-6 max-w-4xl mx-auto">
+@section('content')
+<div class="p-6 max-w-5xl mx-auto">
 
     {{-- BACK + EXPORT --}}
     <div class="flex items-center justify-between mb-5 gap-2">
-        <a href="{{ route('missions.index') }}" class="inline-flex items-center gap-1 text-xs text-neutral-400 hover:text-neutral-100 transition-colors">
-            ← Kembali ke Riwayat Misi
+        <a href="{{ route('missions.index') }}"
+            class="inline-flex items-center gap-1.5 text-xs font-mono cyroach-muted hover:cyroach-text transition-colors">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Kembali ke Riwayat Misi
         </a>
         <a href="/missions/{{ $id }}/export-pdf"
-            class="text-xs px-3 py-2 rounded-md bg-red-900 border border-red-700 text-neutral-100 hover:bg-red-800 transition-colors shrink-0">
-            ↓ Export PDF
+            class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-2 rounded-lg font-semibold transition-all shrink-0"
+            style="background-color: var(--accent); color: white;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export PDF
         </a>
     </div>
 
-    {{-- HEADER MISI --}}
-    <div id="mission-header" class="bg-neutral-900 border border-neutral-800 border-l-2 border-l-red-800 rounded-xl p-4 mb-4">
-        <div class="text-xs text-neutral-500">Memuat data misi...</div>
+    {{-- MISSION HEADER --}}
+    <div class="cy-card p-5 mb-4" id="mission-header">
+        <div class="text-xs font-mono cyroach-muted">Memuat data misi...</div>
     </div>
 
-    {{-- SUMMARY --}}
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-        <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-neutral-500 mb-1">Durasi Misi</div>
-            <div class="text-base font-semibold" id="sum-durasi">—</div>
+    {{-- SUMMARY CARDS --}}
+    <div class="grid grid-cols-3 gap-3 mb-6">
+        <div class="cy-card p-4 text-center">
+            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Durasi Misi</div>
+            <div class="text-2xl font-display font-bold cyroach-text" id="sum-durasi">—</div>
         </div>
-        <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-neutral-500 mb-1">Korban Terdeteksi</div>
-            <div class="text-base font-semibold text-red-400" id="sum-korban">—</div>
+        <div class="cy-card p-4 text-center">
+            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Korban Terdeteksi</div>
+            <div class="text-2xl font-display font-bold text-red-400" id="sum-korban">—</div>
         </div>
-        <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-center">
-            <div class="text-xs text-neutral-500 mb-1">Status</div>
+        <div class="cy-card p-4 text-center">
+            <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Status</div>
             <div id="sum-status">—</div>
         </div>
     </div>
 
-    {{-- SECTION DETEKSI --}}
-    <div class="text-xs text-neutral-500 mb-3 pb-2 border-b border-neutral-800">Riwayat Deteksi Korban</div>
-    <div id="detections-list">
-        <div class="text-xs text-neutral-500 text-center py-8">Memuat data deteksi...</div>
+    {{-- DETEKSI KORBAN --}}
+    <div class="flex items-center justify-between mb-3">
+        <div class="text-sm font-semibold cyroach-text">Riwayat Deteksi Korban</div>
+        <div class="text-xs font-mono cyroach-muted">SENSORS ACTIVE</div>
     </div>
-    {{-- SECTION TRAJECTORY --}}
-    <div class="text-xs text-neutral-500 mt-6 mb-3 pb-2 border-b border-neutral-800">Rekap Trajectory per Kecoa</div>
+    <div id="detections-list" class="mb-6">
+        <div class="text-xs font-mono cyroach-muted text-center py-8">Memuat data deteksi...</div>
+    </div>
+
+    {{-- TRAJECTORY --}}
+    <div class="flex items-center justify-between mb-3">
+        <div class="text-sm font-semibold cyroach-text">Rekap Trajectory per Kecoa</div>
+        <div class="text-xs font-mono cyroach-muted">COORDINATE MAPPING ON</div>
+    </div>
     <div id="trajectory-list">
-        <div class="text-xs text-neutral-500 text-center py-4">Memuat trajectory...</div>
+        <div class="text-xs font-mono cyroach-muted text-center py-4">Memuat trajectory...</div>
     </div>
 
 </div>
+@endsection
 
+@push('scripts')
 <script>
 const missionId = {{ $id }};
-
-// =====================
-// THEME TOGGLE
-// =====================
-function applyTheme(theme) {
-    const sun  = document.getElementById('icon-sun');
-    const moon = document.getElementById('icon-moon');
-    if (theme === 'light') {
-        document.documentElement.classList.add('light-mode');
-        if (sun)  sun.style.display  = 'none';
-        if (moon) moon.style.display = 'inline';
-    } else {
-        document.documentElement.classList.remove('light-mode');
-        if (sun)  sun.style.display  = 'inline';
-        if (moon) moon.style.display = 'none';
-    }
-}
-function toggleTheme() {
-    const current = localStorage.getItem('theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', next);
-    applyTheme(next);
-}
-applyTheme(localStorage.getItem('theme') || 'dark');
 
 // =====================
 // HELPERS
@@ -139,26 +88,20 @@ function formatDurasi(start, end) {
 function padNum(n) { return String(n).padStart(3, '0'); }
 
 // =====================
-// HEATMAP — IRON colormap + bilinear upscale
+// HEATMAP
 // =====================
 function ironColor(ratio) {
     const r = Math.max(0, Math.min(1, ratio));
     const stops = [
-        [0.00, [0,   0,   0  ]],
-        [0.20, [80,  0,   130]],
-        [0.40, [150, 0,   100]],
-        [0.60, [220, 30,  0  ]],
-        [0.75, [255, 120, 0  ]],
-        [0.90, [255, 220, 0  ]],
-        [1.00, [255, 255, 255]],
+        [0.00, [0,0,0]],[0.20,[80,0,130]],[0.40,[150,0,100]],
+        [0.60, [220,30,0]],[0.75,[255,120,0]],[0.90,[255,220,0]],[1.00,[255,255,255]],
     ];
-    let lo = stops[0], hi = stops[stops.length - 1];
-    for (let i = 0; i < stops.length - 1; i++) {
-        if (r >= stops[i][0] && r <= stops[i+1][0]) { lo = stops[i]; hi = stops[i+1]; break; }
+    let lo = stops[0], hi = stops[stops.length-1];
+    for (let i = 0; i < stops.length-1; i++) {
+        if (r >= stops[i][0] && r <= stops[i+1][0]) { lo=stops[i]; hi=stops[i+1]; break; }
     }
-    const t = (r - lo[0]) / (hi[0] - lo[0] || 1);
-    const c = lo[1].map((v, i) => Math.round(v + (hi[1][i] - v) * t));
-    return c;
+    const t = (r-lo[0])/(hi[0]-lo[0]||1);
+    return lo[1].map((v,i) => Math.round(v+(hi[1][i]-v)*t));
 }
 
 function bilinearUpscale(grid, outSize) {
@@ -167,16 +110,12 @@ function bilinearUpscale(grid, outSize) {
     for (let y = 0; y < outSize; y++) {
         const row = [];
         for (let x = 0; x < outSize; x++) {
-            const gx = (x / (outSize - 1)) * (src - 1);
-            const gy = (y / (outSize - 1)) * (src - 1);
-            const x0 = Math.floor(gx), x1 = Math.min(x0 + 1, src - 1);
-            const y0 = Math.floor(gy), y1 = Math.min(y0 + 1, src - 1);
-            const tx = gx - x0, ty = gy - y0;
-            const v = grid[y0][x0] * (1-tx)*(1-ty)
-                    + grid[y0][x1] * tx*(1-ty)
-                    + grid[y1][x0] * (1-tx)*ty
-                    + grid[y1][x1] * tx*ty;
-            row.push(v);
+            const gx = (x/(outSize-1))*(src-1);
+            const gy = (y/(outSize-1))*(src-1);
+            const x0=Math.floor(gx),x1=Math.min(x0+1,src-1);
+            const y0=Math.floor(gy),y1=Math.min(y0+1,src-1);
+            const tx=gx-x0,ty=gy-y0;
+            row.push(grid[y0][x0]*(1-tx)*(1-ty)+grid[y0][x1]*tx*(1-ty)+grid[y1][x0]*(1-tx)*ty+grid[y1][x1]*tx*ty);
         }
         out.push(row);
     }
@@ -184,137 +123,231 @@ function bilinearUpscale(grid, outSize) {
 }
 
 function drawHeatmap(canvas, grid) {
-    const SIZE = canvas.width  || 140;
-    const H    = canvas.height || 140;
-    canvas.width  = SIZE;
-    canvas.height = H;
-    canvas.style.imageRendering = 'pixelated';
-
+    const SIZE = canvas.width || 160;
+    const H = canvas.height || 160;
+    canvas.width = SIZE; canvas.height = H;
     const ctx = canvas.getContext('2d');
-    const upscaled = bilinearUpscale(grid, 64); // tetap upscale ke 64x64
+    const upscaled = bilinearUpscale(grid, 64);
     const flat = upscaled.flat();
     const mn = Math.min(...flat), mx = Math.max(...flat);
     const imgData = ctx.createImageData(64, 64);
-
-    for (let i = 0; i < 64 * 64; i++) {
-        const ratio = (flat[i] - mn) / (mx - mn || 1);
-        const [r, g, b] = ironColor(ratio);
-        imgData.data[i*4]   = r;
-        imgData.data[i*4+1] = g;
-        imgData.data[i*4+2] = b;
-        imgData.data[i*4+3] = 255;
+    for (let i = 0; i < 64*64; i++) {
+        const [r,g,b] = ironColor((flat[i]-mn)/(mx-mn||1));
+        imgData.data[i*4]=r; imgData.data[i*4+1]=g; imgData.data[i*4+2]=b; imgData.data[i*4+3]=255;
     }
-
-    // Gambar ke offscreen 64x64 lalu stretch ke canvas ukuran fix
     const off = document.createElement('canvas');
-    off.width = 64; off.height = 64;
-    off.getContext('2d').putImageData(imgData, 0, 0);
+    off.width=64; off.height=64;
+    off.getContext('2d').putImageData(imgData,0,0);
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(off,0,0,SIZE,H);
 
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(off, 0, 0, SIZE, H);
+    // Label overlay
+    ctx.fillStyle='rgba(0,0,0,0.75)';
+    ctx.fillRect(0,H-18,SIZE,18);
+    ctx.fillStyle='#fff';
+    ctx.font='bold 8px monospace';
+    ctx.textAlign='left';
+    ctx.fillText(`MAX ${mx.toFixed(1)}°C`,4,H-5);
+    ctx.textAlign='right';
+    ctx.fillText(`MIN ${mn.toFixed(1)}°C`,SIZE-4,H-5);
 
-    // Label suhu — font lebih kecil karena canvas lebih kecil
-    ctx.fillStyle = 'rgba(0,0,0,0.80)';
-    ctx.fillRect(0, H - 16, SIZE, 16);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 7px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`MAX ${mx.toFixed(1)}°C`, 3, H - 4);
-    ctx.textAlign = 'right';
-    ctx.fillText(`MIN ${mn.toFixed(1)}°C`, SIZE - 3, H - 4);
+    // CALIB tag
+    ctx.fillStyle='rgba(0,0,0,0.6)';
+    ctx.fillRect(2,2,62,14);
+    ctx.fillStyle='#ef4444';
+    ctx.font='bold 7px monospace';
+    ctx.textAlign='left';
+    ctx.fillText('CALIB: AUTO',4,12);
+
+    // RECORDED FEED badge
+    ctx.fillStyle='rgba(220,38,38,0.85)';
+    ctx.fillRect(2,18,80,13);
+    ctx.fillStyle='#fff';
+    ctx.font='bold 7px monospace';
+    ctx.fillText('RECORDED FEED',5,28);
 }
 
 // =====================
-// RENDER
+// TRAJECTORY
+// =====================
+function drawTrajectoryDetail(canvas, history) {
+    const W = canvas.offsetWidth || 500;
+    const H = 200;
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Background grid
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=0.5;
+    for(let x=0;x<=W;x+=W/8){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<=H;y+=H/4){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    ctx.strokeStyle='#2a2a2a'; ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+
+    if (!history || history.length < 2) {
+        ctx.fillStyle='#404040'; ctx.font='10px monospace'; ctx.textAlign='center';
+        ctx.fillText('Tidak ada data trajectory',W/2,H/2+4);
+        return;
+    }
+
+    // Auto-rescale
+    let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+    history.forEach(pt => {
+        if(pt.x<minX)minX=pt.x; if(pt.x>maxX)maxX=pt.x;
+        if(pt.y<minY)minY=pt.y; if(pt.y>maxY)maxY=pt.y;
+    });
+    const range=Math.max(maxX-minX,maxY-minY)||0.01;
+    const pad=range*0.18;
+    const dX=maxX-minX+2*pad||1, dY=maxY-minY+2*pad||1;
+    const toC = (x,y) => ({
+        cx:((x-minX+pad)/dX)*W,
+        cy:H-((y-minY+pad)/dY)*H
+    });
+
+    // Trajectory line gradient
+    for(let i=1;i<history.length;i++){
+        const alpha=0.3+0.7*(i/history.length);
+        ctx.strokeStyle=`rgba(239,68,68,${alpha.toFixed(2)})`;
+        ctx.lineWidth=1.5; ctx.lineJoin='round'; ctx.lineCap='round';
+        ctx.beginPath();
+        const p0=toC(history[i-1].x,history[i-1].y);
+        const p1=toC(history[i].x,history[i].y);
+        ctx.moveTo(p0.cx,p0.cy); ctx.lineTo(p1.cx,p1.cy); ctx.stroke();
+    }
+
+    // Start dot
+    const fp=toC(history[0].x,history[0].y);
+    ctx.fillStyle='#22c55e';
+    ctx.beginPath(); ctx.arc(fp.cx,fp.cy,5,0,Math.PI*2); ctx.fill();
+
+    // End dot
+    const lp=toC(history[history.length-1].x,history[history.length-1].y);
+    ctx.fillStyle='#ef4444';
+    ctx.beginPath(); ctx.arc(lp.cx,lp.cy,5,0,Math.PI*2); ctx.fill();
+
+    // Scale label
+    ctx.fillStyle='#404040'; ctx.font='8px monospace'; ctx.textAlign='left';
+    ctx.fillText(`NAV SCALE: 1:${Math.ceil(range*10)/10}`,4,H-4);
+
+    // Coord label
+    const last=history[history.length-1];
+    ctx.fillStyle='#525252'; ctx.textAlign='right';
+    ctx.fillText(`LAT: ${last.x.toFixed(4)}`,W-4,12);
+    ctx.fillText(`LNG: ${last.y.toFixed(4)}`,W-4,22);
+}
+
+// =====================
+// RENDER HEADER
 // =====================
 function renderHeader(m) {
     document.getElementById('mission-header').innerHTML = `
-        <div class="flex items-start justify-between gap-3">
+        <div class="flex items-start justify-between gap-3 mb-4">
             <div>
-                <div class="text-base font-semibold text-neutral-100 mb-1">
+                <div class="text-xl font-display font-bold cyroach-text mb-1">
                     Misi #${padNum(m.mission_number)} · ${formatTanggal(m.started_at)}
                 </div>
-                <div class="text-xs text-neutral-500">
-                    ${formatJam(m.started_at)} – ${m.ended_at ? formatJam(m.ended_at) : 'sekarang'}
+                <div class="text-xs font-mono cyroach-muted">
+                    ${formatJam(m.started_at)} – ${m.ended_at ? formatJam(m.ended_at) : 'sekarang'} (UTC+7)
                 </div>
             </div>
-            <span class="text-xs px-2 py-1 rounded-full shrink-0 ${m.status === 'berlangsung'
-                ? 'bg-amber-900 text-amber-400 border border-amber-700'
-                : 'bg-neutral-800 text-neutral-400 border border-neutral-700'}">
-                ${m.status === 'berlangsung' ? '● Berlangsung' : '✓ Selesai'}
+            <span class="text-xs font-mono px-3 py-1.5 rounded-full shrink-0
+                ${m.status === 'berlangsung'
+                    ? 'bg-amber-900/30 text-amber-400 border border-amber-800'
+                    : 'bg-emerald-900/30 text-emerald-400 border border-emerald-800'}">
+                ${m.status === 'berlangsung' ? '● Berlangsung' : '● Selesai'}
             </span>
         </div>
     `;
 }
 
+// =====================
+// RENDER SUMMARY
+// =====================
 function renderSummary(m) {
     document.getElementById('sum-durasi').textContent = formatDurasi(m.started_at, m.ended_at);
     document.getElementById('sum-korban').textContent = m.detections?.length ?? 0;
     document.getElementById('sum-status').innerHTML = `
-        <span class="text-xs px-2 py-1 rounded-full ${m.status === 'berlangsung'
-            ? 'bg-amber-900 text-amber-400 border border-amber-700'
-            : 'bg-neutral-800 text-neutral-400 border border-neutral-700'}">
-            ${m.status === 'berlangsung' ? '● Berlangsung' : '✓ Selesai'}
+        <span class="text-sm font-mono px-3 py-1.5 rounded-full
+            ${m.status === 'berlangsung'
+                ? 'bg-amber-900/30 text-amber-400 border border-amber-800'
+                : 'bg-emerald-900/30 text-emerald-400 border border-emerald-800'}">
+            ${m.status === 'berlangsung' ? 'Berlangsung' : '✓ Selesai'}
         </span>`;
 }
 
+// =====================
+// RENDER DETEKSI
+// =====================
 function renderDetections(detections) {
     const container = document.getElementById('detections-list');
-
     if (!detections || detections.length === 0) {
         container.innerHTML = `
-            <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-6 text-center">
-                <div class="text-xs text-neutral-500">Tidak ada deteksi korban pada misi ini</div>
+            <div class="cy-card p-8 text-center">
+                <div class="text-xs font-mono cyroach-muted">Tidak ada deteksi korban pada misi ini</div>
             </div>`;
         return;
     }
 
-    container.innerHTML = detections.map((d, idx) => `
-        <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-4 mb-3">
-            <div class="flex items-center justify-between mb-3 gap-2">
-                <div class="text-xs font-semibold text-neutral-100">
-                    Deteksi #${idx + 1} — ${d.device_id.replace('kecoa_', 'Kecoa #').replace(/^Kecoa #0+/, 'Kecoa #')}
+    container.innerHTML = detections.map((d, idx) => {
+        const devNum = d.device_id.replace('kecoa_','').replace(/^0+/,'');
+        return `
+        <div class="cy-card p-4 mb-3">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-0.5 h-4 rounded" style="background-color:var(--accent);"></div>
+                    <span class="text-sm font-semibold cyroach-text">Deteksi #${idx+1} — Kecoa #${devNum}</span>
                 </div>
-                <div class="text-xs text-neutral-500 shrink-0">${new Date(d.detected_at).toLocaleString('id-ID')}</div>
+                <div class="text-xs font-mono cyroach-muted">${new Date(d.detected_at).toLocaleString('id-ID')}</div>
             </div>
-            <div class="flex gap-3">
-                <div class="shrink-0 rounded-lg overflow-hidden border border-neutral-800" style="width:160px;height:160px;">
-                    <canvas class="detection-hmap block" data-idx="${idx}" width="160" height="160"></canvas>
+            <div class="flex gap-4">
+                {{-- Thermal --}}
+                <div class="shrink-0 rounded-lg overflow-hidden border cyroach-border relative" style="width:180px;height:180px;">
+                    <canvas class="detection-hmap block" data-idx="${idx}" width="180" height="180"></canvas>
                 </div>
+                {{-- Data --}}
                 <div class="flex-1 flex flex-col gap-2 min-w-0">
+                    <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-0.5">Orientasi</div>
                     <div class="grid grid-cols-3 gap-1.5">
-                        <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Pitch</div>
-                            <div class="text-xs text-neutral-300">${(d.pitch ?? 0).toFixed(1)}°</div>
+                        <div class="cy-card-raised p-2 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">PITCH</div>
+                            <div class="text-xs font-mono cyroach-text">${(d.pitch??0).toFixed(1)}°</div>
                         </div>
-                        <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Roll</div>
-                            <div class="text-xs text-neutral-300">${(d.roll ?? 0).toFixed(1)}°</div>
+                        <div class="cy-card-raised p-2 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">ROLL</div>
+                            <div class="text-xs font-mono cyroach-text">${(d.roll??0).toFixed(1)}°</div>
                         </div>
-                        <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Yaw</div>
-                            <div class="text-xs text-neutral-300">${(d.yaw ?? 0).toFixed(1)}°</div>
+                        <div class="cy-card-raised p-2 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">YAW</div>
+                            <div class="text-xs font-mono cyroach-text">${(d.yaw??0).toFixed(1)}°</div>
                         </div>
                     </div>
+                    <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mt-1 mb-0.5">Suhu</div>
                     <div class="grid grid-cols-2 gap-1.5">
-                        <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Suhu Maks</div>
-                            <div class="text-sm font-semibold text-red-400">${(d.suhu_max ?? 0).toFixed(1)}°C</div>
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MAKS</div>
+                            <div class="text-lg font-display font-bold text-red-400">${(d.suhu_max??0).toFixed(1)}°C</div>
                         </div>
-                        <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Suhu Min</div>
-                            <div class="text-sm font-semibold text-blue-400">${(d.suhu_min ?? 0).toFixed(1)}°C</div>
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MIN</div>
+                            <div class="text-lg font-display font-bold text-blue-400">${(d.suhu_min??0).toFixed(1)}°C</div>
                         </div>
                     </div>
-                    <div class="bg-red-950 border border-red-900 rounded-lg p-2 text-center mt-auto">
-                        <div class="text-xs text-red-400 font-semibold">⚠ Korban Terdeteksi</div>
-                        <div class="text-neutral-500 mt-0.5" style="font-size:10px;">Suhu melebihi ambang batas 37.5°C</div>
+                    <div class="mt-auto rounded-lg p-3 flex items-center gap-2"
+                        style="background-color:rgba(127,29,29,0.2);border:1px solid rgba(185,28,28,0.3);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <div>
+                            <div class="text-xs font-semibold text-red-400">Korban Terdeteksi</div>
+                            <div class="text-xs cyroach-muted" style="font-size:10px;">Suhu melebihi ambang batas 37.5°C</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 
     setTimeout(() => {
         detections.forEach((d, idx) => {
@@ -325,146 +358,56 @@ function renderDetections(detections) {
 }
 
 // =====================
-// TRAJECTORY (sama seperti app.js)
+// RENDER TRAJECTORY
 // =====================
-function drawTrajectoryDetail(canvas, history) {
-    const W = canvas.offsetWidth || 300;
-    const H = 160;
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = '#0a0a0a';
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.strokeStyle = '#262626';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x <= W; x += W/4) {
-        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
-    }
-    for (let y = 0; y <= H; y += H/4) {
-        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-    }
-    ctx.strokeStyle = '#404040';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.stroke();
-
-    if (!history || history.length < 2) {
-        ctx.fillStyle = '#404040';
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('Tidak ada data trajectory', W/2, H/2+4);
-        return;
-    }
-
-    const scale = 2;
-    ctx.strokeStyle = '#ef4444';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    history.forEach((pt, i) => {
-        const x = W/2 + ((pt.roll ?? 0) * scale);
-        const y = H/2 - ((pt.pitch ?? 0) * scale);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    // Titik start
-    const first = history[0];
-    ctx.fillStyle = '#22c55e';
-    ctx.beginPath();
-    ctx.arc(W/2 + (first.roll??0)*scale, H/2 - (first.pitch??0)*scale, 4, 0, Math.PI*2);
-    ctx.fill();
-    ctx.fillStyle = '#22c55e';
-    ctx.font = '8px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText('START', W/2 + (first.roll??0)*scale + 6, H/2 - (first.pitch??0)*scale + 3);
-
-    // Titik akhir
-    const last = history[history.length-1];
-    const lx = W/2 + (last.roll??0)*scale;
-    const ly = H/2 - (last.pitch??0)*scale;
-    ctx.fillStyle = '#ef4444';
-    ctx.beginPath();
-    ctx.arc(lx, ly, 4, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.fillStyle = '#525252';
-    ctx.font = '8px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText('Roll →', 4, H-4);
-    ctx.textAlign = 'right';
-    ctx.fillText('↑ Pitch', W-4, 10);
-
-    // Info titik
-    ctx.fillStyle = '#737373';
-    ctx.textAlign = 'left';
-    ctx.fillText(`${history.length} titik`, 4, 12);
-}
-
 function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
     const container = document.getElementById('trajectory-list');
     if (!container) return;
-
     const deviceIds = Object.keys(trajectoryByDevice);
 
     if (deviceIds.length === 0) {
-        container.innerHTML = '<div class="text-xs text-neutral-500 text-center py-4">Tidak ada data trajectory</div>';
+        container.innerHTML = '<div class="text-xs font-mono cyroach-muted text-center py-4">Tidak ada data trajectory</div>';
         return;
     }
 
     container.innerHTML = deviceIds.map(deviceId => {
-        const num    = deviceId.replace('kecoa_', '').replace(/^0+/, '');
+        const num = deviceId.replace('kecoa_','').replace(/^0+/,'');
         const points = trajectoryByDevice[deviceId];
-        const telem  = (telemetryByDevice && telemetryByDevice[deviceId]) || {};
-        const avgSig = telem.avg_signal    != null ? telem.avg_signal.toFixed(1) + '%' : '—';
-        const dist   = telem.distance_total_m != null ? telem.distance_total_m.toFixed(2) + ' m' : '—';
-
-        // Warna progress bar signal
+        const telem = (telemetryByDevice && telemetryByDevice[deviceId]) || {};
+        const avgSig = telem.avg_signal != null ? telem.avg_signal.toFixed(1)+'%' : '—';
+        const dist = telem.distance_total_m != null ? telem.distance_total_m.toFixed(2)+' m' : '—';
         const sigVal = telem.avg_signal ?? 0;
-        const sigColor = sigVal >= 60 ? 'bg-green-500' : sigVal >= 30 ? 'bg-yellow-500' : 'bg-red-500';
+        const sigColor = sigVal>=60 ? '#22c55e' : sigVal>=30 ? '#f59e0b' : '#ef4444';
 
         return `
-            <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-4 mb-3">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="text-xs font-semibold text-neutral-100">Kecoa #${num}</div>
-                    <div class="text-xs text-neutral-500">${points.length} titik data</div>
-                </div>
-                <div class="rounded-lg overflow-hidden border border-neutral-800">
-                    <canvas class="trajectory-canvas block w-full" data-device="${deviceId}" style="height:160px;"></canvas>
-                </div>
-                <div class="grid grid-cols-3 gap-2 mt-2">
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-2 text-center">
-                        <div class="text-xs text-neutral-500 mb-0.5">Pitch awal</div>
-                        <div class="text-xs text-neutral-300">${(points[0]?.pitch ?? 0).toFixed(1)}°</div>
-                    </div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-2 text-center">
-                        <div class="text-xs text-neutral-500 mb-0.5">Roll awal</div>
-                        <div class="text-xs text-neutral-300">${(points[0]?.roll ?? 0).toFixed(1)}°</div>
-                    </div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-2 text-center">
-                        <div class="text-xs text-neutral-500 mb-0.5">Yaw awal</div>
-                        <div class="text-xs text-neutral-300">${(points[0]?.yaw ?? 0).toFixed(1)}°</div>
+        <div class="cy-card p-4 mb-3">
+            <div class="flex items-center justify-between mb-3">
+                <div class="text-sm font-semibold cyroach-text">Kecoa #${num}</div>
+                <div class="text-xs font-mono cyroach-muted">${points.length} titik data</div>
+            </div>
+            <div class="rounded-lg overflow-hidden border cyroach-border mb-3" style="background-color:#0a0a0a;">
+                <canvas class="trajectory-canvas block w-full" data-device="${deviceId}" style="height:200px;"></canvas>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs font-mono cyroach-muted mb-1">Pitch / Roll / Yaw Awal</div>
+                    <div class="text-xs font-mono cyroach-text">
+                        ${(points[0]?.pitch??0).toFixed(1)}° / ${(points[0]?.roll??0).toFixed(1)}° / ${(points[0]?.yaw??0).toFixed(1)}°
                     </div>
                 </div>
-
-                {{-- BARIS BARU: Telemetri rata-rata signal & total jarak --}}
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-2">
-                        <div class="text-xs text-neutral-500 mb-1">Rata-rata Signal</div>
-                        <div class="text-xs font-semibold text-neutral-200 mb-1">${avgSig}</div>
-                        <div class="w-full bg-neutral-800 rounded-full h-1">
-                            <div class="${sigColor} h-1 rounded-full transition-all" style="width:${Math.min(sigVal,100)}%"></div>
-                        </div>
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs font-mono cyroach-muted mb-1">Rata Rata Signal</div>
+                    <div class="text-xs font-mono font-semibold cyroach-text mb-1.5">${avgSig}</div>
+                    <div class="w-full rounded-full h-1" style="background-color:var(--bg-hover);">
+                        <div class="h-1 rounded-full transition-all" style="width:${Math.min(sigVal,100)}%;background-color:${sigColor};"></div>
                     </div>
-                    <div class="bg-neutral-950 border border-neutral-800 rounded p-2">
-                        <div class="text-xs text-neutral-500 mb-1">Total Jarak Tempuh</div>
-                        <div class="text-xs font-semibold text-neutral-200">${dist}</div>
-                    </div>
+                </div>
+                <div class="cy-card-raised p-2.5">
+                    <div class="text-xs font-mono cyroach-muted mb-1">Total Jarak Tempuh</div>
+                    <div class="text-xs font-mono font-semibold cyroach-text">${dist}</div>
                 </div>
             </div>
-        `;
+        </div>`;
     }).join('');
 
     setTimeout(() => {
@@ -488,11 +431,7 @@ fetch(`/api/missions/${missionId}`)
     })
     .catch(() => {
         document.getElementById('mission-header').innerHTML =
-            '<div class="text-xs text-red-400">Gagal memuat data misi</div>';
-        document.getElementById('detections-list').innerHTML = '';
-        document.getElementById('trajectory-list').innerHTML = '';
+            '<div class="text-xs font-mono text-red-400">Gagal memuat data misi</div>';
     });
 </script>
-
-</body>
-</html>
+@endpush
