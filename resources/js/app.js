@@ -592,6 +592,7 @@ document.getElementById("modal")?.addEventListener("click", function (e) {
 // PUSHER LISTENER — untuk data yang tidak real-time (battery, signal, jarak tempuh, status online)
 // =====================
 window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
+    if (!missionActive) return;
     const data = e.data;
 
     if (!trajectoryHistory[data.device_id]) {
@@ -659,13 +660,20 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
 });
 
 // =====================
+// STATE misi aktif
+// =====================
+let missionActive = false;
+
+// =====================
 // INITIAL LOAD — cek status misi dulu
 // =====================
 fetch('/api/mission-status')
     .then(r => r.json())
     .then(status => {
-        if (!status.active) {
-            // Tidak ada misi berlangsung — tampilkan pesan kosong
+        missionActive = status.active;
+
+        if (!missionActive) {
+            // Tidak ada misi berlangsung
             const grid  = document.getElementById('cards-grid');
             const empty = document.getElementById('empty-state');
             if (grid)  grid.innerHTML = '';
@@ -678,14 +686,12 @@ fetch('/api/mission-status')
                     </div>
                 `;
             }
-            
-            // Tidak ada misi — jangan tampilkan notifikasi lama
             renderNotifications();
-
+            return; // ← PENTING: stop di sini, jangan lanjut ke bawah
         }
 
         // Ada misi berlangsung — load data normal
-        return fetch('/api/devices/live')
+        fetch('/api/devices/live')
             .then(r => r.json())
             .then(data => {
                 data.devices.forEach(d => {
