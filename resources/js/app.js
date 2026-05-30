@@ -659,43 +659,76 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
 });
 
 // =====================
-// INITIAL LOAD
+// INITIAL LOAD — cek status misi dulu
 // =====================
-fetch("/api/devices/live")
-    .then((r) => r.json())
-    .then((data) => {
-        data.devices.forEach((d) => {
-            if (!d.latest) return;
-            devices[d.device_id] = {
-                device_id: d.device_id,
-                online: d.status === "online",
-                suhu_max: d.latest.suhu_max,
-                suhu_min: d.latest.suhu_min,
-                pitch: d.latest.pitch,
-                roll: d.latest.roll,
-                yaw: d.latest.yaw,
-                thermal: d.latest.thermal_grid,
-                battery: d.latest.battery ?? 0,
-                signal_strength: d.latest.signal_strength ?? 0,
-                distance_total_m: d.latest.distance_total_m ?? 0,
-                timestamp: d.last_seen
-                    ? new Date(d.last_seen).toLocaleTimeString("id-ID")
-                    : "—",
-            };
-        });
+fetch('/api/mission-status')
+    .then(r => r.json())
+    .then(status => {
+        if (!status.active) {
+            // Tidak ada misi berlangsung — tampilkan pesan kosong
+            const grid  = document.getElementById('cards-grid');
+            const empty = document.getElementById('empty-state');
+            if (grid)  grid.innerHTML = '';
+            if (empty) {
+                empty.classList.remove('hidden');
+                empty.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-neutral-500 text-sm mb-1">Tidak ada misi yang sedang berlangsung</div>
+                        <div class="text-neutral-700 text-xs">Misi akan dimulai otomatis saat kecoa mulai mengirim data</div>
+                    </div>
+                `;
+            }
+            // Tetap load notifikasi
+            return fetch('/api/devices/live')
+                .then(r => r.json())
+                .then(data => {
+                    data.notifications?.forEach(n => {
+                        notifications.push({
+                            device_id: n.device_id,
+                            message:   n.message,
+                            time:      new Date(n.notified_at).toLocaleTimeString('id-ID'),
+                            ts:        new Date(n.notified_at).getTime(),
+                        });
+                    });
+                    renderNotifications();
+                });
+        }
 
-        data.notifications?.forEach((n) => {
-            notifications.push({
-                device_id: n.device_id,
-                message: n.message,
-                time: new Date(n.notified_at).toLocaleTimeString("id-ID"),
-                ts: new Date(n.notified_at).getTime(),
+        // Ada misi berlangsung — load data normal
+        return fetch('/api/devices/live')
+            .then(r => r.json())
+            .then(data => {
+                data.devices.forEach(d => {
+                    if (!d.latest) return;
+                    devices[d.device_id] = {
+                        device_id:        d.device_id,
+                        online:           d.status === 'online',
+                        suhu_max:         d.latest.suhu_max,
+                        suhu_min:         d.latest.suhu_min,
+                        pitch:            d.latest.pitch,
+                        roll:             d.latest.roll,
+                        yaw:              d.latest.yaw,
+                        thermal:          d.latest.thermal_grid,
+                        battery:          d.latest.battery ?? 0,
+                        signal_strength:  d.latest.signal_strength ?? 0,
+                        distance_total_m: d.latest.distance_total_m ?? 0,
+                        timestamp:        d.last_seen ? new Date(d.last_seen).toLocaleTimeString('id-ID') : '—',
+                    };
+                });
+
+                data.notifications?.forEach(n => {
+                    notifications.push({
+                        device_id: n.device_id,
+                        message:   n.message,
+                        time:      new Date(n.notified_at).toLocaleTimeString('id-ID'),
+                        ts:        new Date(n.notified_at).getTime(),
+                    });
+                });
+
+                renderDevices();
+                renderNotifications();
             });
-        });
-
-        renderDevices();
-        renderNotifications();
     })
-    .catch((err) => console.error("Gagal load data awal:", err));
+    .catch(err => console.error('Gagal load data awal:', err));
 
 trajectoryAnimLoop();
