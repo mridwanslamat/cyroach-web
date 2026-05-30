@@ -278,38 +278,38 @@ function renderDetections(detections) {
                 </div>
                 <div class="text-xs text-neutral-500 shrink-0">${new Date(d.detected_at).toLocaleString('id-ID')}</div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div class="rounded-lg overflow-hidden border border-neutral-800 inline-block">
-                    <canvas class="detection-hmap block" data-idx="${idx}" style="width:140px;height:140px;"></canvas>
+            <div class="flex gap-3">
+                <div class="shrink-0 rounded-lg overflow-hidden border border-neutral-800" style="width:160px;height:160px;">
+                    <canvas class="detection-hmap block" data-idx="${idx}" width="160" height="160"></canvas>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <div class="grid grid-cols-3 gap-2">
+                <div class="flex-1 flex flex-col gap-2 min-w-0">
+                    <div class="grid grid-cols-3 gap-1.5">
                         <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-xs text-neutral-500 mb-1">Pitch</div>
+                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Pitch</div>
                             <div class="text-xs text-neutral-300">${(d.pitch ?? 0).toFixed(1)}°</div>
                         </div>
                         <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-xs text-neutral-500 mb-1">Roll</div>
+                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Roll</div>
                             <div class="text-xs text-neutral-300">${(d.roll ?? 0).toFixed(1)}°</div>
                         </div>
                         <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-xs text-neutral-500 mb-1">Yaw</div>
+                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Yaw</div>
                             <div class="text-xs text-neutral-300">${(d.yaw ?? 0).toFixed(1)}°</div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-1.5">
                         <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-xs text-neutral-500 mb-1">Suhu Maks</div>
+                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Suhu Maks</div>
                             <div class="text-sm font-semibold text-red-400">${(d.suhu_max ?? 0).toFixed(1)}°C</div>
                         </div>
                         <div class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-center">
-                            <div class="text-xs text-neutral-500 mb-1">Suhu Min</div>
+                            <div class="text-neutral-500 mb-1" style="font-size:9px;">Suhu Min</div>
                             <div class="text-sm font-semibold text-blue-400">${(d.suhu_min ?? 0).toFixed(1)}°C</div>
                         </div>
                     </div>
-                    <div class="bg-neutral-950 border border-red-900 rounded-lg p-2 text-center mt-auto">
+                    <div class="bg-red-950 border border-red-900 rounded-lg p-2 text-center mt-auto">
                         <div class="text-xs text-red-400 font-semibold">⚠ Korban Terdeteksi</div>
-                        <div class="text-xs text-neutral-500 mt-0.5">Suhu melebihi ambang batas 37.5°C</div>
+                        <div class="text-neutral-500 mt-0.5" style="font-size:10px;">Suhu melebihi ambang batas 37.5°C</div>
                     </div>
                 </div>
             </div>

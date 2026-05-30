@@ -67,12 +67,6 @@
         <div class="text-xs text-neutral-500 text-center py-8">Memuat data misi...</div>
     </div>
 
-    {{-- EMPTY STATE --}}
-    <div id="empty-state" class="hidden bg-neutral-900 border border-neutral-800 rounded-lg p-10 text-center">
-        <div class="text-neutral-600 text-sm mb-1">Belum ada misi tercatat</div>
-        <div class="text-neutral-700 text-xs">Misi akan muncul otomatis saat kecoa mulai mengirim data</div>
-    </div>
-
 </div>
 
 <script>
@@ -131,15 +125,16 @@ function formatMissionNumber(num) {
 
 function renderMissions(missions) {
     const container = document.getElementById('missions-list');
-    const empty = document.getElementById('empty-state');
     if (!container) return;
 
     if (missions.length === 0) {
-        container.innerHTML = '';
-        empty?.classList.remove('hidden');
+        container.innerHTML = `
+            <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-10 text-center">
+                <div class="text-neutral-600 text-sm mb-1">Belum ada misi tercatat</div>
+                <div class="text-neutral-700 text-xs">Misi akan muncul otomatis saat kecoa mulai mengirim data</div>
+            </div>`;
         return;
     }
-    empty?.classList.add('hidden');
 
     container.innerHTML = missions.map(m => `
         <a href="/missions/${m.id}" class="block bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 mb-3 hover:border-red-800 transition-colors group">

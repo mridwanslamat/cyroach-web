@@ -104,24 +104,37 @@ class MissionPdfController extends Controller
             }
         }
 
-        $flat = array_merge(...$matrix);
+        // Bilinear upscale 8x8 → 32x32
+        $out = 32;
+        $upscaled = [];
+        for ($y = 0; $y < $out; $y++) {
+            for ($x = 0; $x < $out; $x++) {
+                $gx = ($x / ($out - 1)) * 7;
+                $gy = ($y / ($out - 1)) * 7;
+                $x0 = (int)$gx; $x1 = min($x0 + 1, 7);
+                $y0 = (int)$gy; $y1 = min($y0 + 1, 7);
+                $tx = $gx - $x0; $ty = $gy - $y0;
+                $upscaled[$y][$x] = $matrix[$y0][$x0] * (1-$tx)*(1-$ty)
+                                + $matrix[$y0][$x1] * $tx*(1-$ty)
+                                + $matrix[$y1][$x0] * (1-$tx)*$ty
+                                + $matrix[$y1][$x1] * $tx*$ty;
+            }
+        }
+
+        $flat = array_merge(...$upscaled);
         $min  = min($flat);
         $max  = max($flat);
         $range = $max - $min ?: 1;
 
-        $cellW = 30;
-        $cellH = 20;
-        $W = 8 * $cellW;
-        $H = 8 * $cellH;
+        $cellW = 8; $cellH = 8;
+        $W = $out * $cellW; $H = $out * $cellH;
 
         $svg = "<svg xmlns='http://www.w3.org/2000/svg' width='{$W}' height='{$H}'>";
-        for ($r = 0; $r < 8; $r++) {
-            for ($c = 0; $c < 8; $c++) {
-                $val   = $matrix[$r][$c];
-                $ratio = ($val - $min) / $range;
+        for ($r = 0; $r < $out; $r++) {
+            for ($c = 0; $c < $out; $c++) {
+                $ratio = ($upscaled[$r][$c] - $min) / $range;
                 [$red, $green, $blue] = $this->ratioToColor($ratio);
-                $x = $c * $cellW;
-                $y = $r * $cellH;
+                $x = $c * $cellW; $y = $r * $cellH;
                 $svg .= "<rect x='{$x}' y='{$y}' width='{$cellW}' height='{$cellH}' fill='rgb({$red},{$green},{$blue})'/>";
             }
         }
