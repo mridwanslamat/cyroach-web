@@ -6,46 +6,81 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-/* ===== LIGHT MODE ===== */
-.light-mode body {
-    background-color: #f0f0f0;
-    color: #111111;
+    --font-sans: 'Syne', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* Konten cards & background */
-.light-mode .bg-neutral-950 { background-color: #e5e5e5 !important; }
-.light-mode .bg-neutral-900 { background-color: #ffffff !important; }
-.light-mode .bg-neutral-800 { background-color: #e0e0e0 !important; }
-.light-mode .border-neutral-800 { border-color: #d0d0d0 !important; }
+/* ===== CSS VARIABLES — DARK MODE (default) ===== */
+:root {
+    --bg-base:       #0c0c0c;
+    --bg-surface:    #141414;
+    --bg-raised:     #1a1a1a;
+    --bg-hover:      #222222;
+    --border:        #272727;
+    --border-accent: #7f1d1d;
+    --text:          #f0f0f0;
+    --text-muted:    #666666;
+    --text-sub:      #444444;
+    --accent:        #c0392b;
+    --accent-dim:    #7f1d1d;
+    --accent-text:   #f87171;
+    --logo-text:     #dc2626;
+    --live-badge-bg: rgba(127,29,29,0.3);
+    --live-badge-border: rgba(185,28,28,0.4);
+    --badge-bg:      #161616;
+}
 
-/* Teks */
-.light-mode .text-neutral-100 { color: #111111 !important; }
-.light-mode .text-neutral-200 { color: #222222 !important; }
-.light-mode .text-neutral-400 { color: #444444 !important; }
-.light-mode .text-neutral-500 { color: #666666 !important; }
-.light-mode .text-neutral-600 { color: #888888 !important; }
-.light-mode .text-neutral-700 { color: #999999 !important; }
-.light-mode .text-neutral-300 { color: #333333; }
+.light-mode {
+    --bg-base:       #f4f4f4;
+    --bg-surface:    #ffffff;
+    --bg-raised:     #f9f9f9;
+    --bg-hover:      #f0f0f0;
+    --border:        #e0e0e0;
+    --border-accent: #b91c1c;
+    --text:          #111111;
+    --text-muted:    #888888;
+    --text-sub:      #aaaaaa;
+    --accent:        #c0392b;
+    --accent-dim:    #fee2e2;
+    --accent-text:   #b91c1c;
+    --logo-text:     #991b1b;
+    --live-badge-bg: rgba(254,226,226,0.8);
+    --live-badge-border: rgba(185,28,28,0.3);
+    --badge-bg:      #f4f4f4;
+}
 
-/* Navbar — tetap gelap di light mode */
-.light-mode nav {
-    background-color: #111111 !important;
-    border-bottom-color: #7f1d1d !important;
-}
-.light-mode nav span,
-.light-mode nav a { color: #dddddd !important; }
-.light-mode nav a.bg-red-900 {
-    background-color: #991b1b !important;
-    color: #ffffff !important;
-}
-.light-mode .bg-red-900 { background-color: #991b1b; }
-.light-mode .border-red-700 { border-color: #b91c1c; }
-.light-mode a.bg-red-900,
-.light-mode a[href*="export-pdf"] {
-    background-color: #991b1b !important;
-    border-color: #b91c1c !important;
-    color: #ffffff !important;
-}
+/* ===== UTILITY CLASSES ===== */
+.cyroach-body        { background-color: var(--bg-base); color: var(--text); font-family: var(--font-sans); }
+.cyroach-sidebar     { background-color: var(--bg-surface); border-color: var(--border); }
+.cyroach-header      { background-color: var(--bg-surface); }
+.cyroach-border      { border-color: var(--border) !important; }
+.cyroach-text        { color: var(--text); }
+.cyroach-muted       { color: var(--text-muted); }
+.cyroach-sub         { color: var(--text-sub); }
+.cyroach-accent-text { color: var(--accent-text); }
+.cyroach-logo-text   { color: var(--logo-text); }
+.cyroach-logo-bg     { background-color: var(--accent); }
+.cyroach-badge-bg    { background-color: var(--badge-bg); }
+.cyroach-live-badge  { background-color: var(--live-badge-bg); border: 1px solid var(--live-badge-border); color: var(--accent-text); }
+.cyroach-btn         { background-color: var(--bg-raised); color: var(--text-muted); }
+.cyroach-btn:hover   { background-color: var(--bg-hover); color: var(--text); }
+
+/* Surface / Card */
+.cy-card { background-color: var(--bg-surface); border: 1px solid var(--border); border-radius: 0.75rem; }
+.cy-card-raised { background-color: var(--bg-raised); border: 1px solid var(--border); border-radius: 0.5rem; }
+
+/* Sidebar links */
+.sidebar-link        { color: var(--text-muted); }
+.sidebar-link:hover  { background-color: var(--bg-hover); color: var(--text); }
+.sidebar-link-active { background-color: var(--accent-dim); color: var(--accent-text) !important; }
+.light-mode .sidebar-link-active { background-color: #fee2e2; color: #991b1b !important; }
+
+/* Font helpers */
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }

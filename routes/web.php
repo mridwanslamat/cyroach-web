@@ -17,3 +17,7 @@ Route::get('/missions/{id}', function ($id) {
 })->name('missions.show');
 
 Route::get('/missions/{id}/export-pdf', [MissionPdfController::class, 'export'])->name('missions.export-pdf');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
