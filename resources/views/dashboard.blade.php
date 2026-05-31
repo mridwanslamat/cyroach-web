@@ -64,92 +64,24 @@
         </div>
 
         {{-- INFO BANNER --}}
-        <div class="cy-card p-4 flex items-center gap-6">
-            <div class="flex items-start gap-4 flex-1">
-                <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                        <line x1="12" y1="2" x2="12" y2="5"/>
-                        <line x1="12" y1="19" x2="12" y2="22"/>
-                    </svg>
-                </div>
-                <div>
-                    <div class="text-sm font-semibold cyroach-text mb-1.5">Cara Deteksi Korban</div>
-                    <div class="text-sm cyroach-muted leading-relaxed">
-                        Cyborg kecoa dilengkapi kamera thermal 8×8 untuk mendeteksi panas tubuh manusia.
-                        Ketika suhu terdeteksi melebihi ambang batas <span class="text-red-400 font-medium">37.5°C</span>, sistem secara otomatis mencatat waktu dan data sensor.
-                        Indikasi keberadaan korban ditentukan berdasarkan pola distribusi panas yang terdeteksi oleh grid sensor.
-                    </div>
-                </div>
-            </div>
-
-            {{-- Ilustrasi SVG Cyborg Kecoa --}}
-            <div class="shrink-0 opacity-80" style="width:180px;height:110px;">
-                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-                    <defs>
-                        <radialGradient id="thermalGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#ef4444" stop-opacity="0.25"/>
-                            <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
-                        </radialGradient>
-                    </defs>
-
-                    {{-- Thermal glow background --}}
-                    <ellipse cx="100" cy="62" rx="60" ry="48" fill="url(#thermalGlow)"/>
-
-                    {{-- Antena kiri --}}
-                    <line x1="78" y1="40" x2="56" y2="18" stroke="#4b5563" stroke-width="1.2" stroke-linecap="round"/>
-                    <circle cx="56" cy="18" r="1.5" fill="#4b5563"/>
-                    {{-- Antena kanan --}}
-                    <line x1="86" y1="38" x2="72" y2="15" stroke="#4b5563" stroke-width="1.2" stroke-linecap="round"/>
-                    <circle cx="72" cy="15" r="1.5" fill="#4b5563"/>
-
-                    {{-- Kaki kiri --}}
-                    <line x1="82" y1="58" x2="58" y2="50" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="58" y1="50" x2="46" y2="58" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="82" y1="66" x2="55" y2="64" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="55" y1="64" x2="42" y2="72" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="84" y1="75" x2="58" y2="78" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="58" y1="78" x2="48" y2="88" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-                    {{-- Kaki kanan --}}
-                    <line x1="110" y1="58" x2="134" y2="50" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="134" y1="50" x2="146" y2="58" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="110" y1="66" x2="137" y2="64" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="137" y1="64" x2="150" y2="72" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-                    <line x1="108" y1="75" x2="134" y2="78" stroke="#4b5563" stroke-width="1.1" stroke-linecap="round"/>
-                    <line x1="134" y1="78" x2="144" y2="88" stroke="#4b5563" stroke-width="1" stroke-linecap="round"/>
-
-                    {{-- Tubuh --}}
-                    <ellipse cx="96" cy="66" rx="18" ry="26" fill="#111827" stroke="#374151" stroke-width="1.2"/>
-                    {{-- Kepala --}}
-                    <ellipse cx="90" cy="41" rx="9" ry="7" fill="#111827" stroke="#374151" stroke-width="1.2"/>
-
-                    {{-- PCB di punggung --}}
-                    <rect x="88" y="52" width="22" height="16" rx="2" fill="#052e16" stroke="#16a34a" stroke-width="1.2"/>
-                    {{-- Chip --}}
-                    <rect x="93" y="56" width="7" height="5" rx="1" fill="#14532d" stroke="#4ade80" stroke-width="0.8"/>
-                    {{-- PCB trace lines --}}
-                    <line x1="88" y1="55" x2="85" y2="55" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="88" y1="58" x2="85" y2="58" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="88" y1="61" x2="85" y2="61" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="110" y1="55" x2="113" y2="55" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="110" y1="58" x2="113" y2="58" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="110" y1="61" x2="113" y2="61" stroke="#4ade80" stroke-width="0.8"/>
-                    {{-- Antena PCB --}}
-                    <line x1="99" y1="52" x2="99" y2="46" stroke="#4ade80" stroke-width="0.8"/>
-                    <line x1="97" y1="46" x2="101" y2="46" stroke="#4ade80" stroke-width="0.8"/>
-
-                    {{-- Sinyal thermal (arc) --}}
-                    <path d="M 122 52 Q 136 62 122 74" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.7"/>
-                    <path d="M 127 47 Q 145 62 127 77" fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
-                    <path d="M 132 42 Q 155 62 132 82" fill="none" stroke="#ef4444" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.25"/>
-
-                    {{-- Label bawah --}}
-                    <text x="96" y="105" text-anchor="middle" fill="#4b5563" font-size="6.5" font-family="'IBM Plex Mono', monospace">ESP32-C6 + AMG8833</text>
+        <div class="cy-card p-4 flex gap-4 items-start">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <line x1="12" y1="2" x2="12" y2="5"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
                 </svg>
             </div>
+            <div class="flex-1">
+                <div class="text-sm font-semibold cyroach-text mb-1.5">Cara Deteksi Korban</div>
+                <div class="text-sm cyroach-muted leading-relaxed" style="max-width:680px;">
+                    Cyborg kecoa dilengkapi kamera thermal 8×8 untuk mendeteksi panas tubuh manusia.
+                    Ketika suhu terdeteksi melebihi ambang batas <span class="text-red-400 font-medium">37.5°C</span>, sistem secara otomatis mencatat waktu dan data sensor.
+                    Indikasi keberadaan korban ditentukan berdasarkan pola distribusi panas yang terdeteksi oleh grid sensor.
+                </div>
+            </div>
         </div>
-
 
         {{-- SECTION HEADER --}}
         <div class="flex items-center justify-between">
