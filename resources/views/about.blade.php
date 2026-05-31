@@ -70,24 +70,6 @@
                         <blockquote class="text-sm font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4 mb-4" style="border-color:var(--accent);">
                             "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
                         </blockquote>
-                        <div class="flex flex-col gap-2.5 mt-auto">
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
-                                <span class="text-xs cyroach-muted leading-relaxed">Beroperasi di area reruntuhan yang tidak dapat dijangkau manusia maupun robot konvensional</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
-                                <span class="text-xs cyroach-muted leading-relaxed">Meminimalkan risiko keselamatan petugas SAR di zona berbahaya pascabencana</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
-                                <span class="text-xs cyroach-muted leading-relaxed">Solusi hemat biaya dengan kemampuan manuver biologis yang tidak tertandingi perangkat mekanik</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
-                                <span class="text-xs cyroach-muted leading-relaxed">Kontribusi nyata bagi riset bio-robotika dan teknologi kebencanaan Indonesia</span>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
