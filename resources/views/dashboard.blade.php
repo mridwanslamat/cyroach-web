@@ -120,7 +120,7 @@
 
 {{-- ===== MODAL DETAIL KECOA ===== --}}
 <div class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4" id="modal">
-    <div class="cy-card w-full overflow-hidden shadow-2xl" style="border-color:var(--border-accent);max-width:1280px;">
+    <div class="cy-card w-full overflow-hidden shadow-2xl" style="border-color:var(--border-accent);max-width:1400px;">
 
         {{-- Modal Header --}}
         <div class="flex items-center justify-between px-5 py-3 border-b cyroach-border" style="background-color:var(--bg-raised);">
@@ -135,11 +135,11 @@
         {{-- Modal Body --}}
         <div class="p-6 flex gap-5 items-start">
 
-            {{-- KOLOM 1: Thermal 420x420 fixed --}}
+            {{-- KOLOM 1: Thermal 480x480 fixed --}}
             <div class="flex flex-col gap-2 shrink-0">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
-                <div class="rounded-lg overflow-hidden border cyroach-border" style="width:420px;height:420px;">
-                    <canvas id="modal-canvas" width="420" height="420" style="display:block;width:420px;height:420px;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border" style="width:480px;height:480px;">
+                    <canvas id="modal-canvas" width="480" height="480" style="display:block;width:480px;height:480px;"></canvas>
                 </div>
             </div>
 
@@ -242,11 +242,11 @@
 
             </div>
 
-            {{-- KOLOM 3: Trajectory 420x420 fixed --}}
+            {{-- KOLOM 3: Trajectory 480x480 fixed --}}
             <div class="flex flex-col gap-2 shrink-0">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
-                <div class="rounded-lg border cyroach-border overflow-hidden" style="width:420px;height:420px;position:relative;">
-                    <canvas id="modal-trajectory" width="420" height="420" style="position:absolute;top:0;left:0;width:420px;height:420px;display:block;"></canvas>
+                <div class="rounded-lg border cyroach-border overflow-hidden" style="width:480px;height:480px;position:relative;">
+                    <canvas id="modal-trajectory" width="480" height="480" style="position:absolute;top:0;left:0;width:480px;height:480px;display:block;"></canvas>
                 </div>
             </div>
 

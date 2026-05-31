@@ -155,8 +155,8 @@ function drawHeatmap(canvas, grid, w, h) {
 // DRAW TRAJECTORY — auto-rescale, gradient, pulse animation
 // =====================
 function drawTrajectory(canvas, history) {
-    const W = 420;
-    const H = 420;
+    const W = 480;
+    const H = 480;
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext("2d");
@@ -583,17 +583,17 @@ function _populateModal(device) {
         const canvas = document.getElementById("modal-canvas");
         if (canvas) {
             if (device.thermal) {
-                drawHeatmap(canvas, device.thermal, 420, 420);
+                drawHeatmap(canvas, device.thermal, 480, 480);
             } else {
-                canvas.width = 420;
-                canvas.height = 420;
+                canvas.width = 480;
+                canvas.height = 480;
                 const ctx = canvas.getContext("2d");
                 ctx.fillStyle = "#0a0a0a";
                 ctx.fillRect(0, 0, 280, 280);
                 ctx.fillStyle = "#404040";
                 ctx.font = "12px sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText("Tidak ada sinyal", 210, 210);
+                ctx.fillText("Tidak ada sinyal", 240, 240);
             }
         }
     });
