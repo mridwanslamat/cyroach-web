@@ -8,13 +8,10 @@
 
     {{-- HERO BANNER --}}
     <div class="relative mx-6 mt-6 rounded-xl overflow-hidden" style="height:220px;background:linear-gradient(135deg,#0f0f0f 0%,#1a0505 60%,#0f0f0f 100%);">
-        <img src="/images/hero-cockroach.png" 
-            alt="CyRoach" 
+        <img src="/images/hero-cockroach.png"
+            alt="CyRoach"
             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% center;opacity:0.55;">
-
-        {{-- Grid pattern --}}
         <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,#fff 30px,#fff 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px);"></div>
-        {{-- Content over gradient --}}
         <div class="absolute inset-0 flex flex-col justify-end p-7" style="background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);">
             <div class="text-xs px-2.5 py-1 rounded-full mb-3 inline-block w-fit font-medium" style="background-color:var(--accent);color:#fff;font-family:var(--font-mono);letter-spacing:0.08em;">
                 MISSION CRITICAL RESEARCH
@@ -26,12 +23,13 @@
 
     <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
-        {{-- ROW 1: Kiri (Overview+Thermal) | Kanan (Engineering Profile) --}}
-        <div class="grid gap-5 items-stretch" style="grid-template-columns:1fr 320px;">
+        {{-- ROW 1: Kiri (Overview + Thermal + System Purpose) | Kanan (Engineering Profile) --}}
+        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
 
-            {{-- Kiri: Overview + Thermal Analytics --}}
-            <div class="flex flex-col gap-4 h-full">
+            {{-- KOLOM KIRI --}}
+            <div class="flex flex-col gap-4">
 
+                {{-- Project Overview --}}
                 <div class="cy-card p-5">
                     <div class="flex items-center gap-2 mb-4">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
@@ -48,16 +46,17 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 flex-1">
+                {{-- Thermal + System Purpose --}}
+                <div class="grid grid-cols-2 gap-4">
 
                     {{-- Thermal Analytics --}}
-                    <div class="cy-card p-4 flex flex-col">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
+                    <div class="cy-card p-4 flex flex-col items-center">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5 self-start" style="font-family:var(--font-mono);font-size:10px;">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                             Thermal Analytics
                         </div>
-                        <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="background:#000;min-height:160px;">
-                            <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
+                        <div class="rounded-lg overflow-hidden border cyroach-border" style="background:#000;width:180px;height:180px;">
+                            <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
                         </div>
                         <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
                     </div>
@@ -86,7 +85,7 @@
                             </div>
                             <div class="flex items-start gap-2.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
-                                <span class="text-xs cyroach-muted leading-relaxed">Integrasi multi-disiplin sebagai kontribusi nyata bagi riset bio-robotika dan teknologi kebencanaan Indonesia</span>
+                                <span class="text-xs cyroach-muted leading-relaxed">Kontribusi nyata bagi riset bio-robotika dan teknologi kebencanaan Indonesia</span>
                             </div>
                         </div>
                     </div>
@@ -95,13 +94,13 @@
 
             </div>
 
-            {{-- Kanan: Engineering Profile --}}
+            {{-- KOLOM KANAN: Engineering Profile --}}
             <div class="cy-card p-4">
                 <div class="flex items-center gap-2 mb-3">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
                     <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Engineering Profile</span>
                 </div>
-                < class="flex flex-col">
+                <div class="flex flex-col">
                     <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— WEB & BACKEND</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Framework</span>
@@ -141,11 +140,11 @@
                         <span class="text-xs cyroach-muted">Mikrofon</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">INMP441</span>
                     </div>
-                    <div class="flex justify-between items-center py-2">
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Threshold Suhu</span>
                         <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
                     </div>
-                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border mt-1" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— SYSTEM INFO</div>
+                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— SYSTEM INFO</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Versi</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">CyRoach v1.0</span>
@@ -160,12 +159,10 @@
                     </div>
                 </div>
             </div>
-                
-            </div>
 
         </div>
 
-        {{-- ROW 2: 3 Feature Cards full width --}}
+        {{-- ROW 2: 3 Feature Cards --}}
         <div class="grid grid-cols-3 gap-4">
 
             <div class="cy-card p-4">
@@ -233,9 +230,7 @@ const demoGrid = Array.from({length:8},(_,r)=>
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const rect=canvas.getBoundingClientRect();
-    const W=Math.round(rect.width)||180;
-    const H=Math.round(rect.height)||180;
+    const W=180; const H=180;
     canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
