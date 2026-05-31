@@ -50,17 +50,15 @@
 
                 <div class="grid grid-cols-2 gap-4 flex-1">
 
-                    <div class="cy-card p-4">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
+                    <div class="cy-card p-4 flex flex-col items-center justify-center">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5 self-start" style="font-family:var(--font-mono);font-size:10px;">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                             Thermal Analytics
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-lg overflow-hidden border cyroach-border shrink-0" style="background:#000;width:180px;height:180px;">
-                                <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
-                            </div>
-                            <div class="text-xs cyroach-muted" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
+                        <div class="rounded-lg overflow-hidden border cyroach-border" style="background:#000;width:180px;height:180px;">
+                            <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
                         </div>
+                        <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
                     </div>
 
                     <div class="cy-card p-4 flex flex-col justify-center">
