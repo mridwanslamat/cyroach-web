@@ -24,13 +24,13 @@
     <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
         {{-- ROW 1: Kiri (Overview + Thermal + System Purpose) | Kanan (Engineering Profile) --}}
-        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
+        <div class="grid gap-5 items-stretch" style="grid-template-columns:1fr 320px;">
 
             {{-- KOLOM KIRI --}}
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 h-full">
 
                 {{-- Project Overview --}}
-                <div class="cy-card p-5">
+                <div class="cy-card p-5 h-full">
                     <div class="flex items-center gap-2 mb-4">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                         <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
@@ -44,34 +44,6 @@
                     <p class="text-sm cyroach-text leading-relaxed">
                         Beroperasi secara <em>human-in-the-loop</em>, sistem ini memanfaatkan kemampuan alami kecoa Madagaskar yang tangguh dan hemat biaya untuk mempercepat pencarian korban dalam fase kritis <strong class="cyroach-text">72 jam pertama</strong> pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan.
                     </p>
-                </div>
-
-                {{-- Thermal + System Purpose --}}
-                <div class="grid grid-cols-2 gap-4">
-
-                    {{-- Thermal Analytics --}}
-                    <div class="cy-card p-4 flex flex-col">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
-                            Thermal Analytics
-                        </div>
-                        <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="background:#000;min-height:160px;">
-                            <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
-                        </div>
-                        <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
-                    </div>
-
-                    {{-- System Purpose --}}
-                    <div class="cy-card p-4 flex flex-col">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            System Purpose
-                        </div>
-                        <blockquote class="text-sm font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4 mb-4" style="border-color:var(--accent);">
-                            "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
-                        </blockquote>
-                    </div>
-
                 </div>
 
             </div>
@@ -184,53 +156,3 @@
 
 </div>
 @endsection
-
-@push('scripts')
-<script>
-function ironColor(ratio) {
-    const r = Math.max(0, Math.min(1, ratio));
-    const stops = [
-        [0.00,[0,0,0]],[0.20,[80,0,130]],[0.40,[150,0,100]],
-        [0.60,[220,30,0]],[0.75,[255,120,0]],[0.90,[255,220,0]],[1.00,[255,255,255]],
-    ];
-    let lo=stops[0],hi=stops[stops.length-1];
-    for(let i=0;i<stops.length-1;i++){
-        if(r>=stops[i][0]&&r<=stops[i+1][0]){lo=stops[i];hi=stops[i+1];break;}
-    }
-    const t=(r-lo[0])/(hi[0]-lo[0]||1);
-    return lo[1].map((v,i)=>Math.round(v+(hi[1][i]-v)*t));
-}
-
-const demoGrid = Array.from({length:8},(_,r)=>
-    Array.from({length:8},(_,c)=>{
-        const dx=c-3.5,dy=r-3.5;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        return 25+Math.max(0,(3.5-d)/3.5)*15+Math.random()*1.2;
-    })
-);
-
-requestAnimationFrame(()=>{
-    const canvas=document.getElementById('about-thermal');
-    if(!canvas)return;
-    const rect=canvas.parentElement.getBoundingClientRect();
-    const W=Math.round(rect.width)||200;
-    const H=Math.round(rect.height)||200;
-    canvas.width=W; canvas.height=H;
-    const flat=demoGrid.flat();
-    const mn=Math.min(...flat),mx=Math.max(...flat);
-    const imgData=canvas.getContext('2d').createImageData(8,8);
-    for(let i=0;i<64;i++){
-        const[r,g,b]=ironColor((flat[i]-mn)/(mx-mn||1));
-        imgData.data[i*4]=r;imgData.data[i*4+1]=g;imgData.data[i*4+2]=b;imgData.data[i*4+3]=255;
-    }
-    const off=document.createElement('canvas');off.width=8;off.height=8;
-    off.getContext('2d').putImageData(imgData,0,0);
-    const ctx=canvas.getContext('2d');
-    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-    ctx.drawImage(off,0,0,W,H);
-    ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(2,2,52,14);
-    ctx.fillStyle='#ef4444';ctx.font=`bold 9px 'IBM Plex Mono', monospace`;ctx.textAlign='left';
-    ctx.fillText(`T: ${mx.toFixed(1)}°C`,5,13);
-});
-</script>
-@endpush
