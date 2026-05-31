@@ -27,10 +27,10 @@
     <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
         {{-- ROW 1: Kiri (Overview+Thermal) | Kanan (Engineering Profile) --}}
-        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
+        <div class="grid gap-5 items-stretch" style="grid-template-columns:1fr 320px;">
 
             {{-- Kiri: Overview + Thermal Analytics --}}
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 h-full">
 
                 <div class="cy-card p-5">
                     <div class="flex items-center gap-2 mb-4">
@@ -48,7 +48,7 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 flex-1">
 
                     <div class="cy-card p-4">
                         <div class="text-xs cyroach-muted uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
