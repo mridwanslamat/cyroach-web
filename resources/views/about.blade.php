@@ -8,6 +8,10 @@
 
     {{-- HERO BANNER --}}
     <div class="relative mx-6 mt-6 rounded-xl overflow-hidden" style="height:220px;background:linear-gradient(135deg,#0f0f0f 0%,#1a0505 60%,#0f0f0f 100%);">
+        <img src="/images/hero-cockroach.png" 
+            alt="CyRoach" 
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.6;">
+
         {{-- Grid pattern --}}
         <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,#fff 30px,#fff 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px);"></div>
         {{-- Content over gradient --}}
@@ -34,10 +38,13 @@
                     <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
                 </div>
                 <p class="text-sm cyroach-text leading-relaxed mb-3">
-                    Proyek ini merupakan Tugas Akhir yang berfokus pada pengembangan sistem monitoring hibrida menggunakan kecoa (<em>Periplaneta americana</em>) sebagai platform robotika biologis. Dipilih karena ketahanannya yang luar biasa terhadap radiasi, tekanan fisik, dan kemampuan manuver di celah sempit.
+                    Proyek ini dikembangkan sebagai respons atas keterbatasan metode konvensional yang tidak mampu menjangkau celah sempit dan area tertutup pascabencana. Sistem Cyborg Kecoa Madagaskar dirancang sebagai solusi alternatif inovatif untuk mendukung operasi pencarian dan penyelamatan korban di area reruntuhan yang kompleks dan berbahaya bagi tim SAR.
+                </p>
+                <p class="text-sm cyroach-text leading-relaxed mb-3">
+                    Sistem ini mengintegrasikan tiga komponen utama secara sinergis: <strong class="cyroach-text">elektronik miniatur berbasis mikrokontroler</strong> yang terpasang pada platform biologis kecoa, <strong class="cyroach-text">aplikasi mobile</strong> untuk pengendalian dan pemantauan real-time, serta <strong class="cyroach-text">sistem web monitoring</strong> untuk visualisasi data dan koordinasi tim penyelamat.
                 </p>
                 <p class="text-sm cyroach-text leading-relaxed">
-                    Inti dari penelitian ini adalah integrasi sensor termal dan sistem kendali saraf nirkabel yang memungkinkan operator untuk mengarahkan serangga menuju sumber panas yang terdeteksi, mengidentifikasi korban manusia di bawah reruntuhan atau area yang berbahaya bagi tim SAR.
+                    Beroperasi secara <em>human-in-the-loop</em>, sistem ini memanfaatkan kemampuan alami kecoa Madagaskar yang tangguh dan hemat biaya untuk mempercepat pencarian korban dalam fase kritis <strong class="cyroach-text">72 jam pertama</strong> pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan.
                 </p>
             </div>
 
@@ -102,33 +109,50 @@
             <div class="cy-card p-4">
                 <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">Engineering Profile</div>
                 <div class="flex flex-col gap-0">
+                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Web & Backend</div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Framework</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Laravel + MySQL</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Styling</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Tailwind CSS</span>
+                    </div>
+                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Mobile</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Platform</span>
-                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">ESP32 + AMG8833</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Android Studio</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
-                        <span class="text-xs cyroach-muted">Komunikasi</span>
-                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">2.4GHz ACTIVE</span>
+                        <span class="text-xs cyroach-muted">Language</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Java + XML</span>
+                    </div>
+                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Hardware</div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">MCU</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">ESP32-C6 Supermini</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
-                        <span class="text-xs cyroach-muted">Sensor Grid</span>
-                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">8×8 = 64 pixel</span>
+                        <span class="text-xs cyroach-muted">Thermal</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">AMG8833 8×8</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
-                        <span class="text-xs cyroach-muted">Threshold</span>
-                        <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
+                        <span class="text-xs cyroach-muted">Jarak</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">VL53L0X</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Gyro / IMU</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">MPU6050</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Mikrofon</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">INMP441</span>
                     </div>
                     <div class="flex justify-between items-center py-2">
-                        <span class="text-xs cyroach-muted">Backend</span>
-                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Laravel + Pusher</span>
+                        <span class="text-xs cyroach-muted">Threshold Suhu</span>
+                        <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
                     </div>
                 </div>
-            </div>
-
-            {{-- PROJECT ID --}}
-            <div class="cy-card p-3 text-center">
-                <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:10px;">Project ID</div>
-                <div class="text-sm font-semibold cyroach-accent-text" style="font-family:var(--font-mono);">TA-2024-ERX</div>
             </div>
 
         </div>
