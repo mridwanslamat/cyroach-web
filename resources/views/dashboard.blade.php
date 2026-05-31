@@ -64,8 +64,8 @@
         </div>
 
         {{-- INFO BANNER --}}
-        <div class="cy-card p-4 flex gap-4 items-start">
-            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
+        <div class="cy-card p-4 flex gap-4 items-center">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
@@ -75,13 +75,21 @@
             </div>
             <div class="flex-1">
                 <div class="text-sm font-semibold cyroach-text mb-1.5">Cara Deteksi Korban</div>
-                <div class="text-sm cyroach-muted leading-relaxed" style="max-width:680px;">
+                <div class="text-sm cyroach-muted leading-relaxed">
                     Cyborg kecoa dilengkapi kamera thermal 8×8 untuk mendeteksi panas tubuh manusia.
                     Ketika suhu terdeteksi melebihi ambang batas <span class="text-red-400 font-medium">37.5°C</span>, sistem secara otomatis mencatat waktu dan data sensor.
                     Indikasi keberadaan korban ditentukan berdasarkan pola distribusi panas yang terdeteksi oleh grid sensor.
                 </div>
             </div>
+            <div class="shrink-0 rounded-lg overflow-hidden" style="width:160px;height:100px;">
+                <img src="/images/illustration-rubble.png"
+                    alt="Ilustrasi reruntuhan"
+                    id="rubble-illustration"
+                    class="w-full h-full object-cover"
+                    style="opacity:0.85;mix-blend-mode:lighten;">
+            </div>
         </div>
+
 
         {{-- SECTION HEADER --}}
         <div class="flex items-center justify-between">
@@ -302,5 +310,22 @@ window.openModal = function(deviceId) {
         });
     });
 };
+
+// Theme-aware illustration blend mode
+(function(){
+    function updateIllustration() {
+        const img = document.getElementById('rubble-illustration');
+        if (!img) return;
+        const isLight = document.getElementById('app-body').classList.contains('light-mode');
+        img.style.mixBlendMode = isLight ? 'multiply' : 'lighten';
+        img.style.opacity = isLight ? '0.7' : '0.85';
+    }
+    window.addEventListener('load', updateIllustration);
+    new MutationObserver(updateIllustration).observe(
+        document.getElementById('app-body'),
+        { attributes: true, attributeFilter: ['class'] }
+    );
+})();
+
 </script>
 @endpush
