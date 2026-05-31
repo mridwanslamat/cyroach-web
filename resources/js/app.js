@@ -156,8 +156,7 @@ function drawHeatmap(canvas, grid, w, h) {
 // =====================
 function drawTrajectory(canvas, history) {
     // Resize canvas sesuai ukuran elemen (responsive)
-    const size = 220; // fixed square
-    canvas.width = size;
+    const size = canvas.width || 240;
     canvas.height = size;
     const ctx = canvas.getContext("2d");
     const W = size,

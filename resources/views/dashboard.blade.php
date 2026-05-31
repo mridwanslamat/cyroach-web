@@ -133,18 +133,18 @@
         </div>
 
         {{-- Modal Body --}}
-        <div class="p-5 grid gap-4" style="grid-template-columns:220px 1fr 220px;">
+        <div class="p-5 grid gap-4" style="grid-template-columns:240px 1fr 240px;">
 
-            {{-- KOLOM 1: Thermal — fixed 220x220 --}}
+            {{-- KOLOM 1: Thermal — tinggi mengikuti kolom tengah --}}
             <div class="flex flex-col gap-2">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
-                <div class="rounded-lg overflow-hidden border cyroach-border shrink-0" style="width:220px;height:220px;">
-                    <canvas id="modal-canvas" width="220" height="220" style="display:block;width:220px;height:220px;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border" style="width:240px;height:240px;flex-shrink:0;">
+                    <canvas id="modal-canvas" width="240" height="240" style="display:block;width:240px;height:240px;"></canvas>
                 </div>
             </div>
 
             {{-- KOLOM 2: Sensor Data --}}
-            <div class="flex flex-col gap-2.5">
+            <div class="flex flex-col gap-2" id="modal-sensor-col">
 
                 <div>
                     <div class="text-xs cyroach-muted uppercase tracking-widest flex items-center gap-1.5 mb-2" style="font-family:var(--font-mono);font-size:10px;">
@@ -212,7 +212,10 @@
                 <div class="cy-card-raised p-2.5">
                     <div class="flex items-center justify-between mb-1.5">
                         <div class="flex items-center gap-1.5 text-xs cyroach-muted">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="6" width="18" height="12" rx="2"/>
+                                <line x1="23" y1="13" x2="23" y2="11"/>
+                            </svg>
                             Bat
                         </div>
                         <div class="text-xs font-semibold" style="font-family:var(--font-mono);" id="modal-battery">—</div>
@@ -222,10 +225,16 @@
                     </div>
                 </div>
 
-                <div class="cy-card-raised p-2.5">
+                {{-- Signal — icon diganti jadi wifi/sinyal --}}
+                <div class="cy-card-raised p-2.5" id="modal-signal-section">
                     <div class="flex items-center justify-between mb-1.5">
                         <div class="flex items-center gap-1.5 text-xs cyroach-muted">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="6" x2="1" y2="18"/><line x1="6" y1="11" x2="6" y2="18"/><line x1="11" y1="7" x2="11" y2="18"/><line x1="16" y1="3" x2="16" y2="18"/><line x1="21" y1="1" x2="21" y2="18"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                                <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                                <line x1="12" y1="20" x2="12.01" y2="20"/>
+                            </svg>
                             Signal
                         </div>
                         <div class="text-xs font-semibold" style="font-family:var(--font-mono);" id="modal-signal">—</div>
@@ -237,22 +246,45 @@
 
             </div>
 
-            {{-- KOLOM 3: Trajectory — fixed 220x220 --}}
+            {{-- KOLOM 3: Trajectory — tinggi = tinggi kolom tengah --}}
             <div class="flex flex-col gap-2">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
-                <div class="rounded-lg border cyroach-border overflow-hidden shrink-0" style="width:220px;height:220px;position:relative;">
-                    <canvas id="modal-trajectory" width="220" height="220" style="position:absolute;top:0;left:0;width:220px;height:220px;display:block;"></canvas>
+                <div class="rounded-lg border cyroach-border overflow-hidden" id="modal-trajectory-wrap" style="width:240px;height:240px;position:relative;flex-shrink:0;">
+                    <canvas id="modal-trajectory" width="240" height="240" style="position:absolute;top:0;left:0;width:240px;height:240px;display:block;"></canvas>
                 </div>
             </div>
 
         </div>
-    </div>
-</div>
-@endsection
 
-@push('scripts')
-<script>
-// Mobile notif container alias
-const notifMobile = null; // tidak ada panel mobile terpisah di layout baru
-</script>
-@endpush
+        @push('scripts')
+        <script>
+        // Samakan tinggi thermal & trajectory dengan tinggi kolom sensor setelah render
+        function syncModalCanvasHeight() {
+            const sensorCol = document.getElementById('modal-sensor-col');
+            const thermalWrap = document.getElementById('modal-canvas')?.parentElement;
+            const trajectoryWrap = document.getElementById('modal-trajectory-wrap');
+            if (!sensorCol || !thermalWrap || !trajectoryWrap) return;
+
+            const h = sensorCol.offsetHeight;
+            if (h < 240) return; // belum render
+
+            // Update wrapper height
+            thermalWrap.style.height = h + 'px';
+            trajectoryWrap.style.height = h + 'px';
+
+            // Update canvas size (square = min(width, height))
+            const size = Math.min(240, h);
+            const tc = document.getElementById('modal-canvas');
+            const trc = document.getElementById('modal-trajectory');
+            if (tc) { tc.width = size; tc.height = size; tc.style.width = size+'px'; tc.style.height = size+'px'; }
+            if (trc) { trc.width = size; trc.height = size; trc.style.width = size+'px'; trc.style.height = size+'px'; }
+        }
+
+        // Jalankan saat modal dibuka
+        const _origOpenModal = window.openModal;
+        window.openModal = function(deviceId) {
+            _origOpenModal(deviceId);
+            requestAnimationFrame(() => requestAnimationFrame(syncModalCanvasHeight));
+        };
+        </script>
+        @endpush
