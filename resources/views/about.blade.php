@@ -109,8 +109,8 @@
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                     Thermal Analytics
                 </div>
-                <div class="rounded-lg overflow-hidden border cyroach-border mb-2" style="background:#000;aspect-ratio:1/1;">
-                    <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border mb-2" style="background:#000;width:200px;height:200px;">
+                    <canvas id="about-thermal" width="200" height="200" style="display:block;width:200px;height:200px;"></canvas>
                 </div>
                 <div class="text-xs cyroach-muted text-center" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
             </div>
@@ -191,9 +191,7 @@ const demoGrid = Array.from({length:8},(_,r)=>
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const rect=canvas.getBoundingClientRect();
-    const W=Math.round(rect.width)||280;
-    const H=Math.round(rect.height)||210;
+    const W=200; const H=200;
     canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
