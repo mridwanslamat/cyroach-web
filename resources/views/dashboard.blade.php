@@ -133,120 +133,118 @@
         </div>
 
         {{-- Modal Body --}}
-        <div class="p-5 grid gap-4" style="grid-template-columns:240px 1fr;">
+        <div class="p-5 grid gap-4" style="grid-template-columns:220px 1fr 220px;min-height:380px;">
 
-            {{-- Kiri: Thermal + Trajectory --}}
-            <div class="flex flex-col gap-3">
-                <div>
-                    <div class="text-xs cyroach-muted uppercase tracking-widest mb-1.5" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
-                    <div class="rounded-lg overflow-hidden border cyroach-border" style="width:240px;height:240px;">
-                        <canvas id="modal-canvas" width="240" height="240" style="display:block;width:240px;height:240px;"></canvas>
-                    </div>
-                </div>
-                <div>
-                    <div class="text-xs cyroach-muted uppercase tracking-widest mb-1.5" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
-                    <div class="rounded-lg border cyroach-border overflow-hidden" style="width:240px;height:160px;position:relative;">
-                        <canvas id="modal-trajectory" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
-                    </div>
+            {{-- KOLOM 1: Thermal --}}
+            <div class="flex flex-col gap-2">
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-1" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
+                <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="min-height:220px;position:relative;">
+                    <canvas id="modal-canvas" width="220" height="220" style="display:block;width:100%;height:100%;position:absolute;top:0;left:0;"></canvas>
                 </div>
             </div>
 
-            {{-- Kanan: Data --}}
-            <div class="flex flex-col gap-3">
+            {{-- KOLOM 2: Sensor Data --}}
+            <div class="flex flex-col gap-2.5">
 
-                {{-- Sensor --}}
                 <div>
                     <div class="text-xs cyroach-muted uppercase tracking-widest flex items-center gap-1.5 mb-2" style="font-family:var(--font-mono);font-size:10px;">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
                         Sensor
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="cy-card-raised p-3 text-center">
-                            <div class="text-xs cyroach-muted mb-1" style="font-size:10px;">Suhu Maks</div>
-                            <div class="text-xl font-bold text-red-400 font-display" id="modal-suhu-max">—</div>
+                    <div class="grid grid-cols-2 gap-1.5">
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MAKS</div>
+                            <div class="text-lg font-bold text-red-400 font-display" id="modal-suhu-max">—</div>
                         </div>
-                        <div class="cy-card-raised p-3 text-center">
-                            <div class="text-xs cyroach-muted mb-1" style="font-size:10px;">Suhu Min</div>
-                            <div class="text-xl font-bold text-blue-400 font-display" id="modal-suhu-min">—</div>
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">SUHU MIN</div>
+                            <div class="text-lg font-bold text-blue-400 font-display" id="modal-suhu-min">—</div>
                         </div>
-                        <div class="cy-card-raised p-3 text-center">
-                            <div class="text-xs cyroach-muted mb-1" style="font-size:10px;">Rata-rata</div>
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">RATA-RATA</div>
                             <div class="text-sm font-semibold cyroach-text font-display" id="modal-suhu-avg">—</div>
                         </div>
-                        <div class="cy-card-raised p-3 text-center">
-                            <div class="text-xs cyroach-muted mb-1" style="font-size:10px;">Jarak</div>
+                        <div class="cy-card-raised p-2.5 text-center">
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">JARAK</div>
                             <div class="text-sm font-semibold cyroach-text font-display" id="modal-distance">—</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Orientasi --}}
                 <div>
                     <div class="text-xs cyroach-muted uppercase tracking-widest flex items-center gap-1.5 mb-2" style="font-family:var(--font-mono);font-size:10px;">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 8v8"/></svg>
                         Orientasi
                     </div>
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-3 gap-1.5">
                         <div class="cy-card-raised p-2.5 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:10px;">P</div>
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">P</div>
                             <div class="text-sm font-semibold cyroach-text" style="font-family:var(--font-mono);" id="modal-pitch">—</div>
                         </div>
                         <div class="cy-card-raised p-2.5 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:10px;">R</div>
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">R</div>
                             <div class="text-sm font-semibold cyroach-text" style="font-family:var(--font-mono);" id="modal-roll">—</div>
                         </div>
                         <div class="cy-card-raised p-2.5 text-center">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:10px;">Y</div>
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">Y</div>
                             <div class="text-sm font-semibold cyroach-text" style="font-family:var(--font-mono);" id="modal-yaw">—</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Status Deteksi --}}
                 <div>
                     <div class="text-xs cyroach-muted uppercase tracking-widest flex items-center gap-1.5 mb-2" style="font-family:var(--font-mono);font-size:10px;">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                         Status Deteksi
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-1.5">
                         <div class="cy-card-raised p-2.5">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:10px;">Timestamp</div>
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">TIMESTAMP</div>
                             <div class="text-xs cyroach-text" style="font-family:var(--font-mono);" id="modal-ts">—</div>
                         </div>
                         <div class="cy-card-raised p-2.5">
-                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:10px;">Deteksi Korban</div>
-                            <div class="text-xs cyroach-accent-text" style="font-family:var(--font-mono);" id="modal-deteksi-status">—</div>
+                            <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;">DETEKSI KORBAN</div>
+                            <div class="text-xs" style="font-family:var(--font-mono);" id="modal-deteksi-status">—</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Battery & Signal --}}
-                <div class="cy-card-raised p-3">
+                <div class="cy-card-raised p-2.5">
                     <div class="flex items-center justify-between mb-1.5">
                         <div class="flex items-center gap-1.5 text-xs cyroach-muted">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
-                            Battery
+                            Bat
                         </div>
-                        <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);" id="modal-battery">—</div>
+                        <div class="text-xs font-semibold" style="font-family:var(--font-mono);" id="modal-battery">—</div>
                     </div>
-                    <div class="w-full rounded-full h-1.5" style="background-color: var(--bg-hover);">
-                        <div id="modal-battery-bar" class="h-1.5 rounded-full bg-emerald-500 transition-all" style="width:0%"></div>
+                    <div class="w-full rounded-full h-1.5" style="background-color:var(--bg-hover);">
+                        <div id="modal-battery-bar" class="h-1.5 rounded-full transition-all" style="width:0%;background-color:#16a34a;"></div>
                     </div>
                 </div>
-                <div class="cy-card-raised p-3">
+
+                <div class="cy-card-raised p-2.5">
                     <div class="flex items-center justify-between mb-1.5">
                         <div class="flex items-center gap-1.5 text-xs cyroach-muted">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="6" x2="1" y2="18"/><line x1="6" y1="11" x2="6" y2="18"/><line x1="11" y1="7" x2="11" y2="18"/><line x1="16" y1="3" x2="16" y2="18"/><line x1="21" y1="1" x2="21" y2="18"/></svg>
                             Signal
                         </div>
-                        <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);" id="modal-signal">—</div>
+                        <div class="text-xs font-semibold" style="font-family:var(--font-mono);" id="modal-signal">—</div>
                     </div>
-                    <div class="w-full rounded-full h-1.5" style="background-color: var(--bg-hover);">
-                        <div id="modal-signal-bar" class="h-1.5 rounded-full bg-blue-500 transition-all" style="width:0%"></div>
+                    <div class="w-full rounded-full h-1.5" style="background-color:var(--bg-hover);">
+                        <div id="modal-signal-bar" class="h-1.5 rounded-full transition-all" style="width:0%;background-color:#2563eb;"></div>
                     </div>
                 </div>
 
             </div>
+
+            {{-- KOLOM 3: Trajectory --}}
+            <div class="flex flex-col gap-2">
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-1" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
+                <div class="rounded-lg border cyroach-border overflow-hidden flex-1" style="position:relative;min-height:340px;">
+                    <canvas id="modal-trajectory" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
