@@ -83,6 +83,7 @@ class MissionPdfController extends Controller
             'heatmaps'     => $heatmaps,
             'trajectories' => $trajectories,
             'telemetryPdf' => $telemetryPdf,
+            'kecoaCount'   => count($trajectories),
         ])->setPaper('a4', 'portrait');
 
         $filename = 'Berita_Acara_Misi_' . str_pad($mission->mission_number, 3, '0', STR_PAD_LEFT) . '.pdf';
@@ -176,45 +177,60 @@ class MissionPdfController extends Controller
     // =====================
     private function generateTrajectoryBase64(array $points): string
     {
-        $W = 300; $H = 160;
-        $scale = 2;
+        $W = 600; $H = 320;
+        $scale = 4;
 
-        $svg = "<svg xmlns='http://www.w3.org/2000/svg' width='{$W}' height='{$H}' style='background:#0a0a0a'>";
+        $img = imagecreatetruecolor($W, $H);
+
+        $white   = imagecolorallocate($img, 255, 255, 255);
+        $grid    = imagecolorallocate($img, 204, 204, 204);
+        $axis    = imagecolorallocate($img, 153, 153, 153);
+        $red     = imagecolorallocate($img, 239, 68,  68 );
+        $green   = imagecolorallocate($img, 34,  197, 94 );
+        $txtClr  = imagecolorallocate($img, 102, 102, 102);
+
+        imagefill($img, 0, 0, $white);
 
         // Grid
         for ($x = 0; $x <= $W; $x += $W/4) {
-            $svg .= "<line x1='{$x}' y1='0' x2='{$x}' y2='{$H}' stroke='#262626' stroke-width='0.5'/>";
+            imageline($img, (int)$x, 0, (int)$x, $H, $grid);
         }
         for ($y = 0; $y <= $H; $y += $H/4) {
-            $svg .= "<line x1='0' y1='{$y}' x2='{$W}' y2='{$y}' stroke='#262626' stroke-width='0.5'/>";
+            imageline($img, 0, (int)$y, $W, (int)$y, $grid);
         }
-        $svg .= "<line x1='".($W/2)."' y1='0' x2='".($W/2)."' y2='{$H}' stroke='#404040' stroke-width='1'/>";
-        $svg .= "<line x1='0' y1='".($H/2)."' x2='{$W}' y2='".($H/2)."' stroke='#404040' stroke-width='1'/>";
+        // Sumbu tengah
+        imageline($img, $W/2, 0, $W/2, $H, $axis);
+        imageline($img, 0, $H/2, $W, $H/2, $axis);
 
+        // Trajectory
         if (count($points) >= 2) {
-            $polyline = '';
-            foreach ($points as $pt) {
-                $x = $W/2 + ($pt['roll'] ?? 0) * $scale;
-                $y = $H/2 - ($pt['pitch'] ?? 0) * $scale;
-                $polyline .= "{$x},{$y} ";
+            for ($i = 0; $i < count($points) - 1; $i++) {
+                $x1 = (int)($W/2 + ($points[$i]['roll']   ?? 0) * $scale);
+                $y1 = (int)($H/2 - ($points[$i]['pitch']  ?? 0) * $scale);
+                $x2 = (int)($W/2 + ($points[$i+1]['roll'] ?? 0) * $scale);
+                $y2 = (int)($H/2 - ($points[$i+1]['pitch']?? 0) * $scale);
+                imageline($img, $x1, $y1, $x2, $y2, $red);
             }
-            $svg .= "<polyline points='{$polyline}' fill='none' stroke='#ef4444' stroke-width='1.5'/>";
 
-            // Titik start
-            $sx = $W/2 + ($points[0]['roll'] ?? 0) * $scale;
-            $sy = $H/2 - ($points[0]['pitch'] ?? 0) * $scale;
-            $svg .= "<circle cx='{$sx}' cy='{$sy}' r='4' fill='#22c55e'/>";
+            // Titik start (hijau)
+            $sx = (int)($W/2 + ($points[0]['roll']  ?? 0) * $scale);
+            $sy = (int)($H/2 - ($points[0]['pitch'] ?? 0) * $scale);
+            imagefilledellipse($img, $sx, $sy, 10, 10, $green);
 
-            // Titik end
+            // Titik end (merah)
             $last = end($points);
-            $ex = $W/2 + ($last['roll'] ?? 0) * $scale;
-            $ey = $H/2 - ($last['pitch'] ?? 0) * $scale;
-            $svg .= "<circle cx='{$ex}' cy='{$ey}' r='4' fill='#ef4444'/>";
+            $ex = (int)($W/2 + ($last['roll']  ?? 0) * $scale);
+            $ey = (int)($H/2 - ($last['pitch'] ?? 0) * $scale);
+            imagefilledellipse($img, $ex, $ey, 10, 10, $red);
         }
 
-        $svg .= "<text x='4' y='".($H-4)."' fill='#525252' font-size='8'>Roll → | ↑ Pitch</text>";
-        $svg .= "</svg>";
+        imagestring($img, 1, 4, $H - 12, 'Roll (X) | Pitch (Y)', $txtClr);
 
-        return 'data:image/svg+xml;base64,' . base64_encode($svg);
+        ob_start();
+        imagepng($img);
+        $pngData = ob_get_clean();
+        imagedestroy($img);
+
+        return 'data:image/png;base64,' . base64_encode($pngData);
     }
 }

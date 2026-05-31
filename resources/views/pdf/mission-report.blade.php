@@ -246,7 +246,7 @@
         </td>
         <td style="width:33%;">
             <div class="sum-label">Kecoa Terlibat</div>
-            <div class="sum-value">{{ $mission->detections->pluck('device_id')->unique()->count() }}</div>
+            <div class="sum-value">{{ $kecoaCount }}</div>
         </td>
         <td style="width:34%;">
             <div class="sum-label">Tanggal Cetak</div>
@@ -405,7 +405,7 @@
 <div class="footer">
     Dokumen ini digenerate secara otomatis oleh sistem CyRoach Monitoring Dashboard &mdash;
     Universitas Diponegoro, Departemen Teknik Elektro &mdash; TA 2025/2026<br>
-    Dicetak pada {{ $fmtTgl(now()) }}, {{ now()->format('H:i') }} WIB
+    Dicetak pada {{ $fmtTgl(now()) }}
 </div>
 
 </body>
