@@ -133,7 +133,7 @@
         </div>
 
         {{-- Modal Body --}}
-        <div class="p-5 grid gap-4" style="grid-template-columns:240px 1fr 240px;">
+        <div class="p-5 grid gap-4" id="modal-body-grid" style="grid-template-columns:240px 1fr 240px;">
 
             {{-- KOLOM 1: Thermal — tinggi mengikuti kolom tengah --}}
             <div class="flex flex-col gap-2">
@@ -255,36 +255,60 @@
             </div>
 
         </div>
+    </div>
+</div>
+@endsection
 
-        @push('scripts')
-        <script>
-        // Samakan tinggi thermal & trajectory dengan tinggi kolom sensor setelah render
-        function syncModalCanvasHeight() {
-            const sensorCol = document.getElementById('modal-sensor-col');
-            const thermalWrap = document.getElementById('modal-canvas')?.parentElement;
-            const trajectoryWrap = document.getElementById('modal-trajectory-wrap');
-            if (!sensorCol || !thermalWrap || !trajectoryWrap) return;
+@push('scripts')
+<script>
+const notifMobile = null;
 
-            const h = sensorCol.offsetHeight;
-            if (h < 240) return; // belum render
+function syncModalCanvasHeight() {
+    const sensorCol = document.getElementById('modal-sensor-col');
+    const thermalCanvas = document.getElementById('modal-canvas');
+    const trajectoryWrap = document.getElementById('modal-trajectory-wrap');
+    const trajectoryCanvas = document.getElementById('modal-trajectory');
+    if (!sensorCol || !thermalCanvas || !trajectoryWrap) return;
 
-            // Update wrapper height
-            thermalWrap.style.height = h + 'px';
-            trajectoryWrap.style.height = h + 'px';
+    const h = sensorCol.offsetHeight;
+    if (h < 100) return;
 
-            // Update canvas size (square = min(width, height))
-            const size = Math.min(240, h);
-            const tc = document.getElementById('modal-canvas');
-            const trc = document.getElementById('modal-trajectory');
-            if (tc) { tc.width = size; tc.height = size; tc.style.width = size+'px'; tc.style.height = size+'px'; }
-            if (trc) { trc.width = size; trc.height = size; trc.style.width = size+'px'; trc.style.height = size+'px'; }
-        }
+    const size = Math.min(h, 400); // max 400px, square
 
-        // Jalankan saat modal dibuka
-        const _origOpenModal = window.openModal;
-        window.openModal = function(deviceId) {
-            _origOpenModal(deviceId);
-            requestAnimationFrame(() => requestAnimationFrame(syncModalCanvasHeight));
-        };
-        </script>
-        @endpush
+    const grid = document.getElementById('modal-body-grid');
+    if (grid) grid.style.gridTemplateColumns = `${size}px 1fr ${size}px`;
+
+
+    // Update thermal
+    const thermalWrap = thermalCanvas.parentElement;
+    thermalWrap.style.height = size + 'px';
+    thermalWrap.style.width = size + 'px';
+    thermalCanvas.width = size;
+    thermalCanvas.height = size;
+    thermalCanvas.style.width = size + 'px';
+    thermalCanvas.style.height = size + 'px';
+
+    // Update trajectory
+    trajectoryWrap.style.height = size + 'px';
+    trajectoryWrap.style.width = size + 'px';
+    if (trajectoryCanvas) {
+        trajectoryCanvas.width = size;
+        trajectoryCanvas.height = size;
+        trajectoryCanvas.style.width = size + 'px';
+        trajectoryCanvas.style.height = size + 'px';
+    }
+}
+
+// Override openModal untuk sync ukuran setelah modal muncul
+const _origOpenModal = window.openModal;
+window.openModal = function(deviceId) {
+    _origOpenModal(deviceId);
+    // Dua frame untuk pastikan DOM sudah render
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            syncModalCanvasHeight();
+        });
+    });
+};
+</script>
+@endpush
