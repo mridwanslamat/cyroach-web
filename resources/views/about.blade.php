@@ -50,13 +50,13 @@
                 <div class="grid grid-cols-2 gap-4">
 
                     {{-- Thermal Analytics --}}
-                    <div class="cy-card p-4 flex flex-col items-center">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5 self-start" style="font-family:var(--font-mono);font-size:10px;">
+                    <div class="cy-card p-4 flex flex-col">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                             Thermal Analytics
                         </div>
-                        <div class="rounded-lg overflow-hidden border cyroach-border" style="background:#000;width:180px;height:180px;">
-                            <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
+                        <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="background:#000;min-height:160px;">
+                            <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
                         </div>
                         <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
                     </div>
@@ -154,7 +154,7 @@
                     </svg>
                 </div>
                 <div class="text-sm font-semibold cyroach-text mb-2">Bio-Hybrid Control</div>
-                <div class="text-xs cyroach-muted leading-relaxed">Memanfaatkan kecoa Madagaskar sebagai platform biologis yang tangguh, hemat biaya, dan mampu menjangkau ruang sempit yang tidak dapat dijangkau perangkat mekanik konvensional.</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Memanfaatkan kecoa Madagaskar sebagai platform biologis yang tangguh dan mampu menjangkau ruang sempit yang tidak dapat dijangkau perangkat mekanik konvensional.</div>
             </div>
 
             <div class="cy-card p-4">
@@ -212,7 +212,9 @@ const demoGrid = Array.from({length:8},(_,r)=>
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const W=180; const H=180;
+    const rect=canvas.parentElement.getBoundingClientRect();
+    const W=Math.round(rect.width)||200;
+    const H=Math.round(rect.height)||200;
     canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
