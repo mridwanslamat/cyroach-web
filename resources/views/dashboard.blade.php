@@ -133,13 +133,13 @@
         </div>
 
         {{-- Modal Body --}}
-        <div class="p-5 grid gap-4" style="grid-template-columns:220px 1fr 220px;min-height:380px;">
+        <div class="p-5 grid gap-4" style="grid-template-columns:220px 1fr 220px;">
 
-            {{-- KOLOM 1: Thermal --}}
+            {{-- KOLOM 1: Thermal — fixed 220x220 --}}
             <div class="flex flex-col gap-2">
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-1" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
-                <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="min-height:220px;position:relative;">
-                    <canvas id="modal-canvas" width="220" height="220" style="display:block;width:100%;height:100%;position:absolute;top:0;left:0;"></canvas>
+                <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
+                <div class="rounded-lg overflow-hidden border cyroach-border shrink-0" style="width:220px;height:220px;">
+                    <canvas id="modal-canvas" width="220" height="220" style="display:block;width:220px;height:220px;"></canvas>
                 </div>
             </div>
 
@@ -237,11 +237,11 @@
 
             </div>
 
-            {{-- KOLOM 3: Trajectory --}}
+            {{-- KOLOM 3: Trajectory — fixed 220x220 --}}
             <div class="flex flex-col gap-2">
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-1" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
-                <div class="rounded-lg border cyroach-border overflow-hidden flex-1" style="position:relative;min-height:340px;">
-                    <canvas id="modal-trajectory" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
+                <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
+                <div class="rounded-lg border cyroach-border overflow-hidden shrink-0" style="width:220px;height:220px;position:relative;">
+                    <canvas id="modal-trajectory" width="220" height="220" style="position:absolute;top:0;left:0;width:220px;height:220px;display:block;"></canvas>
                 </div>
             </div>
 
