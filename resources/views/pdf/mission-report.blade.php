@@ -21,14 +21,6 @@
             width: 100%;
             display: block;
         }
-        .kop-sub-line {
-            border-top: 1px solid #000;
-            margin-top: 5px;
-            padding-top: 3px;
-            font-size: 8px;
-            color: #000;
-            text-align: center;
-        }
 
         /* ===== JUDUL DOKUMEN ===== */
         .doc-title-block {
@@ -61,7 +53,7 @@
             letter-spacing: 0.4px;
         }
 
-        /* ===== TABLES ===== */
+        /* ===== INFO TABLE ===== */
         table { width: 100%; border-collapse: collapse; }
 
         .info-table td {
@@ -69,40 +61,20 @@
             vertical-align: top;
             color: #000;
         }
-        .info-table .label {
-            width: 36%;
-            font-size: 11px;
-        }
-        .info-table .sep {
-            width: 4%;
-            font-size: 11px;
-        }
-        .info-table .value {
-            font-size: 11px;
-            font-weight: bold;
-        }
+        .info-table .label { width: 36%; font-size: 11px; }
+        .info-table .sep   { width: 4%;  font-size: 11px; }
+        .info-table .value { font-size: 11px; font-weight: bold; }
 
-        .summary-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 4px;
-        }
+        /* ===== SUMMARY TABLE ===== */
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
         .summary-table td {
             text-align: center;
             padding: 10px 8px;
             border: 1px solid #000;
             vertical-align: middle;
         }
-        .sum-label {
-            font-size: 9px;
-            color: #000;
-            margin-bottom: 4px;
-        }
-        .sum-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #000;
-        }
+        .sum-label { font-size: 9px; color: #000; margin-bottom: 4px; }
+        .sum-value { font-size: 18px; font-weight: bold; color: #000; }
 
         /* ===== DETECTION BLOCK ===== */
         .detection-wrap {
@@ -111,50 +83,40 @@
             margin-bottom: 16px;
             padding: 12px;
         }
-        .det-header {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .det-header td {
-            vertical-align: middle;
-            color: #000;
-        }
-        .det-title {
-            font-weight: bold;
-            font-size: 12px;
-        }
-        .det-time {
-            text-align: right;
-            font-size: 10px;
-        }
 
-        .det-body td {
-            vertical-align: top;
-        }
+        /* Detection header row */
+        .det-header-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .det-header-table td { vertical-align: middle; color: #000; }
+        .det-title { font-weight: bold; font-size: 12px; }
+        .det-time  { text-align: right; font-size: 10px; }
+
+        /* Detection body: thermal left, sensor right */
+        .det-body-table { width: 100%; border-collapse: collapse; }
         .det-heatmap-cell {
-            width: 40%;
+            width: 35%;
             padding-right: 14px;
             vertical-align: middle;
+            text-align: center;
         }
         .det-heatmap-cell img {
-            width: 100%;
-            max-width: 140px;
+            width: 130px;
+            height: 130px;
             display: block;
+            margin: 0 auto;
             border: 1px solid #000;
             border-radius: 2px;
+            object-fit: cover;
         }
         .det-heatmap-label {
             font-size: 8px;
             color: #000;
             text-align: center;
-            margin-top: 3px;
+            margin-top: 4px;
         }
+        .det-sensor-cell { width: 65%; vertical-align: top; }
 
-        .sensor-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 6px;
-        }
+        /* Sensor tables */
+        .sensor-table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
         .sensor-table td {
             text-align: center;
             padding: 5px 4px;
@@ -162,25 +124,13 @@
             background: #f5f5f5;
             color: #000;
         }
-        .sensor-label {
-            font-size: 8px;
-            color: #000;
-            margin-bottom: 2px;
-        }
-        .sensor-value {
-            font-size: 11px;
-            font-weight: bold;
-            color: #000;
-        }
+        .sensor-label { font-size: 8px; color: #000; margin-bottom: 2px; }
+        .sensor-value { font-size: 11px; font-weight: bold; color: #000; }
 
-        .alert-row {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-        .alert-row td {
+        /* Alert */
+        .alert-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .alert-table td {
             border: 1px solid #000;
-            border-radius: 2px;
             text-align: center;
             padding: 6px;
             font-weight: bold;
@@ -196,28 +146,10 @@
             margin-bottom: 14px;
             padding: 10px;
         }
-        .traj-title {
-            font-weight: bold;
-            font-size: 11px;
-            margin-bottom: 8px;
-            color: #000;
-        }
-        .traj-img {
-            width: 100%;
-            display: block;
-            border: 1px solid #000;
-            border-radius: 2px;
-        }
-        .traj-legend {
-            font-size: 8px;
-            color: #000;
-            margin-top: 4px;
-        }
-        .traj-stats {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
+        .traj-title { font-weight: bold; font-size: 11px; margin-bottom: 8px; color: #000; }
+        .traj-img   { width: 100%; display: block; border: 1px solid #000; border-radius: 2px; }
+        .traj-legend { font-size: 8px; color: #000; margin-top: 4px; }
+        .traj-stats { width: 100%; border-collapse: collapse; margin-top: 8px; }
         .traj-stats td {
             width: 50%;
             text-align: center;
@@ -247,6 +179,13 @@
 
 {{-- ===== JUDUL DOKUMEN ===== --}}
 @php
+    $bulanId = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    $fmtTgl  = function($dt) use ($bulanId) {
+        return $dt->day.' '.$bulanId[$dt->month].' '.$dt->year;
+    };
+    $fmtWkt  = function($dt) use ($bulanId) {
+        return $dt->format('d').' '.$bulanId[$dt->month].' '.$dt->format('Y, H:i:s');
+    };
     $start  = \Carbon\Carbon::parse($mission->started_at);
     $end    = $mission->ended_at ? \Carbon\Carbon::parse($mission->ended_at) : now();
     $diff   = $start->diff($end);
@@ -268,7 +207,7 @@
     <tr>
         <td class="label">Tanggal Operasi</td>
         <td class="sep">:</td>
-        <td class="value">{{ $start->translatedFormat('d F Y') }}</td>
+        <td class="value">{{ $fmtTgl($start) }}</td>
     </tr>
     <tr>
         <td class="label">Waktu Mulai</td>
@@ -311,7 +250,7 @@
         </td>
         <td style="width:34%;">
             <div class="sum-label">Tanggal Cetak</div>
-            <div style="font-size:11px; font-weight:bold; margin-top:4px;">{{ now()->translatedFormat('d F Y') }}</div>
+            <div style="font-size:11px; font-weight:bold; margin-top:4px;">{{ $fmtTgl(now()) }}</div>
         </td>
     </tr>
 </table>
@@ -326,35 +265,37 @@
 @else
     @foreach($mission->detections as $i => $d)
     @php
-        $devNum = ltrim(str_replace('kecoa_', '', $d->device_id), '0');
+        $devNum  = ltrim(str_replace('kecoa_', '', $d->device_id), '0');
+        $detAt   = \Carbon\Carbon::parse($d->detected_at);
     @endphp
     <div class="detection-wrap">
 
-        {{-- Header deteksi --}}
-        <table class="det-header">
+        {{-- Header --}}
+        <table class="det-header-table">
             <tr>
                 <td class="det-title">Deteksi #{{ $i + 1 }} &mdash; Kecoa #{{ $devNum }}</td>
-                <td class="det-time">{{ \Carbon\Carbon::parse($d->detected_at)->translatedFormat('d F Y, H:i:s') }} WIB</td>
+                <td class="det-time">{{ $fmtWkt($detAt) }} WIB</td>
             </tr>
         </table>
 
-        {{-- Body: thermal + sensor data --}}
-        <table>
-            <tr class="det-body">
+        {{-- Body: thermal kiri, sensor kanan --}}
+        <table class="det-body-table">
+            <tr>
                 <td class="det-heatmap-cell">
                     @if(isset($heatmaps[$d->id]))
                         <img src="{{ $heatmaps[$d->id] }}" alt="Thermal Heatmap">
                         <div class="det-heatmap-label">Thermal Heatmap AMG8833 8&times;8</div>
                     @else
-                        <div style="height:100px; border:1px solid #000; text-align:center; line-height:100px; font-size:9px; color:#555;">
+                        <div style="width:130px;height:130px;border:1px solid #000;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555;">
                             Tidak ada data thermal
                         </div>
+                        <div class="det-heatmap-label">Thermal Heatmap AMG8833 8&times;8</div>
                     @endif
                 </td>
-                <td style="vertical-align:top;">
+                <td class="det-sensor-cell">
 
-                    {{-- IMU Data --}}
-                    <table class="sensor-table" style="margin-bottom:6px;">
+                    {{-- IMU --}}
+                    <table class="sensor-table">
                         <tr>
                             <td>
                                 <div class="sensor-label">Pitch</div>
@@ -372,7 +313,7 @@
                     </table>
 
                     {{-- Suhu --}}
-                    <table class="sensor-table" style="margin-bottom:6px;">
+                    <table class="sensor-table">
                         <tr>
                             <td>
                                 <div class="sensor-label">Suhu Maksimum</div>
@@ -407,11 +348,11 @@
             </tr>
         </table>
 
-        {{-- Alert --}}
-        <table class="alert-row">
+        {{-- Alert: ganti &#9888; dengan teks [!] agar aman di semua PDF engine --}}
+        <table class="alert-table">
             <tr>
                 <td>
-                    &#9888;&nbsp; Terindikasi keberadaan korban hidup &mdash;
+                    [!] Terindikasi keberadaan korban hidup &mdash;
                     suhu tubuh terdeteksi melebihi ambang batas 37,5&deg;C
                 </td>
             </tr>
@@ -433,15 +374,16 @@
 @php
     $devNum = ltrim(str_replace('kecoa_', '', $deviceId), '0');
     $telem  = $telemetryPdf[$deviceId] ?? [];
-    $avgSig = isset($telem['avg_signal'])       ? number_format($telem['avg_signal'], 1).'%'       : '—';
-    $distM  = isset($telem['distance_total_m']) ? number_format($telem['distance_total_m'], 2).' m' : '—';
+    $avgSig = isset($telem['avg_signal'])       ? number_format($telem['avg_signal'], 1).'%'        : '-';
+    $distM  = isset($telem['distance_total_m']) ? number_format($telem['distance_total_m'], 2).' m'  : '-';
 @endphp
 <div class="traj-wrap">
     <div class="traj-title">Kecoa #{{ $devNum }}</div>
     <img src="{{ $imgBase64 }}" alt="Trajectory Kecoa #{{ $devNum }}" class="traj-img">
+    {{-- Ganti bullet unicode dengan teks biasa agar tidak jadi "?" --}}
     <div class="traj-legend">
         Sumbu X = Roll &nbsp;|&nbsp; Sumbu Y = Pitch &nbsp;|&nbsp;
-        &#9679; Hijau = Posisi Awal (START) &nbsp;|&nbsp; &#9679; Merah = Posisi Terakhir
+        [H] = Posisi Awal (START) &nbsp;|&nbsp; [M] = Posisi Terakhir
     </div>
     <table class="traj-stats">
         <tr>
@@ -463,7 +405,7 @@
 <div class="footer">
     Dokumen ini digenerate secara otomatis oleh sistem CyRoach Monitoring Dashboard &mdash;
     Universitas Diponegoro, Departemen Teknik Elektro &mdash; TA 2025/2026<br>
-    Dicetak pada {{ now()->translatedFormat('d F Y, H:i') }} WIB
+    Dicetak pada {{ $fmtTgl(now()) }}, {{ now()->format('H:i') }} WIB
 </div>
 
 </body>
