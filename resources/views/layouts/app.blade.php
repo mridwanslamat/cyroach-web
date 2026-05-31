@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'CYROACH') — Cyborg Cockroach</title>
+    <title>@yield('title', 'CYROACH') - CyRoach</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#7f1d1d">
