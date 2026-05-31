@@ -21,19 +21,23 @@ const trajectoryHistory = {};
 const STATUS_MAP = {
     confirmed: {
         label: "Confirmed Live",
-        cls: "bg-emerald-900 text-emerald-400 border border-emerald-700",
+        cls: "",
+        style: "background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);",
     },
     probable: {
         label: "Probable Live",
-        cls: "bg-amber-900 text-amber-400 border border-amber-700",
+        cls: "",
+        style: "background-color:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);",
     },
     possible: {
         label: "Possible Live",
-        cls: "bg-orange-900 text-orange-400 border border-orange-700",
+        cls: "",
+        style: "background-color:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.3);",
     },
     nosig: {
         label: "No signal",
-        cls: "bg-neutral-800 text-neutral-500 border border-neutral-700",
+        cls: "",
+        style: "background-color:var(--bg-raised);color:var(--text-muted);border:1px solid var(--border);",
     },
 };
 
@@ -338,53 +342,55 @@ function renderDevices() {
         if (!card) {
             card = document.createElement("div");
             card.id = `card-${device.device_id}`;
-            card.className = `bg-neutral-900 border rounded-xl p-3 cursor-pointer transition-all hover:border-red-800 ${isDetected ? "border-red-800 shadow-lg shadow-red-950/30" : "border-neutral-800"}`;
+            card.className = `cy-card rounded-xl p-3 cursor-pointer transition-all hover:opacity-90`;
+            card.style.borderColor = isDetected ? 'var(--border-accent)' : 'var(--border)';
+            card.style.boxShadow = isDetected ? '0 4px 24px rgba(127,29,29,0.2)' : 'none';
             card.onclick = () => openModal(device.device_id);
 
             card.innerHTML = `
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold text-neutral-100">Kecoa #${num}</span>
+                    <span class="text-xs font-semibold cyroach-text">Kecoa #${num}</span>
                     <span class="card-status text-xs px-2 py-0.5 rounded-full"></span>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <div class="shrink-0 rounded-lg overflow-hidden border border-neutral-800" style="width:120px;height:120px;position:relative;">
+                    <div class="shrink-0 rounded-lg overflow-hidden border cyroach-border" style="width:120px;height:120px;position:relative;">
                         <canvas class="hmap-card" data-id="${device.device_id}" style="display:block;width:120px;height:120px;"></canvas>
-                        <div class="hmap-nosignal hidden absolute inset-0 flex items-center justify-center text-xs text-neutral-600 bg-neutral-950">No signal</div>
+                        <div class="hmap-nosignal hidden absolute inset-0 flex items-center justify-center text-xs cyroach-muted" style="background-color:var(--bg-raised);">No signal</div>
                     </div>
                     <div class="flex-1 flex flex-col gap-1.5 min-w-0">
                         <div class="grid grid-cols-3 gap-1">
-                            <div class="bg-neutral-950 border border-neutral-800 rounded py-1.5 text-center">
-                                <div class="text-neutral-600" style="font-size:9px;">Pitch</div>
-                                <div class="card-pitch text-xs font-medium text-neutral-300" style="font-size:10px;">—</div>
+                            <div class="cy-card-raised rounded py-1.5 text-center">
+                                <div class="cyroach-sub" style="font-size:9px;">Pitch</div>
+                                <div class="card-pitch cyroach-text font-medium" style="font-size:10px;font-family:var(--font-mono);">—</div>
                             </div>
-                            <div class="bg-neutral-950 border border-neutral-800 rounded py-1.5 text-center">
-                                <div class="text-neutral-600" style="font-size:9px;">Roll</div>
-                                <div class="card-roll text-xs font-medium text-neutral-300" style="font-size:10px;">—</div>
+                            <div class="cy-card-raised rounded py-1.5 text-center">
+                                <div class="cyroach-sub" style="font-size:9px;">Roll</div>
+                                <div class="card-roll cyroach-text font-medium" style="font-size:10px;font-family:var(--font-mono);">—</div>
                             </div>
-                            <div class="bg-neutral-950 border border-neutral-800 rounded py-1.5 text-center">
-                                <div class="text-neutral-600" style="font-size:9px;">Yaw</div>
-                                <div class="card-yaw text-xs font-medium text-neutral-300" style="font-size:10px;">—</div>
+                            <div class="cy-card-raised rounded py-1.5 text-center">
+                                <div class="cyroach-sub" style="font-size:9px;">Yaw</div>
+                                <div class="card-yaw cyroach-text font-medium" style="font-size:10px;font-family:var(--font-mono);">—</div>
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-1">
-                            <div class="bg-neutral-950 border border-neutral-800 rounded py-1.5 text-center">
-                                <div class="text-neutral-600" style="font-size:9px;">Suhu maks</div>
-                                <div class="card-suhu-max font-semibold text-red-400" style="font-size:11px;">—</div>
+                            <div class="cy-card-raised rounded py-1.5 text-center">
+                                <div class="cyroach-sub" style="font-size:9px;">Suhu maks</div>
+                                <div class="card-suhu-max font-semibold text-red-400" style="font-size:11px;font-family:var(--font-mono);">—</div>
                             </div>
-                            <div class="bg-neutral-950 border border-neutral-800 rounded py-1.5 text-center">
-                                <div class="text-neutral-600" style="font-size:9px;">Suhu min</div>
-                                <div class="card-suhu-min font-semibold text-blue-400" style="font-size:11px;">—</div>
+                            <div class="cy-card-raised rounded py-1.5 text-center">
+                                <div class="cyroach-sub" style="font-size:9px;">Suhu min</div>
+                                <div class="card-suhu-min font-semibold text-blue-400" style="font-size:11px;font-family:var(--font-mono);">—</div>
                             </div>
                         </div>
-                        <div class="bg-neutral-950 border border-neutral-800 rounded px-2 py-1.5 flex items-center justify-between">
-                            <span class="text-neutral-600" style="font-size:9px;">Jarak</span>
-                            <span class="card-distance font-medium text-neutral-300" style="font-size:10px;">—</span>
+                        <div class="cy-card-raised rounded px-2 py-1.5 flex items-center justify-between">
+                            <span class="cyroach-sub" style="font-size:9px;">Jarak</span>
+                            <span class="card-distance cyroach-text font-medium" style="font-size:10px;font-family:var(--font-mono);">—</span>
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center justify-between pt-1 border-t border-neutral-800">
+                <div class="flex items-center justify-between pt-1 border-t cyroach-border">
                     <span class="card-badge text-xs px-2 py-0.5 rounded-full"></span>
-                    <span class="card-ts text-xs text-neutral-600">—</span>
+                    <span class="card-ts text-xs cyroach-muted" style="font-family:var(--font-mono);">—</span>
                 </div>
             `;
             grid.appendChild(card);
@@ -394,8 +400,10 @@ function renderDevices() {
         card.querySelector(".card-status").textContent = device.online
             ? "● Online"
             : "○ Offline";
-        card.querySelector(".card-status").className =
-            `card-status text-xs px-2 py-0.5 rounded-full ${device.online ? "bg-emerald-900 text-emerald-400 border border-emerald-800" : "bg-neutral-800 text-neutral-500 border border-neutral-700"}`;
+        card.querySelector(".card-status").className = "card-status text-xs px-2 py-0.5 rounded-full";
+        card.querySelector(".card-status").style.cssText = device.online
+            ? "background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);"
+            : "background-color:var(--bg-raised);color:var(--text-muted);border:1px solid var(--border);";
         card.querySelector(".card-pitch").textContent =
             device.pitch !== undefined ? device.pitch.toFixed(2) + "°" : "—";
         card.querySelector(".card-roll").textContent =
@@ -414,8 +422,8 @@ function renderDevices() {
         card.querySelector(".card-distance").textContent =
             (device.distance_total_m ?? 0).toFixed(1) + " m";
         card.querySelector(".card-badge").textContent = s.label;
-        card.querySelector(".card-badge").className =
-            `card-badge text-xs px-2 py-0.5 rounded-full ${s.cls}`;
+        card.querySelector(".card-badge").className = "card-badge text-xs px-2 py-0.5 rounded-full";
+        card.querySelector(".card-badge").style.cssText = s.style;
         card.querySelector(".card-ts").textContent = device.timestamp ?? "—";
 
         const canvas = card.querySelector(".hmap-card");
@@ -469,9 +477,9 @@ function renderNotifications() {
                   .slice(0, 10)
                   .map(
                       (n) => `
-            <div class="bg-neutral-950 border border-neutral-800 border-l-2 border-l-red-700 rounded-lg px-3 py-2 mb-2">
-                <div class="text-xs text-neutral-200 leading-relaxed">${n.message}</div>
-                <div class="text-xs text-neutral-600 mt-1">${n.time}</div>
+            <div class="cy-card-raised rounded-lg px-3 py-2 mb-2" style="border-left:2px solid var(--accent);">
+                <div class="text-xs cyroach-text leading-relaxed">${n.message}</div>
+                <div class="text-xs cyroach-muted mt-1" style="font-family:var(--font-mono);">${n.time}</div>
             </div>
         `,
                   )
