@@ -13,10 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     @stack('head')
 </head>
-<body class="cyroach-body h-full flex overflow-hidden" id="app-body">
+<body class="cyroach-body h-full flex overflow-hidden" id="app-body" data-sidebar-open="false">
 
 {{-- ===================== SIDEBAR ===================== --}}
-<aside class="cyroach-sidebar w-52 shrink-0 flex flex-col h-full border-r overflow-y-auto" id="sidebar">
+<aside class="cyroach-sidebar shrink-0 flex flex-col h-full border-r overflow-y-auto
+    fixed inset-y-0 left-0 z-40 w-52 -translate-x-full transition-transform duration-200
+    md:relative md:translate-x-0 md:flex" id="sidebar">
 
     {{-- Logo --}}
     <div class="px-5 pt-6 pb-4 border-b cyroach-border">
@@ -82,13 +84,20 @@
         </div>
     </div>
 </aside>
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden" onclick="toggleSidebar()"></div>
 
 {{-- ===================== MAIN AREA ===================== --}}
 <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
 
     {{-- Header Bar --}}
-    <header class="cyroach-header flex items-center justify-between px-6 h-14 shrink-0 border-b cyroach-border">
+    <header class="cyroach-header flex items-center justify-between px-4 md:px-6 h-14 shrink-0 border-b cyroach-border">
         <div class="flex items-center gap-3">
+            {{-- Hamburger — hanya muncul di mobile --}}
+            <button onclick="toggleSidebar()" class="md:hidden w-8 h-8 flex items-center justify-center rounded-lg cyroach-btn border cyroach-border" id="hamburger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
             <h1 class="font-display text-base font-bold cyroach-logo-text">@yield('page-title', 'Dashboard')</h1>
         </div>
         <div class="flex items-center gap-2">
@@ -149,6 +158,22 @@ function toggleTheme() {
     applyTheme(next);
 }
 applyTheme(localStorage.getItem('cyroach-theme') || 'dark');
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const isOpen = sidebar.classList.contains('translate-x-0');
+    if (isOpen) {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    } else {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+    }
+}
+
 </script>
 
 @stack('scripts')
