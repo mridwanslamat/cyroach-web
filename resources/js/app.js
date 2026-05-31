@@ -156,11 +156,12 @@ function drawHeatmap(canvas, grid, w, h) {
 // =====================
 function drawTrajectory(canvas, history) {
     // Resize canvas sesuai ukuran elemen (responsive)
-    const size = canvas.width || 240;
-    canvas.height = size;
+    const rect = canvas.getBoundingClientRect();
+    const W = Math.round(rect.width) || 220;
+    const H = Math.round(rect.height) || 220;
+    canvas.width = W;
+    canvas.height = H;
     const ctx = canvas.getContext("2d");
-    const W = size,
-        H = size;
 
     // Background
     ctx.fillStyle = "#0a0a0a";
@@ -402,11 +403,11 @@ function renderDevices() {
             ? "background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);"
             : "background-color:var(--bg-raised);color:var(--text-muted);border:1px solid var(--border);";
         card.querySelector(".card-pitch").textContent =
-            device.pitch !== undefined ? device.pitch.toFixed(2) + "°" : "—";
+            device.pitch !== undefined ? device.pitch.toFixed(1) + "°" : "—";
         card.querySelector(".card-roll").textContent =
-            device.roll !== undefined ? device.roll.toFixed(2) + "°" : "—";
+            device.roll !== undefined ? device.roll.toFixed(1) + "°" : "—";
         card.querySelector(".card-yaw").textContent =
-            device.yaw !== undefined ? device.yaw.toFixed(2) + "°" : "—";
+            device.yaw !== undefined ? device.yaw.toFixed(1) + "°" : "—";
         card.querySelector(".card-suhu-max").textContent =
             device.suhu_max !== undefined
                 ? device.suhu_max.toFixed(1) + "°C"
@@ -517,9 +518,10 @@ function _populateModal(device) {
 
     document.getElementById("modal-title").textContent =
         `Detail — Kecoa #${num}`;
-    document.getElementById("modal-pitch").textContent = fmt(device.pitch);
-    document.getElementById("modal-roll").textContent = fmt(device.roll);
-    document.getElementById("modal-yaw").textContent = fmt(device.yaw);
+    const fmtShort = v => (v === undefined || v === null) ? "—" : parseFloat(v).toFixed(1) + "°";
+    document.getElementById("modal-pitch").textContent = fmtShort(device.pitch);
+    document.getElementById("modal-roll").textContent  = fmtShort(device.roll);
+    document.getElementById("modal-yaw").textContent   = fmtShort(device.yaw);
     document.getElementById("modal-suhu-max").textContent =
         device.suhu_max !== undefined ? device.suhu_max.toFixed(1) + "°C" : "—";
     document.getElementById("modal-suhu-min").textContent =
@@ -582,18 +584,20 @@ function _populateModal(device) {
     requestAnimationFrame(() => {
         const canvas = document.getElementById("modal-canvas");
         if (canvas) {
+            const wrap = canvas.parentElement;
+            const size = Math.round(wrap.getBoundingClientRect().width) || 220;
             if (device.thermal) {
-                drawHeatmap(canvas, device.thermal, 240, 240);
+                drawHeatmap(canvas, device.thermal, size, size);
             } else {
-                canvas.width = 240;
-                canvas.height = 240;
+                canvas.width = size;
+                canvas.height = size;
                 const ctx = canvas.getContext("2d");
                 ctx.fillStyle = "#0a0a0a";
-                ctx.fillRect(0, 0, 240, 240);
+                ctx.fillRect(0, 0, size, size);
                 ctx.fillStyle = "#404040";
                 ctx.font = "12px sans-serif";
                 ctx.textAlign = "center";
-                ctx.fillText("Tidak ada sinyal", 120, 120);
+                ctx.fillText("Tidak ada sinyal", size/2, size/2);
             }
         }
     });
