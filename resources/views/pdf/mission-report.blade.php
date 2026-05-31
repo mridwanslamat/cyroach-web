@@ -5,191 +5,287 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'DejaVu Sans', sans-serif;
-            font-size: 11px;
-            color: #1a1a1a;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            color: #000000;
             background: #fff;
-            padding: 28px 40px;
+            padding: 30px 50px;
         }
 
         /* ===== KOP SURAT ===== */
         .kop-wrap {
+            width: 100%;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+        }
+        .kop-inner {
             display: table;
             width: 100%;
-            border-bottom: 3px solid #1a1a1a;
-            padding-bottom: 10px;
-            margin-bottom: 6px;
         }
         .kop-logo-cell {
             display: table-cell;
-            width: 80px;
+            width: 90px;
             vertical-align: middle;
-            padding-right: 14px;
+            padding-right: 12px;
         }
         .kop-logo-cell img {
-            width: 72px;
-            height: 72px;
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
         }
         .kop-text-cell {
             display: table-cell;
             vertical-align: middle;
         }
         .kop-ministry {
-            font-size: 9.5px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             line-height: 1.4;
-            color: #1a1a1a;
+            color: #000;
         }
         .kop-university {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #1a1a1a;
+            color: #000;
             margin-top: 2px;
+            line-height: 1.2;
+        }
+        .kop-faculty {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #000;
+            line-height: 1.2;
         }
         .kop-address-cell {
             display: table-cell;
-            width: 210px;
+            width: 220px;
             vertical-align: middle;
             text-align: right;
-            font-size: 7.5px;
-            color: #444;
-            line-height: 1.55;
-            padding-left: 10px;
-            border-left: 1px solid #aaa;
+            font-size: 8px;
+            color: #000;
+            line-height: 1.6;
+            padding-left: 12px;
+            border-left: 1px solid #555;
         }
         .kop-sub-line {
-            border-top: 1px solid #1a1a1a;
-            margin-top: 4px;
+            border-top: 1px solid #000;
+            margin-top: 5px;
             padding-top: 3px;
-            font-size: 7.5px;
-            color: #555;
+            font-size: 8px;
+            color: #000;
             text-align: center;
         }
 
         /* ===== JUDUL DOKUMEN ===== */
         .doc-title-block {
             text-align: center;
-            margin: 18px 0 14px;
+            margin: 20px 0 16px;
         }
         .doc-title-block .doc-type {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: bold;
             text-decoration: underline;
             text-transform: uppercase;
         }
-        .doc-title-block .doc-nomor {
-            font-size: 10px;
-            margin-top: 2px;
-        }
         .doc-title-block .doc-subject {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
             font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        /* ===== SECTION ===== */
-        .section-title {
-            font-size: 9px;
-            font-weight: bold;
-            color: #7f1d1d;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 4px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 3px;
             margin-bottom: 10px;
-            margin-top: 18px;
+            margin-top: 20px;
+            color: #000;
+            letter-spacing: 0.4px;
         }
 
+        /* ===== TABLES ===== */
         table { width: 100%; border-collapse: collapse; }
 
-        .info-table td { padding: 3px 0; vertical-align: top; }
-        .info-table .label { width: 38%; color: #555; font-size: 10px; }
-        .info-table .value { font-weight: bold; font-size: 10px; }
+        .info-table td {
+            padding: 4px 0;
+            vertical-align: top;
+            color: #000;
+        }
+        .info-table .label {
+            width: 36%;
+            font-size: 11px;
+        }
+        .info-table .sep {
+            width: 4%;
+            font-size: 11px;
+        }
+        .info-table .value {
+            font-size: 11px;
+            font-weight: bold;
+        }
 
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+        }
         .summary-table td {
             text-align: center;
-            padding: 10px 5px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
+            padding: 10px 8px;
+            border: 1px solid #000;
+            vertical-align: middle;
         }
-        .sum-label { font-size: 8px; color: #6b7280; margin-bottom: 4px; }
-        .sum-value { font-size: 16px; font-weight: bold; }
+        .sum-label {
+            font-size: 9px;
+            color: #000;
+            margin-bottom: 4px;
+        }
+        .sum-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
 
+        /* ===== DETECTION BLOCK ===== */
         .detection-wrap {
-            border: 1px solid #e5e7eb;
-            border-left: 3px solid #7f1d1d;
-            border-radius: 3px;
-            margin-bottom: 14px;
+            border: 1px solid #000;
+            border-radius: 2px;
+            margin-bottom: 16px;
             padding: 12px;
         }
-        .det-header td { padding-bottom: 8px; vertical-align: middle; }
-        .det-title { font-weight: bold; font-size: 11px; }
-        .det-time  { text-align: right; font-size: 9px; color: #6b7280; }
-
-        .det-body td { vertical-align: top; }
-        .det-heatmap { width: 42%; padding-right: 12px; }
-        .det-heatmap img { width: 100%; max-width: 120px; display: block; border-radius: 3px; border: 1px solid #e5e7eb; }
-
-        .imu-table td {
-            text-align: center;
-            padding: 5px 3px;
-            border: 1px solid #e5e7eb;
-            background: #f3f4f6;
-        }
-        .imu-label { font-size: 8px; color: #6b7280; }
-        .imu-value { font-size: 10px; font-weight: bold; margin-top: 2px; }
-
-        .alert-row td {
-            background: #fef2f2;
-            border: 1px solid #fca5a5;
-            border-radius: 3px;
-            text-align: center;
-            padding: 6px;
-            color: #dc2626;
-            font-weight: bold;
-            font-size: 9px;
-        }
-
-        .badge {
-            display: inline;
-            padding: 2px 7px;
-            border-radius: 8px;
-            font-size: 9px;
-            font-weight: bold;
-        }
-        .badge-green { background: #dcfce7; color: #15803d; }
-        .badge-amber { background: #fef9c3; color: #a16207; }
-
-        /* ===== SIGNATURE ===== */
-        .signature-wrap {
-            margin-top: 32px;
-            display: table;
+        .det-header {
             width: 100%;
+            margin-bottom: 10px;
         }
-        .sig-cell {
-            display: table-cell;
-            width: 50%;
-            text-align: center;
+        .det-header td {
+            vertical-align: middle;
+            color: #000;
+        }
+        .det-title {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .det-time {
+            text-align: right;
             font-size: 10px;
         }
-        .sig-line {
-            border-bottom: 1px solid #1a1a1a;
-            width: 160px;
-            margin: 48px auto 4px;
+
+        .det-body td {
+            vertical-align: top;
+        }
+        .det-heatmap-cell {
+            width: 40%;
+            padding-right: 14px;
+            vertical-align: middle;
+        }
+        .det-heatmap-cell img {
+            width: 100%;
+            max-width: 140px;
+            display: block;
+            border: 1px solid #000;
+            border-radius: 2px;
+        }
+        .det-heatmap-label {
+            font-size: 8px;
+            color: #000;
+            text-align: center;
+            margin-top: 3px;
         }
 
+        .sensor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
+        }
+        .sensor-table td {
+            text-align: center;
+            padding: 5px 4px;
+            border: 1px solid #999;
+            background: #f5f5f5;
+            color: #000;
+        }
+        .sensor-label {
+            font-size: 8px;
+            color: #000;
+            margin-bottom: 2px;
+        }
+        .sensor-value {
+            font-size: 11px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .alert-row {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .alert-row td {
+            border: 1px solid #000;
+            border-radius: 2px;
+            text-align: center;
+            padding: 6px;
+            font-weight: bold;
+            font-size: 10px;
+            color: #000;
+            background: #f0f0f0;
+        }
+
+        /* ===== TRAJECTORY ===== */
+        .traj-wrap {
+            border: 1px solid #000;
+            border-radius: 2px;
+            margin-bottom: 14px;
+            padding: 10px;
+        }
+        .traj-title {
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 8px;
+            color: #000;
+        }
+        .traj-img {
+            width: 100%;
+            display: block;
+            border: 1px solid #000;
+            border-radius: 2px;
+        }
+        .traj-legend {
+            font-size: 8px;
+            color: #000;
+            margin-top: 4px;
+        }
+        .traj-stats {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .traj-stats td {
+            width: 50%;
+            text-align: center;
+            padding: 6px;
+            border: 1px solid #999;
+            background: #f5f5f5;
+            color: #000;
+        }
+
+        /* ===== FOOTER ===== */
         .footer {
-            margin-top: 24px;
-            border-top: 1px solid #e5e7eb;
+            margin-top: 28px;
+            border-top: 1px solid #000;
             padding-top: 8px;
             text-align: center;
-            font-size: 7.5px;
-            color: #9ca3af;
+            font-size: 8px;
+            color: #000;
         }
     </style>
 </head>
@@ -197,98 +293,106 @@
 
 {{-- ===== KOP SURAT ===== --}}
 <div class="kop-wrap">
-    {{-- Logo --}}
-    <div class="kop-logo-cell">
-        {{-- Placeholder lingkaran jika tidak ada file logo --}}
-        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
-            <circle cx="36" cy="36" r="34" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-            <circle cx="36" cy="36" r="26" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-            <text x="36" y="30" text-anchor="middle" font-size="6" font-family="DejaVu Sans" font-weight="bold" fill="#1a1a1a">UNIVERSITAS</text>
-            <text x="36" y="40" text-anchor="middle" font-size="6" font-family="DejaVu Sans" font-weight="bold" fill="#1a1a1a">DIPONEGORO</text>
-            <text x="36" y="50" text-anchor="middle" font-size="5" font-family="DejaVu Sans" fill="#555">SEMARANG</text>
-        </svg>
-    </div>
-    {{-- Teks kop --}}
-    <div class="kop-text-cell">
-        <div class="kop-ministry">
-            KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET DAN TEKNOLOGI
+    <div class="kop-inner">
+        <div class="kop-logo-cell">
+            <img src="{{ public_path('images/kopsuratft.png') }}" alt="Logo Undip">
         </div>
-        <div class="kop-university">UNIVERSITAS DIPONEGORO</div>
-        <div class="kop-sub-line">
-            Departemen Teknik Elektro dan Teknologi Informasi &mdash; Fakultas Teknik
+        <div class="kop-text-cell">
+            <div class="kop-ministry">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</div>
+            <div class="kop-university">UNIVERSITAS DIPONEGORO</div>
+            <div class="kop-faculty">FAKULTAS TEKNIK</div>
+        </div>
+        <div class="kop-address-cell">
+            Jalan Prof. Sudarto, S.H.<br>
+            Tembalang Semarang KodePos 50275<br>
+            Tel. (024) 7460055, (024) 7460053<br>
+            Faks. (024) 7460053<br>
+            www.ft.undip.ac.id<br>
+            email: teknik@undip.ac.id
         </div>
     </div>
-    {{-- Alamat kanan --}}
-    <div class="kop-address-cell">
-        Gedung Departemen Teknik Elektro<br>
-        Jl. Prof. Sudharto, S.H., Tembalang<br>
-        Semarang 50275<br>
-        Telp. (024) 7460024<br>
-        www.undip.ac.id
+    <div class="kop-sub-line">
+        Departemen Teknik Elektro dan Teknologi Informasi
     </div>
 </div>
 
 {{-- ===== JUDUL DOKUMEN ===== --}}
 @php
-    $start = \Carbon\Carbon::parse($mission->started_at);
-    $end   = $mission->ended_at ? \Carbon\Carbon::parse($mission->ended_at) : now();
-    $diff  = $start->diff($end);
+    $start  = \Carbon\Carbon::parse($mission->started_at);
+    $end    = $mission->ended_at ? \Carbon\Carbon::parse($mission->ended_at) : now();
+    $diff   = $start->diff($end);
     $misiNo = str_pad($mission->mission_number, 3, '0', STR_PAD_LEFT);
 @endphp
 <div class="doc-title-block">
     <div class="doc-type">Berita Acara Operasi SAR</div>
-    <div class="doc-nomor">No. BA/CYR/{{ $misiNo }}/{{ $start->format('Y') }}</div>
-    <div class="doc-subject">
-        Operasi Deteksi Korban Bencana Menggunakan Cyborg Kecoa
-    </div>
+    <div class="doc-subject">Operasi Deteksi Korban Bencana Menggunakan Cyborg Kecoa</div>
 </div>
 
-{{-- ===== INFO MISI ===== --}}
-<div class="section-title">Informasi Misi</div>
+{{-- ===== INFORMASI MISI ===== --}}
+<div class="section-title">I. Informasi Misi</div>
 <table class="info-table">
-    <tr><td class="label">Nomor Misi</td><td class="value">Misi #{{ $misiNo }}</td></tr>
-    <tr><td class="label">Tanggal Operasi</td><td class="value">{{ $start->format('d F Y') }}</td></tr>
-    <tr><td class="label">Waktu Mulai</td><td class="value">{{ $start->format('H:i') }} WIB</td></tr>
-    <tr><td class="label">Waktu Selesai</td><td class="value">{{ $mission->ended_at ? $end->format('H:i').' WIB' : 'Masih berlangsung' }}</td></tr>
-    <tr><td class="label">Durasi Operasi</td><td class="value">{{ $diff->h > 0 ? $diff->h.'j ' : '' }}{{ $diff->i }}m {{ $diff->s }}d</td></tr>
-    <tr><td class="label">Status</td>
-        <td class="value">
-            <span class="badge {{ $mission->status === 'selesai' ? 'badge-green' : 'badge-amber' }}">
-                {{ $mission->status === 'selesai' ? 'Selesai' : 'Berlangsung' }}
-            </span>
-        </td>
+    <tr>
+        <td class="label">Nomor Misi</td>
+        <td class="sep">:</td>
+        <td class="value">Misi #{{ $misiNo }}</td>
+    </tr>
+    <tr>
+        <td class="label">Tanggal Operasi</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $start->translatedFormat('d F Y') }}</td>
+    </tr>
+    <tr>
+        <td class="label">Waktu Mulai</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $start->format('H:i') }} WIB</td>
+    </tr>
+    <tr>
+        <td class="label">Waktu Selesai</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $mission->ended_at ? $end->format('H:i').' WIB' : 'Masih berlangsung' }}</td>
+    </tr>
+    <tr>
+        <td class="label">Durasi Operasi</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $diff->h > 0 ? $diff->h.' jam ' : '' }}{{ $diff->i }} menit {{ $diff->s }} detik</td>
+    </tr>
+    <tr>
+        <td class="label">Status</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $mission->status === 'selesai' ? 'Selesai' : 'Masih Berlangsung' }}</td>
+    </tr>
+    <tr>
+        <td class="label">Ambang Batas Suhu</td>
+        <td class="sep">:</td>
+        <td class="value">37,5&deg;C</td>
     </tr>
 </table>
 
-{{-- ===== RINGKASAN ===== --}}
-<div class="section-title">Ringkasan Hasil Operasi</div>
+{{-- ===== RINGKASAN HASIL OPERASI ===== --}}
+<div class="section-title">II. Ringkasan Hasil Operasi</div>
 <table class="summary-table">
     <tr>
-        <td>
+        <td style="width:33%;">
             <div class="sum-label">Total Deteksi Korban</div>
-            <div class="sum-value" style="color:#dc2626;">{{ $mission->detections->count() }}</div>
+            <div class="sum-value">{{ $mission->detections->count() }}</div>
         </td>
-        <td>
+        <td style="width:33%;">
             <div class="sum-label">Kecoa Terlibat</div>
             <div class="sum-value">{{ $mission->detections->pluck('device_id')->unique()->count() }}</div>
         </td>
-        <td>
-            <div class="sum-label">Ambang Batas Suhu</div>
-            <div class="sum-value">37.5&deg;C</div>
-        </td>
-        <td>
-            <div class="sum-label">Dicetak</div>
-            <div style="font-size:10px; font-weight:bold; margin-top:4px;">{{ now()->format('d M Y') }}</div>
+        <td style="width:34%;">
+            <div class="sum-label">Tanggal Cetak</div>
+            <div style="font-size:11px; font-weight:bold; margin-top:4px;">{{ now()->translatedFormat('d F Y') }}</div>
         </td>
     </tr>
 </table>
 
-{{-- ===== RIWAYAT DETEKSI ===== --}}
-<div class="section-title">Riwayat Deteksi Korban</div>
+{{-- ===== RIWAYAT DETEKSI KORBAN ===== --}}
+<div class="section-title">III. Riwayat Deteksi Korban</div>
 
 @if($mission->detections->isEmpty())
-    <p style="text-align:center; color:#6b7280; font-style:italic; padding:16px 0;">
-        Tidak ada deteksi korban pada misi ini.
+    <p style="color:#000; font-style:italic; padding:12px 0; text-align:center;">
+        Tidak ada deteksi korban yang tercatat pada misi ini.
     </p>
 @else
     @foreach($mission->detections as $i => $d)
@@ -296,77 +400,129 @@
         $devNum = ltrim(str_replace('kecoa_', '', $d->device_id), '0');
     @endphp
     <div class="detection-wrap">
-        <table><tr class="det-header">
-            <td class="det-title">Deteksi #{{ $i+1 }} &mdash; Kecoa #{{ $devNum }}</td>
-            <td class="det-time">{{ \Carbon\Carbon::parse($d->detected_at)->format('d M Y, H:i:s') }} WIB</td>
-        </tr></table>
 
-        <table><tr class="det-body">
-            <td class="det-heatmap">
-                @if(isset($heatmaps[$d->id]))
-                    <img src="{{ $heatmaps[$d->id] }}" alt="Thermal Heatmap">
-                @else
-                    <div style="height:80px; background:#f3f4f6; border:1px solid #e5e7eb; text-align:center; line-height:80px; color:#9ca3af; font-size:9px;">
-                        Tidak ada data thermal
-                    </div>
-                @endif
-            </td>
-            <td style="vertical-align:top;">
-                <table class="imu-table" style="margin-bottom:6px;">
-                    <tr>
-                        <td><div class="imu-label">Pitch</div><div class="imu-value">{{ number_format($d->pitch,1) }}&deg;</div></td>
-                        <td><div class="imu-label">Roll</div><div class="imu-value">{{ number_format($d->roll,1) }}&deg;</div></td>
-                        <td><div class="imu-label">Yaw</div><div class="imu-value">{{ number_format($d->yaw,1) }}&deg;</div></td>
-                    </tr>
-                </table>
-                <table class="imu-table" style="margin-bottom:6px;">
-                    <tr>
-                        <td><div class="imu-label">Suhu Maks</div><div class="imu-value" style="color:#dc2626;">{{ number_format($d->suhu_max,1) }}&deg;C</div></td>
-                        <td><div class="imu-label">Suhu Min</div><div class="imu-value" style="color:#2563eb;">{{ number_format($d->suhu_min,1) }}&deg;C</div></td>
-                    </tr>
-                </table>
-                <table class="imu-table">
-                    <tr>
-                        <td><div class="imu-label">Gyro X</div><div class="imu-value">{{ number_format($d->gyro_x??0,1) }}</div></td>
-                        <td><div class="imu-label">Gyro Y</div><div class="imu-value">{{ number_format($d->gyro_y??0,1) }}</div></td>
-                        <td><div class="imu-label">Gyro Z</div><div class="imu-value">{{ number_format($d->gyro_z??0,1) }}</div></td>
-                    </tr>
-                </table>
-            </td>
-        </tr></table>
+        {{-- Header deteksi --}}
+        <table class="det-header">
+            <tr>
+                <td class="det-title">Deteksi #{{ $i + 1 }} &mdash; Kecoa #{{ $devNum }}</td>
+                <td class="det-time">{{ \Carbon\Carbon::parse($d->detected_at)->translatedFormat('d F Y, H:i:s') }} WIB</td>
+            </tr>
+        </table>
 
-        <table style="margin-top:8px;"><tr class="alert-row">
-            <td>&#9888; Terindikasi keberadaan korban hidup &mdash; suhu tubuh terdeteksi melebihi ambang batas 37.5&deg;C</td>
-        </tr></table>
+        {{-- Body: thermal + sensor data --}}
+        <table>
+            <tr class="det-body">
+                <td class="det-heatmap-cell">
+                    @if(isset($heatmaps[$d->id]))
+                        <img src="{{ $heatmaps[$d->id] }}" alt="Thermal Heatmap">
+                        <div class="det-heatmap-label">Thermal Heatmap AMG8833 8&times;8</div>
+                    @else
+                        <div style="height:100px; border:1px solid #000; text-align:center; line-height:100px; font-size:9px; color:#555;">
+                            Tidak ada data thermal
+                        </div>
+                    @endif
+                </td>
+                <td style="vertical-align:top;">
+
+                    {{-- IMU Data --}}
+                    <table class="sensor-table" style="margin-bottom:6px;">
+                        <tr>
+                            <td>
+                                <div class="sensor-label">Pitch</div>
+                                <div class="sensor-value">{{ number_format($d->pitch, 1) }}&deg;</div>
+                            </td>
+                            <td>
+                                <div class="sensor-label">Roll</div>
+                                <div class="sensor-value">{{ number_format($d->roll, 1) }}&deg;</div>
+                            </td>
+                            <td>
+                                <div class="sensor-label">Yaw</div>
+                                <div class="sensor-value">{{ number_format($d->yaw, 1) }}&deg;</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    {{-- Suhu --}}
+                    <table class="sensor-table" style="margin-bottom:6px;">
+                        <tr>
+                            <td>
+                                <div class="sensor-label">Suhu Maksimum</div>
+                                <div class="sensor-value">{{ number_format($d->suhu_max, 1) }}&deg;C</div>
+                            </td>
+                            <td>
+                                <div class="sensor-label">Suhu Minimum</div>
+                                <div class="sensor-value">{{ number_format($d->suhu_min, 1) }}&deg;C</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    {{-- Gyro --}}
+                    <table class="sensor-table">
+                        <tr>
+                            <td>
+                                <div class="sensor-label">Gyro X</div>
+                                <div class="sensor-value">{{ number_format($d->gyro_x ?? 0, 1) }}</div>
+                            </td>
+                            <td>
+                                <div class="sensor-label">Gyro Y</div>
+                                <div class="sensor-value">{{ number_format($d->gyro_y ?? 0, 1) }}</div>
+                            </td>
+                            <td>
+                                <div class="sensor-label">Gyro Z</div>
+                                <div class="sensor-value">{{ number_format($d->gyro_z ?? 0, 1) }}</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+
+        {{-- Alert --}}
+        <table class="alert-row">
+            <tr>
+                <td>
+                    &#9888;&nbsp; Terindikasi keberadaan korban hidup &mdash;
+                    suhu tubuh terdeteksi melebihi ambang batas 37,5&deg;C
+                </td>
+            </tr>
+        </table>
+
     </div>
     @endforeach
 @endif
 
-{{-- ===== TRAJECTORY ===== --}}
+{{-- ===== REKAP TRAJECTORY ===== --}}
 @if(!empty($trajectories))
-<div class="section-title">Rekap Trajectory per Kecoa</div>
+<div class="section-title">IV. Rekap Trajectory Pergerakan Kecoa</div>
+<p style="font-size:10px; color:#000; margin-bottom:12px; line-height:1.6;">
+    Berikut adalah peta pergerakan kecoa selama operasi berlangsung berdasarkan data IMU (Inertial Measurement Unit).
+    Sumbu X merepresentasikan nilai Roll dan sumbu Y merepresentasikan nilai Pitch.
+</p>
+
 @foreach($trajectories as $deviceId => $imgBase64)
 @php
-    $devNum  = ltrim(str_replace('kecoa_', '', $deviceId), '0');
-    $telem   = $telemetryPdf[$deviceId] ?? [];
-    $avgSig  = isset($telem['avg_signal'])       ? number_format($telem['avg_signal'], 1).'%'     : '—';
-    $distM   = isset($telem['distance_total_m']) ? number_format($telem['distance_total_m'], 2).' m' : '—';
+    $devNum = ltrim(str_replace('kecoa_', '', $deviceId), '0');
+    $telem  = $telemetryPdf[$deviceId] ?? [];
+    $avgSig = isset($telem['avg_signal'])       ? number_format($telem['avg_signal'], 1).'%'       : '—';
+    $distM  = isset($telem['distance_total_m']) ? number_format($telem['distance_total_m'], 2).' m' : '—';
 @endphp
-<div style="border:1px solid #e5e7eb; border-left:3px solid #7f1d1d; border-radius:3px; margin-bottom:12px; padding:10px;">
-    <div style="font-weight:bold; font-size:10px; margin-bottom:6px;">Kecoa #{{ $devNum }}</div>
-    <img src="{{ $imgBase64 }}" alt="Trajectory" style="width:100%; display:block; border-radius:3px; border:1px solid #e5e7eb;">
-    <div style="font-size:8px; color:#6b7280; margin-top:4px;">
-        Sumbu X = Roll &nbsp;|&nbsp; Sumbu Y = Pitch &nbsp;|&nbsp; &#9679; Hijau = START &nbsp;|&nbsp; &#9679; Merah = Posisi terakhir
+<div class="traj-wrap">
+    <div class="traj-title">Kecoa #{{ $devNum }}</div>
+    <img src="{{ $imgBase64 }}" alt="Trajectory Kecoa #{{ $devNum }}" class="traj-img">
+    <div class="traj-legend">
+        Sumbu X = Roll &nbsp;|&nbsp; Sumbu Y = Pitch &nbsp;|&nbsp;
+        &#9679; Hijau = Posisi Awal (START) &nbsp;|&nbsp; &#9679; Merah = Posisi Terakhir
     </div>
-    <table style="width:100%; border-collapse:collapse; margin-top:8px;">
+    <table class="traj-stats">
         <tr>
-            <td style="width:50%; text-align:center; padding:6px; background:#f3f4f6; border:1px solid #e5e7eb;">
-                <div style="font-size:8px; color:#6b7280; margin-bottom:2px;">Rata-rata Kekuatan Sinyal</div>
-                <div style="font-size:11px; font-weight:bold;">{{ $avgSig }}</div>
+            <td>
+                <div style="font-size:9px; color:#000; margin-bottom:2px;">Rata-rata Kekuatan Sinyal</div>
+                <div style="font-size:12px; font-weight:bold;">{{ $avgSig }}</div>
             </td>
-            <td style="width:50%; text-align:center; padding:6px; background:#f3f4f6; border:1px solid #e5e7eb;">
-                <div style="font-size:8px; color:#6b7280; margin-bottom:2px;">Total Jarak Tempuh</div>
-                <div style="font-size:11px; font-weight:bold;">{{ $distM }}</div>
+            <td>
+                <div style="font-size:9px; color:#000; margin-bottom:2px;">Total Jarak Tempuh</div>
+                <div style="font-size:12px; font-weight:bold;">{{ $distM }}</div>
             </td>
         </tr>
     </table>
@@ -374,29 +530,11 @@
 @endforeach
 @endif
 
-{{-- ===== TANDA TANGAN ===== --}}
-<div class="signature-wrap">
-    <div class="sig-cell">
-        <div>Semarang, {{ now()->format('d F Y') }}</div>
-        <div style="margin-top:4px; font-size:9px; color:#6b7280;">Peneliti / Operator</div>
-        <div class="sig-line"></div>
-        <div style="font-size:9px;">Muhammad Afiq</div>
-        <div style="font-size:8px; color:#6b7280;">Mahasiswa Teknik Elektro &mdash; Undip</div>
-    </div>
-    <div class="sig-cell">
-        <div>Mengetahui,</div>
-        <div style="margin-top:4px; font-size:9px; color:#6b7280;">Dosen Pembimbing</div>
-        <div class="sig-line"></div>
-        <div style="font-size:9px;">________________________</div>
-        <div style="font-size:8px; color:#6b7280;">NIP.</div>
-    </div>
-</div>
-
 {{-- ===== FOOTER ===== --}}
 <div class="footer">
     Dokumen ini digenerate secara otomatis oleh sistem CyRoach Monitoring Dashboard &mdash;
     Universitas Diponegoro, Departemen Teknik Elektro dan Teknologi Informasi &mdash; TA 2025/2026<br>
-    Dicetak pada {{ now()->format('d M Y, H:i') }} WIB
+    Dicetak pada {{ now()->translatedFormat('d F Y, H:i') }} WIB
 </div>
 
 </body>
