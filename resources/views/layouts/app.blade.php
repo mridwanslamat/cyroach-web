@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#7f1d1d">
     <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="/images/logo-cyroach.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     @stack('head')
