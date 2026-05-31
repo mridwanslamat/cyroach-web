@@ -39,7 +39,7 @@
                         Proyek ini dikembangkan sebagai respons atas keterbatasan metode konvensional yang tidak mampu menjangkau celah sempit dan area tertutup pascabencana. Sistem Cyborg Kecoa Madagaskar dirancang sebagai solusi alternatif inovatif untuk mendukung operasi pencarian dan penyelamatan korban di area reruntuhan yang kompleks dan berbahaya bagi tim SAR.
                     </p>
                     <p class="text-sm cyroach-text leading-relaxed mb-3">
-                        Sistem ini mengintegrasikan tiga komponen utama secara sinergis: <strong class="cyroach-text">elektronik miniatur berbasis mikrokontroler</strong> yang terpasang pada platform biologis kecoa, <strong class="cyroach-text">aplikasi mobile</strong> untuk pengendalian dan pemantauan real-time, serta <strong class="cyroach-text">sistem web monitoring</strong> untuk visualisasi data dan koordinasi tim penyelamat.
+                        Sistem ini mengintegrasikan tiga komponen utama secara sinergis, <strong class="cyroach-text">elektronik miniatur berbasis mikrokontroler</strong> yang terpasang pada platform biologis kecoa, <strong class="cyroach-text">aplikasi mobile</strong> untuk pengendalian dan pemantauan real-time, serta <strong class="cyroach-text">sistem web monitoring</strong> untuk visualisasi data dan koordinasi tim penyelamat.
                     </p>
                     <p class="text-sm cyroach-text leading-relaxed">
                         Beroperasi secara <em>human-in-the-loop</em>, sistem ini memanfaatkan kemampuan alami kecoa Madagaskar yang tangguh dan hemat biaya untuk mempercepat pencarian korban dalam fase kritis <strong class="cyroach-text">72 jam pertama</strong> pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan.
@@ -66,7 +66,7 @@
                             </svg>
                         </div>
                         <div class="text-sm font-semibold cyroach-text mb-2">Thermal Imaging</div>
-                        <div class="text-xs cyroach-muted leading-relaxed">Deteksi keberadaan korban secara real-time melalui sensor panas tubuh dengan threshold 37.5°C, membedakan manusia dari objek lain di bawah reruntuhan.</div>
+                        <div class="text-xs cyroach-muted leading-relaxed">Deteksi keberadaan korban secara real-time melalui sensor panas tubuh dengan threshold <strong class="cyroach-text">37.5°C</strong>, membedakan manusia dari objek lain di bawah reruntuhan.</div>
                     </div>
 
                     <div class="cy-card p-4">
@@ -130,10 +130,6 @@
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Mikrofon</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">INMP441</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
-                        <span class="text-xs cyroach-muted">Threshold Suhu</span>
-                        <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
                     </div>
                     <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— SYSTEM INFO</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
