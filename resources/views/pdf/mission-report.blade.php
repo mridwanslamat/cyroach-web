@@ -15,62 +15,11 @@
         /* ===== KOP SURAT ===== */
         .kop-wrap {
             width: 100%;
-            border-bottom: 3px solid #000000;
-            padding-bottom: 8px;
             margin-bottom: 4px;
         }
-        .kop-inner {
-            display: table;
+        .kop-wrap img {
             width: 100%;
-        }
-        .kop-logo-cell {
-            display: table-cell;
-            width: 90px;
-            vertical-align: middle;
-            padding-right: 12px;
-        }
-        .kop-logo-cell img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
-        .kop-text-cell {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        .kop-ministry {
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.2px;
-            line-height: 1.4;
-            color: #000;
-        }
-        .kop-university {
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #000;
-            margin-top: 2px;
-            line-height: 1.2;
-        }
-        .kop-faculty {
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #000;
-            line-height: 1.2;
-        }
-        .kop-address-cell {
-            display: table-cell;
-            width: 220px;
-            vertical-align: middle;
-            text-align: right;
-            font-size: 8px;
-            color: #000;
-            line-height: 1.6;
-            padding-left: 12px;
-            border-left: 1px solid #555;
+            display: block;
         }
         .kop-sub-line {
             border-top: 1px solid #000;
@@ -293,27 +242,7 @@
 
 {{-- ===== KOP SURAT ===== --}}
 <div class="kop-wrap">
-    <div class="kop-inner">
-        <div class="kop-logo-cell">
-            <img src="{{ public_path('images/kopsuratft.png') }}" alt="Logo Undip">
-        </div>
-        <div class="kop-text-cell">
-            <div class="kop-ministry">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</div>
-            <div class="kop-university">UNIVERSITAS DIPONEGORO</div>
-            <div class="kop-faculty">FAKULTAS TEKNIK</div>
-        </div>
-        <div class="kop-address-cell">
-            Jalan Prof. Sudarto, S.H.<br>
-            Tembalang Semarang KodePos 50275<br>
-            Tel. (024) 7460055, (024) 7460053<br>
-            Faks. (024) 7460053<br>
-            www.ft.undip.ac.id<br>
-            email: teknik@undip.ac.id
-        </div>
-    </div>
-    <div class="kop-sub-line">
-        Departemen Teknik Elektro dan Teknologi Informasi
-    </div>
+    <img src="{{ public_path('images/kopsuratft.png') }}" alt="Kop Surat Fakultas Teknik Undip">
 </div>
 
 {{-- ===== JUDUL DOKUMEN ===== --}}
@@ -533,7 +462,7 @@
 {{-- ===== FOOTER ===== --}}
 <div class="footer">
     Dokumen ini digenerate secara otomatis oleh sistem CyRoach Monitoring Dashboard &mdash;
-    Universitas Diponegoro, Departemen Teknik Elektro dan Teknologi Informasi &mdash; TA 2025/2026<br>
+    Universitas Diponegoro, Departemen Teknik Elektro &mdash; TA 2025/2026<br>
     Dicetak pada {{ now()->translatedFormat('d F Y, H:i') }} WIB
 </div>
 
