@@ -50,22 +50,45 @@
 
                 <div class="grid grid-cols-2 gap-4 flex-1">
 
-                    <div class="cy-card p-4 flex flex-col items-center justify-center">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5 self-start" style="font-family:var(--font-mono);font-size:10px;">
+                    {{-- Thermal Analytics --}}
+                    <div class="cy-card p-4 flex flex-col">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                             Thermal Analytics
                         </div>
-                        <div class="rounded-lg overflow-hidden border cyroach-border" style="background:#000;width:180px;height:180px;">
-                            <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
+                        <div class="rounded-lg overflow-hidden border cyroach-border flex-1" style="background:#000;min-height:160px;">
+                            <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
                         </div>
                         <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
                     </div>
 
-                    <div class="cy-card p-4 flex flex-col justify-center">
-                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
-                        <blockquote class="text-sm font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
+                    {{-- System Purpose --}}
+                    <div class="cy-card p-4 flex flex-col">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            System Purpose
+                        </div>
+                        <blockquote class="text-sm font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4 mb-4" style="border-color:var(--accent);">
                             "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
                         </blockquote>
+                        <div class="flex flex-col gap-2.5 mt-auto">
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
+                                <span class="text-xs cyroach-muted leading-relaxed">Beroperasi di area reruntuhan yang tidak dapat dijangkau manusia maupun robot konvensional</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
+                                <span class="text-xs cyroach-muted leading-relaxed">Meminimalkan risiko keselamatan petugas SAR di zona berbahaya pascabencana</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
+                                <span class="text-xs cyroach-muted leading-relaxed">Solusi hemat biaya dengan kemampuan manuver biologis yang tidak tertandingi perangkat mekanik</span>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-1.5"></span>
+                                <span class="text-xs cyroach-muted leading-relaxed">Integrasi multi-disiplin sebagai kontribusi nyata bagi riset bio-robotika dan teknologi kebencanaan Indonesia</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -78,7 +101,7 @@
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
                     <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Engineering Profile</span>
                 </div>
-                <div class="flex flex-col">
+                < class="flex flex-col">
                     <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— WEB & BACKEND</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Framework</span>
@@ -122,7 +145,22 @@
                         <span class="text-xs cyroach-muted">Threshold Suhu</span>
                         <span class="text-xs font-semibold text-red-400" style="font-family:var(--font-mono);">37.5°C</span>
                     </div>
+                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border mt-1" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— SYSTEM INFO</div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Versi</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">CyRoach v1.0</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b cyroach-border">
+                        <span class="text-xs cyroach-muted">Komunikasi</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">2.4GHz NRF24</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-xs cyroach-muted">Tahun</span>
+                        <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">TA 2025/2026</span>
+                    </div>
                 </div>
+            </div>
+                
             </div>
 
         </div>
@@ -195,7 +233,9 @@ const demoGrid = Array.from({length:8},(_,r)=>
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const W=180; const H=180;
+    const rect=canvas.getBoundingClientRect();
+    const W=Math.round(rect.width)||180;
+    const H=Math.round(rect.height)||180;
     canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
