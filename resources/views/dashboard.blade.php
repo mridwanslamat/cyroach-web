@@ -81,7 +81,7 @@
                     Indikasi keberadaan korban ditentukan berdasarkan pola distribusi panas yang terdeteksi oleh grid sensor.
                 </div>
             </div>
-            <div class="hidden sm:block shrink-0 rounded-lg overflow-hidden" style="width:160px;height:100px;">
+            <div class="shrink-0 rounded-lg overflow-hidden" style="width:160px;height:100px;">
                 <img src="/images/illustration-rubble.png"
                     alt="Ilustrasi reruntuhan"
                     id="rubble-illustration"
@@ -141,18 +141,18 @@
         </div>
 
         {{-- Modal Body --}}
-        <div class="p-4 md:p-6 flex flex-col lg:flex-row gap-5 items-start overflow-y-auto" style="max-height:85vh;">
+        <div class="p-6 flex gap-5 items-start">
 
             {{-- KOLOM 1: Thermal 480x480 fixed --}}
-            <div class="flex flex-col gap-2 w-full lg:w-auto lg:shrink-0">
+            <div class="flex flex-col gap-2 shrink-0">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Kamera Thermal</div>
-                <div class="rounded-lg overflow-hidden border cyroach-border" style="width:100%;max-width:480px;aspect-ratio:1/1;">
-                    <canvas id="modal-canvas" width="480" height="480" style="display:block;width:100%;height:100%;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border" style="width:480px;height:480px;">
+                    <canvas id="modal-canvas" width="480" height="480" style="display:block;width:480px;height:480px;"></canvas>
                 </div>
             </div>
 
             {{-- KOLOM 2: Sensor Data --}}
-            <div class="flex flex-col gap-3 flex-1 min-w-0 w-full">
+            <div class="flex flex-col gap-3 flex-1 min-w-0">
 
                 <div>
                     <div class="text-xs cyroach-muted uppercase tracking-widest flex items-center gap-1.5 mb-2" style="font-family:var(--font-mono);font-size:10px;">
@@ -247,7 +247,7 @@
             </div>
 
             {{-- KOLOM 3: Trajectory 480x480 fixed --}}
-            <div class="hidden lg:flex flex-col gap-2 shrink-0">
+            <div class="flex flex-col gap-2 shrink-0">
                 <div class="text-xs cyroach-muted uppercase tracking-widest" style="font-family:var(--font-mono);font-size:10px;">Trajectory Map</div>
                 <div class="rounded-lg border cyroach-border overflow-hidden" style="width:480px;height:480px;position:relative;">
                     <canvas id="modal-trajectory" width="480" height="480" style="position:absolute;top:0;left:0;width:480px;height:480px;display:block;"></canvas>
@@ -329,3 +329,19 @@ window.openModal = function(deviceId) {
 
 </script>
 @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

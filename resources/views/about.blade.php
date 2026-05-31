@@ -24,7 +24,7 @@
     <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
         {{-- ROW 1: Kiri (Overview + Thermal + System Purpose) | Kanan (Engineering Profile) --}}
-        <div class="grid gap-5 items-start grid-cols-1 lg:grid-cols-[1fr_320px]">
+        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
 
             {{-- KOLOM KIRI --}}
             <div class="flex flex-col gap-4 h-full">
@@ -47,7 +47,7 @@
                 </div>
 
                 {{-- 3 Feature Cards --}}
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="grid grid-cols-3 gap-4">
 
                     <div class="cy-card p-4">
                         <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
@@ -152,3 +152,19 @@
 
 </div>
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

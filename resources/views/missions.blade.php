@@ -4,7 +4,7 @@
 @section('page-title', 'Mission History')
 
 @section('content')
-<div class="p-4 md:p-6 max-w-5xl mx-auto">
+<div class="p-6 max-w-5xl mx-auto">
 
     {{-- STAT SUMMARY --}}
     <div class="grid grid-cols-3 gap-3 mb-6">
@@ -53,7 +53,7 @@
     </div>
 
     {{-- FILTER BAR --}}
-    <div class="cy-card p-3 mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+    <div class="cy-card p-3 mb-4 flex items-center gap-2 flex-wrap">
         <div class="flex items-center gap-2 flex-1 min-w-48" style="background-color: var(--bg-raised); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0 0.75rem;">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-muted shrink-0">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -89,26 +89,24 @@
 
     {{-- TABLE --}}
     <div class="cy-card overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs min-w-[600px]">
-                <thead>
-                    <tr class="border-b cyroach-border" style="background-color: var(--bg-raised);">
-                        <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Mission ID</th>
-                        <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Waktu & Tanggal</th>
-                        <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Durasi</th>
-                        <th class="text-center px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Korban</th>
-                        <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Suhu Maks</th>
-                        <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Status</th>
-                        <th class="px-4 py-3"></th>
-                    </tr>
-                </thead>
-                <tbody id="missions-list">
-                    <tr>
-                        <td colspan="7" class="text-center py-10 cyroach-muted font-mono text-xs">Memuat data misi...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="w-full text-xs">
+            <thead>
+                <tr class="border-b cyroach-border" style="background-color: var(--bg-raised);">
+                    <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Mission ID</th>
+                    <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Waktu & Tanggal</th>
+                    <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Durasi</th>
+                    <th class="text-center px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Korban</th>
+                    <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Suhu Maks</th>
+                    <th class="text-left px-4 py-3 font-mono cyroach-muted uppercase tracking-widest font-medium">Status</th>
+                    <th class="px-4 py-3"></th>
+                </tr>
+            </thead>
+            <tbody id="missions-list">
+                <tr>
+                    <td colspan="7" class="text-center py-10 cyroach-muted font-mono text-xs">Memuat data misi...</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     {{-- PAGINATION --}}
@@ -313,3 +311,19 @@ document.getElementById('filter-status').addEventListener('change', filterAndRen
 document.getElementById('search-input').addEventListener('input', filterAndRender);
 </script>
 @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -27,7 +27,7 @@
     </div>
 
     {{-- SUMMARY CARDS --}}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+    <div class="grid grid-cols-3 gap-3 mb-6">
         <div class="cy-card p-4 text-center">
             <div class="text-xs font-mono cyroach-muted uppercase tracking-widest mb-2">Durasi Misi</div>
             <div class="text-2xl font-display font-bold cyroach-text" id="sum-durasi">—</div>
@@ -309,9 +309,9 @@ function renderDetections(detections) {
                 </div>
                 <div class="text-xs font-mono cyroach-muted">${new Date(d.detected_at).toLocaleString('id-ID')}</div>
             </div>
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex gap-4">
                 {{-- Thermal --}}
-                <div class="shrink-0 rounded-lg overflow-hidden border cyroach-border relative" style="width:100%;max-width:180px;height:180px;">
+                <div class="shrink-0 rounded-lg overflow-hidden border cyroach-border relative" style="width:180px;height:180px;">
                     <canvas class="detection-hmap block" data-idx="${idx}" width="180" height="180"></canvas>
                 </div>
                 {{-- Data --}}
@@ -462,3 +462,19 @@ fetch(`/api/missions/${missionId}`)
     });
 </script>
 @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
