@@ -26,27 +26,50 @@
 
     <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
-        {{-- ROW 1: Overview + Engineering Profile --}}
+        {{-- ROW 1: Kiri (Overview+Thermal) | Kanan (Engineering Profile) --}}
         <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
 
-            {{-- Project Overview --}}
-            <div class="cy-card p-5">
-                <div class="flex items-center gap-2 mb-4">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                    <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
+            {{-- Kiri: Overview + Thermal Analytics --}}
+            <div class="flex flex-col gap-4">
+
+                <div class="cy-card p-5">
+                    <div class="flex items-center gap-2 mb-4">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                        <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
+                    </div>
+                    <p class="text-sm cyroach-text leading-relaxed mb-3">
+                        Proyek ini dikembangkan sebagai respons atas keterbatasan metode konvensional yang tidak mampu menjangkau celah sempit dan area tertutup pascabencana. Sistem Cyborg Kecoa Madagaskar dirancang sebagai solusi alternatif inovatif untuk mendukung operasi pencarian dan penyelamatan korban di area reruntuhan yang kompleks dan berbahaya bagi tim SAR.
+                    </p>
+                    <p class="text-sm cyroach-text leading-relaxed mb-3">
+                        Sistem ini mengintegrasikan tiga komponen utama secara sinergis: <strong class="cyroach-text">elektronik miniatur berbasis mikrokontroler</strong> yang terpasang pada platform biologis kecoa, <strong class="cyroach-text">aplikasi mobile</strong> untuk pengendalian dan pemantauan real-time, serta <strong class="cyroach-text">sistem web monitoring</strong> untuk visualisasi data dan koordinasi tim penyelamat.
+                    </p>
+                    <p class="text-sm cyroach-text leading-relaxed">
+                        Beroperasi secara <em>human-in-the-loop</em>, sistem ini memanfaatkan kemampuan alami kecoa Madagaskar yang tangguh dan hemat biaya untuk mempercepat pencarian korban dalam fase kritis <strong class="cyroach-text">72 jam pertama</strong> pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan.
+                    </p>
                 </div>
-                <p class="text-sm cyroach-text leading-relaxed mb-3">
-                    Proyek ini dikembangkan sebagai respons atas keterbatasan metode konvensional yang tidak mampu menjangkau celah sempit dan area tertutup pascabencana. Sistem Cyborg Kecoa Madagaskar dirancang sebagai solusi alternatif inovatif untuk mendukung operasi pencarian dan penyelamatan korban di area reruntuhan yang kompleks dan berbahaya bagi tim SAR.
-                </p>
-                <p class="text-sm cyroach-text leading-relaxed mb-3">
-                    Sistem ini mengintegrasikan tiga komponen utama secara sinergis: <strong class="cyroach-text">elektronik miniatur berbasis mikrokontroler</strong> yang terpasang pada platform biologis kecoa, <strong class="cyroach-text">aplikasi mobile</strong> untuk pengendalian dan pemantauan real-time, serta <strong class="cyroach-text">sistem web monitoring</strong> untuk visualisasi data dan koordinasi tim penyelamat.
-                </p>
-                <p class="text-sm cyroach-text leading-relaxed">
-                    Beroperasi secara <em>human-in-the-loop</em>, sistem ini memanfaatkan kemampuan alami kecoa Madagaskar yang tangguh dan hemat biaya untuk mempercepat pencarian korban dalam fase kritis <strong class="cyroach-text">72 jam pertama</strong> pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan.
-                </p>
+
+                <div class="cy-card p-4 flex items-center gap-5">
+                    <div class="shrink-0">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-2 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                            Thermal Analytics
+                        </div>
+                        <div class="rounded-lg overflow-hidden border cyroach-border" style="background:#000;width:180px;height:180px;">
+                            <canvas id="about-thermal" width="180" height="180" style="display:block;width:180px;height:180px;"></canvas>
+                        </div>
+                        <div class="text-xs cyroach-muted text-center mt-2" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-xs cyroach-muted uppercase tracking-widest mb-2" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
+                        <blockquote class="text-sm font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
+                            "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
+                        </blockquote>
+                    </div>
+                </div>
+
             </div>
 
-            {{-- Engineering Profile --}}
+            {{-- Kanan: Engineering Profile --}}
             <div class="cy-card p-4">
                 <div class="flex items-center gap-2 mb-3">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
@@ -98,24 +121,12 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
-        {{-- ROW 2: Thermal + 3 Feature Cards (4 kolom sejajar) --}}
-        <div class="grid grid-cols-4 gap-4 items-start">
+        {{-- ROW 2: 3 Feature Cards full width --}}
+        <div class="grid grid-cols-3 gap-4">
 
-            {{-- Thermal Analytics --}}
-            <div class="cy-card p-4 flex flex-col">
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
-                    Thermal Analytics
-                </div>
-                <div class="rounded-lg overflow-hidden border cyroach-border mb-2" style="background:#000;width:200px;height:200px;">
-                    <canvas id="about-thermal" width="200" height="200" style="display:block;width:200px;height:200px;"></canvas>
-                </div>
-                <div class="text-xs cyroach-muted text-center" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
-            </div>
-
-            {{-- Bio-Hybrid Control --}}
             <div class="cy-card p-4">
                 <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
@@ -123,10 +134,9 @@
                     </svg>
                 </div>
                 <div class="text-sm font-semibold cyroach-text mb-2">Bio-Hybrid Control</div>
-                <div class="text-xs cyroach-muted leading-relaxed">Neural interfacing untuk navigasi presisi melalui stimulasi antena serangga secara artifisial.</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Memanfaatkan kecoa Madagaskar sebagai platform biologis yang tangguh, hemat biaya, dan mampu menjangkau ruang sempit yang tidak dapat dijangkau perangkat mekanik konvensional.</div>
             </div>
 
-            {{-- Thermal Imaging --}}
             <div class="cy-card p-4">
                 <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8">
@@ -134,10 +144,9 @@
                     </svg>
                 </div>
                 <div class="text-sm font-semibold cyroach-text mb-2">Thermal Imaging</div>
-                <div class="text-xs cyroach-muted leading-relaxed">Deteksi panas tubuh real-time dengan algoritma filtering untuk membedakan manusia dari objek lain.</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Deteksi keberadaan korban secara real-time melalui sensor panas tubuh dengan threshold 37.5°C, membedakan manusia dari objek lain di bawah reruntuhan.</div>
             </div>
 
-            {{-- Trajectory Analysis --}}
             <div class="cy-card p-4">
                 <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8">
@@ -146,17 +155,9 @@
                     </svg>
                 </div>
                 <div class="text-sm font-semibold cyroach-text mb-2">Trajectory Analysis</div>
-                <div class="text-xs cyroach-muted leading-relaxed">Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir di bawah reruntuhan.</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir, mendukung koordinasi tim SAR dalam operasi pencarian di medan yang kompleks.</div>
             </div>
 
-        </div>
-
-        {{-- ROW 3: System Purpose full width --}}
-        <div class="cy-card p-5">
-            <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
-            <blockquote class="text-base font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
-                "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
-            </blockquote>
         </div>
 
     </div>
@@ -191,7 +192,7 @@ const demoGrid = Array.from({length:8},(_,r)=>
 requestAnimationFrame(()=>{
     const canvas=document.getElementById('about-thermal');
     if(!canvas)return;
-    const W=200; const H=200;
+    const W=180; const H=180;
     canvas.width=W; canvas.height=H;
     const flat=demoGrid.flat();
     const mn=Math.min(...flat),mx=Math.max(...flat);
