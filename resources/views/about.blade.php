@@ -24,17 +24,15 @@
         </div>
     </div>
 
-    <div class="p-6 flex flex-col gap-5 max-w-6xl">
+    <div class="p-6 flex flex-col gap-5" style="max-width:1200px;">
 
-        {{-- ROW 1: Overview + Engineering Profile side by side --}}
-        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 300px;">
+        {{-- ROW 1: Overview + Engineering Profile --}}
+        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 320px;">
 
-            {{-- Kiri: Project Overview --}}
+            {{-- Project Overview --}}
             <div class="cy-card p-5">
                 <div class="flex items-center gap-2 mb-4">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
-                    </svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                     <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Project Overview</span>
                 </div>
                 <p class="text-sm cyroach-text leading-relaxed mb-3">
@@ -48,11 +46,14 @@
                 </p>
             </div>
 
-            {{-- Kanan: Engineering Profile --}}
+            {{-- Engineering Profile --}}
             <div class="cy-card p-4">
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">Engineering Profile</div>
-                <div class="flex flex-col gap-0">
-                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Web & Backend</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cyroach-accent-text"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                    <span class="text-xs font-semibold cyroach-accent-text uppercase tracking-widest" style="font-family:var(--font-mono);">Engineering Profile</span>
+                </div>
+                <div class="flex flex-col">
+                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— WEB & BACKEND</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Framework</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Laravel + MySQL</span>
@@ -61,7 +62,7 @@
                         <span class="text-xs cyroach-muted">Styling</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Tailwind CSS</span>
                     </div>
-                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Mobile</div>
+                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— MOBILE</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">Platform</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Android Studio</span>
@@ -70,7 +71,7 @@
                         <span class="text-xs cyroach-muted">Language</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">Java + XML</span>
                     </div>
-                    <div class="text-xs cyroach-muted uppercase tracking-widest py-2 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— Hardware</div>
+                    <div class="text-xs cyroach-muted py-1.5 border-b cyroach-border" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;">— HARDWARE</div>
                     <div class="flex justify-between items-center py-2 border-b cyroach-border">
                         <span class="text-xs cyroach-muted">MCU</span>
                         <span class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">ESP32-C6 Supermini</span>
@@ -97,68 +98,65 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-        {{-- ROW 2: Thermal + Feature Cards + System Purpose --}}
-        <div class="grid gap-5 items-start" style="grid-template-columns:300px 1fr;">
+        {{-- ROW 2: Thermal + 3 Feature Cards (4 kolom sejajar) --}}
+        <div class="grid grid-cols-4 gap-4 items-start">
 
-            {{-- Kiri: Thermal Analytics --}}
+            {{-- Thermal Analytics --}}
             <div class="cy-card p-4 flex flex-col">
                 <div class="text-xs cyroach-muted uppercase tracking-widest mb-3 flex items-center gap-1.5" style="font-family:var(--font-mono);font-size:10px;">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
                     Thermal Analytics
                 </div>
-                <div class="rounded-lg overflow-hidden border cyroach-border mb-2 flex-1" style="background:#000;min-height:220px;">
-                    <canvas id="about-thermal" style="display:block;width:100%;height:100%;min-height:220px;"></canvas>
+                <div class="rounded-lg overflow-hidden border cyroach-border mb-2" style="background:#000;aspect-ratio:1/1;">
+                    <canvas id="about-thermal" style="display:block;width:100%;height:100%;"></canvas>
                 </div>
                 <div class="text-xs cyroach-muted text-center" style="font-family:var(--font-mono);font-size:10px;">1:1 THERMAL FEED ACCURACY</div>
             </div>
 
-            {{-- Kanan: Feature Cards + System Purpose --}}
-            <div class="flex flex-col gap-4">
-
-                {{-- Feature Cards --}}
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="cy-card p-4">
-                        <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
-                                <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                            </svg>
-                        </div>
-                        <div class="text-sm font-semibold cyroach-text mb-1.5">Bio-Hybrid Control</div>
-                        <div class="text-xs cyroach-muted leading-relaxed">Neural interfacing untuk navigasi presisi melalui stimulasi antena serangga secara artifisial.</div>
-                    </div>
-                    <div class="cy-card p-4">
-                        <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8">
-                                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-                            </svg>
-                        </div>
-                        <div class="text-sm font-semibold cyroach-text mb-1.5">Thermal Imaging</div>
-                        <div class="text-xs cyroach-muted leading-relaxed">Deteksi panas tubuh real-time dengan algoritma filtering untuk membedakan manusia dari objek lain.</div>
-                    </div>
-                    <div class="cy-card p-4">
-                        <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8">
-                                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                            </svg>
-                        </div>
-                        <div class="text-sm font-semibold cyroach-text mb-1.5">Trajectory Analysis</div>
-                        <div class="text-xs cyroach-muted leading-relaxed">Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir di bawah reruntuhan.</div>
-                    </div>
+            {{-- Bio-Hybrid Control --}}
+            <div class="cy-card p-4">
+                <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.25);">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8">
+                        <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
                 </div>
-
-                {{-- System Purpose --}}
-                <div class="cy-card p-5 flex-1">
-                    <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
-                    <blockquote class="text-base font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
-                        "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
-                    </blockquote>
-                </div>
-
+                <div class="text-sm font-semibold cyroach-text mb-2">Bio-Hybrid Control</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Neural interfacing untuk navigasi presisi melalui stimulasi antena serangga secara artifisial.</div>
             </div>
+
+            {{-- Thermal Imaging --}}
+            <div class="cy-card p-4">
+                <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                </div>
+                <div class="text-sm font-semibold cyroach-text mb-2">Thermal Imaging</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Deteksi panas tubuh real-time dengan algoritma filtering untuk membedakan manusia dari objek lain.</div>
+            </div>
+
+            {{-- Trajectory Analysis --}}
+            <div class="cy-card p-4">
+                <div class="w-9 h-9 rounded-lg mb-3 flex items-center justify-center" style="background-color:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8">
+                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </div>
+                <div class="text-sm font-semibold cyroach-text mb-2">Trajectory Analysis</div>
+                <div class="text-xs cyroach-muted leading-relaxed">Pemetaan pergerakan 1:1 untuk melacak area yang telah disisir di bawah reruntuhan.</div>
+            </div>
+
+        </div>
+
+        {{-- ROW 3: System Purpose full width --}}
+        <div class="cy-card p-5">
+            <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">System Purpose</div>
+            <blockquote class="text-base font-display font-semibold cyroach-accent-text italic leading-relaxed border-l-2 pl-4" style="border-color:var(--accent);">
+                "Mempercepat pencarian korban dalam fase kritis 72 jam pertama pascabencana, sekaligus meminimalkan risiko keselamatan petugas SAR di lapangan."
+            </blockquote>
         </div>
 
     </div>
