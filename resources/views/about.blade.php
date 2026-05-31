@@ -10,7 +10,7 @@
     <div class="relative mx-6 mt-6 rounded-xl overflow-hidden" style="height:220px;background:linear-gradient(135deg,#0f0f0f 0%,#1a0505 60%,#0f0f0f 100%);">
         <img src="/images/hero-cockroach.png" 
             alt="CyRoach" 
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.6;">
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% center;opacity:0.55;">
 
         {{-- Grid pattern --}}
         <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,#fff 30px,#fff 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px);"></div>
@@ -27,7 +27,7 @@
     <div class="p-6 flex flex-col gap-5 max-w-6xl">
 
         {{-- ROW 1: Overview + Engineering Profile side by side --}}
-        <div class="grid gap-5" style="grid-template-columns:1fr 300px;">
+        <div class="grid gap-5 items-start" style="grid-template-columns:1fr 300px;">
 
             {{-- Kiri: Project Overview --}}
             <div class="cy-card p-5">
@@ -101,7 +101,7 @@
         </div>
 
         {{-- ROW 2: Thermal + Feature Cards + System Purpose --}}
-        <div class="grid gap-5" style="grid-template-columns:300px 1fr;">
+        <div class="grid gap-5 items-start" style="grid-template-columns:300px 1fr;">
 
             {{-- Kiri: Thermal Analytics --}}
             <div class="cy-card p-4 flex flex-col">
