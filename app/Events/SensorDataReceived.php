@@ -3,9 +3,9 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class SensorDataReceived implements ShouldBroadcast
+class SensorDataReceived implements ShouldBroadcastNow
 {
     public $data;
 

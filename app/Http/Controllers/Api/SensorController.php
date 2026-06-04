@@ -86,6 +86,8 @@ class SensorController extends Controller
             ]);
             cache([$cacheKey => now()->timestamp], 60);
         }
+    	\Log::info('Broadcasting event for device: ' . $deviceId);
+
         // 5. Broadcast ke browser via Pusher
         event(new SensorDataReceived([
             'device_id'        => $deviceId,
