@@ -57,30 +57,35 @@ class SensorController extends Controller
             ]);
         }
 
-        // 4. Simpan data sensor
-        // Jarak total diterima langsung dari Android (sudah dihitung di sana)
+        // 4. Simpan data sensor (throttle: hanya setiap 5 detik per device)
         $distanceCm     = $request->distance_cm ?? 0;
         $distanceTotalM = $request->distance_total_m ?? 0;
 
-        SensorData::create([
-            'mission_id'       => $mission->id,
-            'device_id'        => $deviceId,
-            'thermal_grid'     => $request->thermal_grid,
-            'suhu_max'         => $suhuMax,
-            'suhu_min'         => $request->suhu_min,
-            'pitch'            => $request->pitch,
-            'roll'             => $request->roll,
-            'yaw'              => $request->yaw,
-            'gyro_x'           => $request->gyro_x ?? 0,
-            'gyro_y'           => $request->gyro_y ?? 0,
-            'gyro_z'           => $request->gyro_z ?? 0,
-            'battery'          => $request->battery ?? 0,
-            'signal_strength'  => $request->signal_strength ?? 0,
-            'distance_cm'      => $distanceCm,
-            'distance_total_m' => $distanceTotalM,
-            'recorded_at'      => now(),
-        ]);
+        $cacheKey    = "last_insert_{$deviceId}";
+        $lastInsert  = cache($cacheKey, 0);
+        $shouldInsert = (now()->timestamp - $lastInsert) >= 5;
 
+        if ($shouldInsert) {
+            SensorData::create([
+                'mission_id'       => $mission->id,
+                'device_id'        => $deviceId,
+                'thermal_grid'     => $request->thermal_grid,
+                'suhu_max'         => $suhuMax,
+                'suhu_min'         => $request->suhu_min,
+                'pitch'            => $request->pitch,
+                'roll'             => $request->roll,
+                'yaw'              => $request->yaw,
+                'gyro_x'           => $request->gyro_x ?? 0,
+                'gyro_y'           => $request->gyro_y ?? 0,
+                'gyro_z'           => $request->gyro_z ?? 0,
+                'battery'          => $request->battery ?? 0,
+                'signal_strength'  => $request->signal_strength ?? 0,
+                'distance_cm'      => $distanceCm,
+                'distance_total_m' => $distanceTotalM,
+                'recorded_at'      => now(),
+            ]);
+            cache([$cacheKey => now()->timestamp], 60);
+        }
         // 5. Broadcast ke browser via Pusher
         event(new SensorDataReceived([
             'device_id'        => $deviceId,
