@@ -21,3 +21,17 @@ Route::get('/missions/{id}/export-pdf', [MissionPdfController::class, 'export'])
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::post('/broadcasting/auth', function(\Illuminate\Http\Request $request) {
+    $pusher = new \Pusher\Pusher(
+        config('broadcasting.connections.pusher.key'),
+        config('broadcasting.connections.pusher.secret'),
+        config('broadcasting.connections.pusher.app_id'),
+        ['cluster' => config('broadcasting.connections.pusher.options.cluster'), 'useTLS' => true]
+    );
+    $auth = $pusher->authorizeChannel($request->channel_name, $request->socket_id, json_encode([
+        'user_id' => uniqid(),
+        'user_info' => ['name' => 'Guest']
+    ]));
+    return response($auth);
+});
