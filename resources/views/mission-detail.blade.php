@@ -248,13 +248,6 @@ function drawTrajectoryDetail(canvas, history) {
     ctx.fillStyle='#a3a3a3'; ctx.font='bold 9px monospace'; ctx.textAlign='left';
     ctx.fillText(bearingLabel,4,12);
     // Bearing dari start ke end
-    const sx=history[0].x??history[0].roll??0, sy=history[0].y??history[0].pitch??0;
-    const ex=history[history.length-1].x??history[history.length-1].roll??0, ey=history[history.length-1].y??history[history.length-1].pitch??0;
-    const angleDeg=Math.atan2(ex-sx, ey-sy)*(180/Math.PI);
-    const angleStr=(angleDeg>=0?'+':'')+angleDeg.toFixed(1)+'°';
-    const bearingLabel='Kemiringan Kecoa: '+angleStr+(angleDeg>0?' (kanan)':angleDeg<0?' (kiri)':' (lurus)');
-    ctx.fillStyle='#a3a3a3'; ctx.font='bold 9px monospace'; ctx.textAlign='left';
-    ctx.fillText(bearingLabel,4,12);
 }
 
 // =====================
