@@ -139,7 +139,11 @@ function drawHeatmap(canvas, grid, w, h) {
     offCtx.putImageData(imgData, 0, 0);
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
-    ctx.drawImage(offscreen, 0, 0, w, h);
+    ctx.save();
+    ctx.translate(w/2, h/2);
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(offscreen, -h/2, -w/2, h, w);
+    ctx.restore();
 
     ctx.fillStyle = "rgba(0,0,0,0.80)";
     ctx.fillRect(0, h - 16, w, 16);
@@ -275,6 +279,13 @@ function drawTrajectory(canvas, history) {
     ctx.font = "8px sans-serif";
     ctx.textAlign = "left";
     ctx.fillText(`(${last.x.toFixed(2)}, ${last.y.toFixed(2)}) m`, 4, H - 4);
+    const bSx=history[0].x, bSy=history[0].y;
+    const bEx=last.x, bEy=last.y;
+    const bAngle=Math.atan2(bEx-bSx, bEy-bSy)*(180/Math.PI);
+    const bStr=(bAngle>=0?'+':'')+bAngle.toFixed(1)+'°';
+    const bLabel='Kemiringan: '+bStr+(bAngle>0?' (kanan)':bAngle<0?' (kiri)':' (lurus)');
+    ctx.fillStyle='#a3a3a3'; ctx.font='bold 8px monospace';
+    ctx.fillText(bLabel, 4, 12);
 }
 
 // =====================

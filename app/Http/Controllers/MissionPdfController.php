@@ -225,6 +225,16 @@ class MissionPdfController extends Controller
         }
 
         imagestring($img, 1, 4, $H - 12, 'Roll (X) | Pitch (Y)', $txtClr);
+        if (count($points) >= 2) {
+            $first = $points[0];
+            $lastP = end($points);
+            $dx = ($lastP['roll'] ?? 0) - ($first['roll'] ?? 0);
+            $dy = ($lastP['pitch'] ?? 0) - ($first['pitch'] ?? 0);
+            $angle = rad2deg(atan2($dx, $dy));
+            $dir = $angle > 0 ? 'kanan' : ($angle < 0 ? 'kiri' : 'lurus');
+            $label = 'Kemiringan: '.($angle >= 0 ? '+' : '').number_format($angle, 1).'deg ('.$dir.')';
+            imagestring($img, 2, 4, 4, $label, $txtClr);
+        }
 
         ob_start();
         imagepng($img);
