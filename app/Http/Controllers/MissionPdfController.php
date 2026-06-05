@@ -202,28 +202,40 @@ class MissionPdfController extends Controller
         imageline($img, $W/2, 0, $W/2, $H, $axis);
         imageline($img, 0, $H/2, $W, $H/2, $axis);
 
+        // Auto-rescale bounding box
+        $allX = array_map(fn($p) => (float)($p['roll'] ?? 0), $points);
+        $allY = array_map(fn($p) => (float)($p['pitch'] ?? 0), $points);
+        $minX = min($allX); $maxX = max($allX);
+        $minY = min($allY); $maxY = max($allY);
+        $range = max($maxX - $minX, $maxY - $minY) ?: 0.01;
+        $pad = $range * 0.18;
+        $dX = ($maxX - $minX + 2*$pad) ?: 1;
+        $dY = ($maxY - $minY + 2*$pad) ?: 1;
+        $toX = fn($x) => (int)(($x - $minX + $pad) / $dX * $W);
+        $toY = fn($y) => (int)($H - ($y - $minY + $pad) / $dY * $H);
+
         // Trajectory
         if (count($points) >= 2) {
             for ($i = 0; $i < count($points) - 1; $i++) {
-                $x1 = (int)($W/2 + ($points[$i]['roll']   ?? 0) * $scale);
-                $y1 = (int)($H/2 - ($points[$i]['pitch']  ?? 0) * $scale);
-                $x2 = (int)($W/2 + ($points[$i+1]['roll'] ?? 0) * $scale);
-                $y2 = (int)($H/2 - ($points[$i+1]['pitch']?? 0) * $scale);
+                $x1 = $toX($points[$i]['roll'] ?? 0);
+                $y1 = $toY($points[$i]['pitch'] ?? 0);
+                $x2 = $toX($points[$i+1]['roll'] ?? 0);
+                $y2 = $toY($points[$i+1]['pitch'] ?? 0);
                 imageline($img, $x1, $y1, $x2, $y2, $red);
             }
 
             // Titik start (hijau)
-            $sx = (int)($W/2 + ($points[0]['roll']  ?? 0) * $scale);
-            $sy = (int)($H/2 - ($points[0]['pitch'] ?? 0) * $scale);
-            imagefilledellipse($img, $sx, $sy, 10, 10, $green);
-            imagestring($img, 2, $sx-3, $sy-14, 'S', $green);
+            $sx = $toX($points[0]['roll'] ?? 0);
+            $sy = $toY($points[0]['pitch'] ?? 0);
+            imagefilledellipse($img, $sx, $sy, 12, 12, $green);
+            imagestring($img, 3, $sx-3, $sy-16, 'S', $green);
 
             // Titik end (merah)
             $last = end($points);
-            $ex = (int)($W/2 + ($last['roll']  ?? 0) * $scale);
-            $ey = (int)($H/2 - ($last['pitch'] ?? 0) * $scale);
-            imagefilledellipse($img, $ex, $ey, 10, 10, $red);
-            imagestring($img, 2, $ex-3, $ey-14, 'E', $red);
+            $ex = $toX($last['roll'] ?? 0);
+            $ey = $toY($last['pitch'] ?? 0);
+            imagefilledellipse($img, $ex, $ey, 12, 12, $red);
+            imagestring($img, 3, $ex-3, $ey-16, 'E', $red);
         }
 
         imagestring($img, 1, 4, $H - 12, 'Roll (X) | Pitch (Y)', $txtClr);
