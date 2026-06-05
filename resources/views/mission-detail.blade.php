@@ -321,11 +321,11 @@ function renderDetections(detections) {
                         <div class="grid grid-cols-2 gap-2">
                             <div class="cy-card-raised p-2.5 text-center">
                                 <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">SUHU MAKS</div>
-                                <div class="text-xl font-display font-bold text-red-400">${(d.suhu_max??0).toFixed(1)}°C</div>
+                                <div class="text-xl font-display font-bold text-red-400">${(parseFloat(d.suhu_max)??0).toFixed(1)}°C</div>
                             </div>
                             <div class="cy-card-raised p-2.5 text-center">
                                 <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">SUHU MIN</div>
-                                <div class="text-xl font-display font-bold text-blue-400">${(d.suhu_min??0).toFixed(1)}°C</div>
+                                <div class="text-xl font-display font-bold text-blue-400">${(parseFloat(d.suhu_min)??0).toFixed(1)}°C</div>
                             </div>
                         </div>
                     </div>
@@ -334,15 +334,15 @@ function renderDetections(detections) {
                         <div class="grid grid-cols-3 gap-1.5">
                             <div class="cy-card-raised p-2 text-center">
                                 <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">PITCH</div>
-                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.pitch??0).toFixed(1)}°</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(d.pitch)??0).toFixed(1)}°</div>
                             </div>
                             <div class="cy-card-raised p-2 text-center">
                                 <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">ROLL</div>
-                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.roll??0).toFixed(1)}°</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(d.roll)??0).toFixed(1)}°</div>
                             </div>
                             <div class="cy-card-raised p-2 text-center">
                                 <div class="text-xs cyroach-muted mb-0.5" style="font-size:9px;font-family:var(--font-mono);">YAW</div>
-                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(d.yaw??0).toFixed(1)}°</div>
+                                <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(d.yaw)??0).toFixed(1)}°</div>
                             </div>
                         </div>
                     </div>
@@ -387,8 +387,8 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
         const num = deviceId.replace('kecoa_','').replace(/^0+/,'');
         const points = trajectoryByDevice[deviceId];
         const telem = (telemetryByDevice && telemetryByDevice[deviceId]) || {};
-        const avgSig = telem.avg_signal != null ? telem.avg_signal.toFixed(1)+'%' : '—';
-        const dist = telem.distance_total_m != null ? telem.distance_total_m.toFixed(2)+' m' : '—';
+        const avgSig = telem.avg_signal != null ? parseFloat(telem.avg_signal).toFixed(1)+'%' : '—';
+        const dist = telem.distance_total_m != null ? parseFloat(telem.distance_total_m).toFixed(2)+' m' : '—';
         const sigVal = telem.avg_signal ?? 0;
         const sigColor = sigVal>=60 ? '#22c55e' : sigVal>=30 ? '#f59e0b' : '#ef4444';
 
@@ -404,15 +404,15 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
             <div class="grid grid-cols-5 gap-2">
                 <div class="cy-card-raised p-2.5">
                     <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Pitch Awal</div>
-                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.pitch??0).toFixed(1)}°</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(points[0]?.pitch)??0).toFixed(1)}°</div>
                 </div>
                 <div class="cy-card-raised p-2.5">
                     <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Roll Awal</div>
-                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.roll??0).toFixed(1)}°</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(points[0]?.roll)??0).toFixed(1)}°</div>
                 </div>
                 <div class="cy-card-raised p-2.5">
                     <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Yaw Awal</div>
-                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(points[0]?.yaw??0).toFixed(1)}°</div>
+                    <div class="text-xs font-semibold cyroach-text" style="font-family:var(--font-mono);">${(parseFloat(points[0]?.yaw)??0).toFixed(1)}°</div>
                 </div>
                 <div class="cy-card-raised p-2.5">
                     <div class="text-xs cyroach-muted mb-1" style="font-family:var(--font-mono);font-size:9px;">Rata Sinyal</div>

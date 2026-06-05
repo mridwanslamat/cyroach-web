@@ -33,7 +33,7 @@
             <div>
                 <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Victims Rescued</div>
                 <div class="flex items-baseline gap-1.5">
-                    <div class="text-2xl font-display font-bold text-red-400 leading-none" id="stat-total-korban">—</div>
+                    <div class="text-2xl font-bold text-red-400 leading-none" id="stat-total-korban" style="font-variant-numeric: normal; font-feature-settings: normal;">—</div>
                     <div class="text-xs cyroach-muted" id="stat-korban-sub" style="font-family:var(--font-mono);">total detected</div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ function renderStats(missions) {
 
     const el = id => document.getElementById(id);
     if (el('stat-total-misi')) el('stat-total-misi').textContent = total || '—';
-    if (el('stat-total-korban')) el('stat-total-korban').textContent = korban;
+    if (el('stat-total-korban')) el('stat-total-korban').textContent = parseInt(korban);
     if (el('stat-hours')) el('stat-hours').textContent = hours.toLocaleString('id-ID');
 }
 
