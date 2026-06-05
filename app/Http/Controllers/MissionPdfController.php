@@ -216,12 +216,14 @@ class MissionPdfController extends Controller
             $sx = (int)($W/2 + ($points[0]['roll']  ?? 0) * $scale);
             $sy = (int)($H/2 - ($points[0]['pitch'] ?? 0) * $scale);
             imagefilledellipse($img, $sx, $sy, 10, 10, $green);
+            imagestring($img, 2, $sx-3, $sy-14, 'S', $green);
 
             // Titik end (merah)
             $last = end($points);
             $ex = (int)($W/2 + ($last['roll']  ?? 0) * $scale);
             $ey = (int)($H/2 - ($last['pitch'] ?? 0) * $scale);
             imagefilledellipse($img, $ex, $ey, 10, 10, $red);
+            imagestring($img, 2, $ex-3, $ey-14, 'E', $red);
         }
 
         imagestring($img, 1, 4, $H - 12, 'Roll (X) | Pitch (Y)', $txtClr);
@@ -233,7 +235,7 @@ class MissionPdfController extends Controller
             $angle = rad2deg(atan2($dx, $dy));
             $dir = $angle > 0 ? 'kanan' : ($angle < 0 ? 'kiri' : 'lurus');
             $label = 'Kemiringan: '.($angle >= 0 ? '+' : '').number_format($angle, 1).'deg ('.$dir.')';
-            imagestring($img, 2, 4, 4, $label, $txtClr);
+            imagestring($img, 3, 4, 4, $label, $txtClr);
         }
 
         ob_start();

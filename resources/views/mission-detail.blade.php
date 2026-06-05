@@ -224,11 +224,13 @@ function drawTrajectoryDetail(canvas, history) {
     const fp=toC(history[0].x??history[0].roll??0, history[0].y??history[0].pitch??0);
     ctx.fillStyle='#22c55e';
     ctx.beginPath(); ctx.arc(fp.cx,fp.cy,5,0,Math.PI*2); ctx.fill();
+    ctx.font='bold 9px monospace'; ctx.textAlign='center'; ctx.fillText('S',fp.cx,fp.cy-8);
 
     // End dot
     const lp=toC(history[history.length-1].x??history[history.length-1].roll??0, history[history.length-1].y??history[history.length-1].pitch??0);
     ctx.fillStyle='#ef4444';
     ctx.beginPath(); ctx.arc(lp.cx,lp.cy,5,0,Math.PI*2); ctx.fill();
+    ctx.font='bold 9px monospace'; ctx.textAlign='center'; ctx.fillText('E',lp.cx,lp.cy-8);
 
     // Scale label
     ctx.fillStyle='#404040'; ctx.font='8px monospace'; ctx.textAlign='left';
@@ -246,7 +248,7 @@ function drawTrajectoryDetail(canvas, history) {
     const angleStr=(angleDeg>=0?'+':'')+angleDeg.toFixed(1)+'°';
     const bearingLabel='Kemiringan Kecoa: '+angleStr+(angleDeg>0?' (kanan)':angleDeg<0?' (kiri)':' (lurus)');
     ctx.fillStyle='#a3a3a3'; ctx.font='bold 9px monospace'; ctx.textAlign='left';
-    ctx.fillText(bearingLabel,4,12);
+    ctx.fillText(bearingLabel,4,H-16);
     // Bearing dari start ke end
 }
 
