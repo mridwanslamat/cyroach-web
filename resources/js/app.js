@@ -689,6 +689,19 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
 
     renderDevices();
     updateModalIfOpen(data.device_id);
+
+// Listener mission-ended
+window.Echo.channel("cyroach-channel").listen(".mission-ended", () => {
+    missionActive = false;
+    Object.keys(devices).forEach(id => { devices[id].online = false; });
+    renderDevices();
+    const grid = document.getElementById("cards-grid");
+    const empty = document.getElementById("empty-state");
+    if (empty) {
+        empty.classList.remove("hidden");
+        empty.innerHTML = `<div class="text-center py-12"><div class="text-neutral-500 text-sm mb-1">Misi telah selesai</div></div>`;
+    }
+});
 });
 
 // =====================

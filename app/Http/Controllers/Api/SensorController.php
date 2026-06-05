@@ -169,6 +169,7 @@ class SensorController extends Controller
                 'ended_at' => now(),
             ]);
 
+            event(new \App\Events\MissionEnded(['status' => 'selesai']));
             return response()->json(['message' => 'Misi selesai'], 200);
         }
 
