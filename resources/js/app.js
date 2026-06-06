@@ -105,13 +105,19 @@ function ironColormap(norm) {
 // DRAW HEATMAP
 // =====================
 const heatmapCache = {};
+const thermalSmoothed = {}; // temporal smoothing per device
+const THERMAL_ALPHA = 0.4;  // sama dengan Android
 
 function drawHeatmap(canvas, grid, w, h) {
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext("2d");
 
-    const flat = new Float32Array(grid.flat());
+    const raw = new Float32Array(grid.flat());
+    const key2 = JSON.stringify(canvas.id||canvas.width);
+    if (!thermalSmoothed[key2]) thermalSmoothed[key2] = new Float32Array(raw);
+    else for (let i=0;i<64;i++) thermalSmoothed[key2][i] = THERMAL_ALPHA*raw[i] + (1-THERMAL_ALPHA)*thermalSmoothed[key2][i];
+    const flat = thermalSmoothed[key2];
     const mn = Math.min(...flat),
         mx = Math.max(...flat);
     const range = mx - mn || 1;
@@ -141,7 +147,8 @@ function drawHeatmap(canvas, grid, w, h) {
     ctx.imageSmoothingQuality = "high";
     ctx.save();
     ctx.translate(w/2, h/2);
-    ctx.rotate(Math.PI / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.scale(-1, 1);
     ctx.drawImage(offscreen, -h/2, -w/2, h, w);
     ctx.restore();
 
