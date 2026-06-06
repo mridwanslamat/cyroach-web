@@ -141,6 +141,36 @@ class SensorController extends Controller
         return response()->json(['message' => 'Data diterima'], 200);
     }
     
+    
+    public function getTrajectory()
+    {
+        $mission = \App\Models\Mission::where("status", "berlangsung")->latest()->first();
+        if (!$mission) {
+            return response()->json([]);
+        }
+
+        $rows = \App\Models\SensorData::where("mission_id", $mission->id)
+            ->orderBy("recorded_at", "asc")
+            ->get(["device_id", "dx", "dy"]);
+
+        $trajectories = [];
+        foreach ($rows as $row) {
+            if (!isset($trajectories[$row->device_id])) {
+                $trajectories[$row->device_id] = [["x" => 0, "y" => 0]];
+            }
+            $last = end($trajectories[$row->device_id]);
+            $dx = (float)($row->dx ?? 0);
+            $dy = (float)($row->dy ?? 0);
+            if ($dx !== 0.0 || $dy !== 0.0) {
+                $trajectories[$row->device_id][] = [
+                    "x" => $last["x"] + $dx,
+                    "y" => $last["y"] + $dy,
+                ];
+            }
+        }
+
+        return response()->json($trajectories);
+    }
     public function endMission(Request $request)
     {
         $request->validate([

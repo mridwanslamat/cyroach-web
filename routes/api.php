@@ -25,3 +25,4 @@ Route::get('/viewers', function () {
     Cache::put('active_viewers', $viewers, 60);
     return response()->json(['count' => max(1, count($viewers))]);
 });
+Route::get('/trajectory', [App\Http\Controllers\Api\SensorController::class, 'getTrajectory']);
