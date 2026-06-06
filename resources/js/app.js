@@ -291,8 +291,8 @@ function drawTrajectory(canvas, history) {
     const bAngle=Math.atan2(bEx-bSx, bEy-bSy)*(180/Math.PI);
     const bStr=(bAngle>=0?'+':'')+bAngle.toFixed(1)+'°';
     const bLabel='Kemiringan: '+bStr+(bAngle>0?' (kanan)':bAngle<0?' (kiri)':' (lurus)');
-    ctx.fillStyle='#ffffff'; ctx.font='bold 10px monospace';
-    ctx.fillText(bLabel, 4, 14);
+    ctx.fillStyle='#ffffff'; ctx.font='bold 14px monospace';
+    ctx.fillText(bLabel, 10, 30);
 }
 
 // =====================
