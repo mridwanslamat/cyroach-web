@@ -47,14 +47,9 @@ class SensorController extends Controller
         // 2. Cek apakah ada misi yang sedang berlangsung
         $mission = Mission::where('status', 'berlangsung')->latest()->first();
 
-        // 3. Kalau belum ada misi, buat misi baru otomatis
+        // 3. Kalau belum ada misi, tolak data
         if (!$mission) {
-            $lastNumber = Mission::max('mission_number') ?? 0;
-            $mission = Mission::create([
-                'mission_number' => $lastNumber + 1,
-                'started_at'     => now(),
-                'status'         => 'berlangsung',
-            ]);
+            return response()->json(['message' => 'Tidak ada misi berlangsung'], 200);
         }
 
         // 4. Simpan data sensor (throttle: hanya setiap 5 detik per device)
