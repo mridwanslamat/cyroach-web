@@ -113,7 +113,7 @@ class SensorController extends Controller
             'distance_total_m' => $distanceTotalM,
             'dx'               => $request->dx ?? 0, // ← BARU: untuk trajectory di web
             'dy'               => $request->dy ?? 0, // ← BARU: untuk trajectory di web
-            'thermal_image_url' => $thermalImagePath ? url('storage/' . $thermalImagePath) : null,
+            'thermal_image_b64' => $thermalBase64ForBroadcast,
         ]));
 
         // 6. Cek threshold deteksi korban
@@ -128,7 +128,14 @@ class SensorController extends Controller
                     'mission_id'       => $mission->id,
                     'device_id'        => $deviceId,
                     'thermal_snapshot' => $request->thermal_grid,
-                    'thermal_image_path' => $thermalImagePath,
+                    'thermal_image_path' => (function() use ($request, $deviceId) {
+                        if (!$request->thermal_image) return null;
+                        $imageData = base64_decode($request->thermal_image);
+                        $filename = $deviceId . '_' . time() . '.jpg';
+                        $savePath = '/home/cyrx6347/public_html/storage/thermal/' . $filename;
+                        file_put_contents($savePath, $imageData);
+                        return 'thermal/' . $filename;
+                    })()
                     'suhu_max'         => $suhuMax,
                     'suhu_min'         => $request->suhu_min,
                     'pitch'            => $request->pitch,
