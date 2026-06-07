@@ -127,6 +127,7 @@ class SensorController extends Controller
                     'mission_id'       => $mission->id,
                     'device_id'        => $deviceId,
                     'thermal_snapshot' => $request->thermal_grid,
+                    'thermal_image_path' => $thermalImagePath,
                     'suhu_max'         => $suhuMax,
                     'suhu_min'         => $request->suhu_min,
                     'pitch'            => $request->pitch,

@@ -376,7 +376,24 @@ function renderDetections(detections) {
     setTimeout(() => {
         detections.forEach((d, idx) => {
             const canvas = document.querySelector(`.detection-hmap[data-idx="${idx}"]`);
-            if (canvas && d.thermal_snapshot) drawHeatmap(canvas, d.thermal_snapshot);
+            if (canvas) {
+                if (d.thermal_image_path) {
+                    const img = new Image();
+                    img.onload = () => {
+                        canvas.width = canvas.offsetWidth || 200;
+                        canvas.height = canvas.offsetWidth || 200;
+                        const ctx = canvas.getContext('2d');
+                        ctx.save();
+                        ctx.translate(canvas.width, 0);
+                        ctx.scale(-1, 1);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        ctx.restore();
+                    };
+                    img.src = '/storage/' + d.thermal_image_path;
+                } else if (d.thermal_snapshot) {
+                    drawHeatmap(canvas, d.thermal_snapshot);
+                }
+            }
         });
     }, 50);
 }

@@ -10,6 +10,7 @@ class Detection extends Model
         'mission_id',
         'device_id',
         'thermal_snapshot',
+        'thermal_image_path',
         'suhu_max',
         'suhu_min',
         'pitch',
