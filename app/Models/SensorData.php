@@ -22,6 +22,7 @@ class SensorData extends Model
         'signal_strength',
         'distance_cm',
         'distance_total_m',
+        'thermal_image_path',
         'recorded_at',
     ];
 
