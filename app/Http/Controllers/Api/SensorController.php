@@ -113,6 +113,7 @@ class SensorController extends Controller
             'distance_total_m' => $distanceTotalM,
             'dx'               => $request->dx ?? 0, // ← BARU: untuk trajectory di web
             'dy'               => $request->dy ?? 0, // ← BARU: untuk trajectory di web
+            'thermal_image_url' => $thermalImagePath ? url('storage/' . $thermalImagePath) : null,
         ]));
 
         // 6. Cek threshold deteksi korban
