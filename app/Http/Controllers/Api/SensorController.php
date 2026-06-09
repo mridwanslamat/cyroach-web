@@ -135,7 +135,7 @@ class SensorController extends Controller
                         $savePath = '/home/cyrx6347/public_html/storage/thermal/' . $filename;
                         file_put_contents($savePath, $imageData);
                         return 'thermal/' . $filename;
-                    })()
+                    })(),
                     'suhu_max'         => $suhuMax,
                     'suhu_min'         => $request->suhu_min,
                     'pitch'            => $request->pitch,
