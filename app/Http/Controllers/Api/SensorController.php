@@ -51,7 +51,12 @@ class SensorController extends Controller
         $mission = Mission::where('status', 'berlangsung')->latest()->first();
 
         // 3. Kalau belum ada misi, buat misi baru otomatis
+        // Tapi jangan buat misi baru kalau device baru saja di-end (cooldown 60 detik)
         if (!$mission) {
+            $endCooldownKey = 'end_mission_cooldown_' . $deviceId;
+            if (cache($endCooldownKey, false)) {
+                return response()->json(['message' => 'Cooldown setelah end mission'], 200);
+            }
             $lastNumber = Mission::max('mission_number') ?? 0;
             $mission = Mission::create([
                 'mission_number' => $lastNumber + 1,
@@ -210,6 +215,8 @@ class SensorController extends Controller
                 'status'   => 'selesai',
                 'ended_at' => now(),
             ]);
+            // Set cooldown agar tidak buat misi baru selama 60 detik
+            cache(['end_mission_cooldown_' . $deviceId => true], 60);
 
             event(new \App\Events\MissionEnded(['status' => 'selesai']));
             return response()->json(['message' => 'Misi selesai'], 200);
