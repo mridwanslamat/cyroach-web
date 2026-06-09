@@ -194,7 +194,7 @@ function drawTrajectoryDetail(canvas, history) {
     const range=Math.max(rangeX,rangeY);
     const pad=range*0.15;
     const x0=minX-pad, y0=minY-pad, span=range+2*pad;
-    const plotW=W-2*PAD, plotH=H-2*PAD-24;
+    const plotW=W-2*PAD, plotH=H-2*PAD-8;
     const toC=(x,y)=>({
         cx:PAD+((parseFloat(x)-x0)/span)*plotW,
         cy:PAD+plotH-((parseFloat(y)-y0)/span)*plotH
