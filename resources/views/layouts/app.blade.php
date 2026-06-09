@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'CYROACH') - CyRoach</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="manifest" href="/manifest.json">
+
     <meta name="theme-color" content="#7f1d1d">
-    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="icon" type="image/png" href="/images/logo-cyroach.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
