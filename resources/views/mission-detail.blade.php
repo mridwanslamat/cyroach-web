@@ -414,8 +414,8 @@ function renderTrajectory(trajectoryByDevice, telemetryByDevice) {
                 <div class="text-sm font-semibold cyroach-text">Kecoa #${num}</div>
                 <div class="text-xs font-mono cyroach-muted">${points.length} titik data</div>
             </div>
-            <div class="rounded-lg overflow-hidden border cyroach-border mb-3" style="background-color:#0a0a0a;">
-                <canvas class="trajectory-canvas block" style="width:min(100%,600px);aspect-ratio:1/1;height:auto;display:block;margin:0 auto;" data-device="${deviceId}"></canvas>
+            <div class="rounded-lg overflow-hidden border cyroach-border mb-3" style="background-color:#ffffff;">
+                <canvas class="trajectory-canvas block" style="width:100%;max-width:600px;aspect-ratio:1/1;height:auto;display:block;margin:0 auto;" data-device="${deviceId}"></canvas>
             </div>
             <div class="grid grid-cols-5 gap-2">
                 <div class="cy-card-raised p-2.5">
