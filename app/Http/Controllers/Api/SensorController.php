@@ -35,15 +35,9 @@ class SensorController extends Controller
         ]);
 
         $deviceId  = $request->device_id;
-        // Simpan thermal image jika ada
+        // Tidak simpan file — hanya siapkan base64 untuk broadcast realtime
         $thermalImagePath = null;
-        if ($request->has('thermal_image') && $request->thermal_image) {
-            $imageData = base64_decode($request->thermal_image);
-            $filename = $deviceId . '_' . time() . '.jpg';
-            $savePath = '/home/cyrx6347/public_html/storage/thermal/' . $filename;
-            file_put_contents($savePath, $imageData);
-            $thermalImagePath = 'thermal/' . $filename;
-        }
+        $thermalBase64ForBroadcast = $request->thermal_image ?? null;
         $suhuMax   = $request->suhu_max;
         $threshold = 37.5;
 
