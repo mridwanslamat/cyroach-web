@@ -127,9 +127,10 @@ class SensorController extends Controller
                     'mission_id'       => $mission->id,
                     'device_id'        => $deviceId,
                     'thermal_snapshot' => $request->thermal_grid,
-                    'thermal_image_path' => (function() use ($request, $deviceId) {
-                        if (!$request->thermal_image) return null;
-                        $imageData = base64_decode($request->thermal_image);
+                    'thermal_image_path' => (function() use ($request, $deviceId, $thermalBase64ForBroadcast) {
+                        $b64 = $request->thermal_image ?? $thermalBase64ForBroadcast;
+                        if (!$b64) return null;
+                        $imageData = base64_decode($b64);
                         $filename = $deviceId . '_' . time() . '.jpg';
                         $savePath = '/home/cyrx6347/public_html/storage/thermal/' . $filename;
                         file_put_contents($savePath, $imageData);
