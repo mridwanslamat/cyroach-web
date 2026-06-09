@@ -61,6 +61,8 @@ return [
             ],
             'client_options' => [
                 'verify' => false,
+                'timeout' => 3,
+                'connect_timeout' => 3,
             ],
         ],
 
