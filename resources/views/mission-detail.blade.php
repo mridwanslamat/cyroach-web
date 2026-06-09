@@ -172,79 +172,72 @@ function drawHeatmap(canvas, grid) {
 // =====================
 function drawTrajectoryDetail(canvas, history) {
     const W = canvas.offsetWidth || 500;
-    const H = 200;
+    const H = Math.min(W, 400);
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
-
-    // Background grid
-    ctx.fillStyle = '#0a0a0a';
+    const PAD = 36;
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=0.5;
-    for(let x=0;x<=W;x+=W/8){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-    for(let y=0;y<=H;y+=H/4){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    ctx.strokeStyle='#2a2a2a'; ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
-
     if (!history || history.length < 2) {
-        ctx.fillStyle='#404040'; ctx.font='10px monospace'; ctx.textAlign='center';
-        ctx.fillText('Tidak ada data trajectory',W/2,H/2+4);
+        ctx.fillStyle='#888'; ctx.font='12px monospace'; ctx.textAlign='center';
+        ctx.fillText('Tidak ada data trajectory',W/2,H/2);
         return;
     }
-
-    // Auto-rescale
-    // Pakai roll sebagai X, pitch sebagai Y
     let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
     history.forEach(pt => {
-        const x = pt.x ?? pt.roll ?? 0;
-        const y = pt.y ?? pt.pitch ?? 0;
+        const x = parseFloat(pt.x ?? pt.roll ?? 0);
+        const y = parseFloat(pt.y ?? pt.pitch ?? 0);
         if(x<minX)minX=x; if(x>maxX)maxX=x;
         if(y<minY)minY=y; if(y>maxY)maxY=y;
     });
-    const range=Math.max(maxX-minX,maxY-minY)||0.01;
-    const pad=range*0.18;
-    const dX=maxX-minX+2*pad||1, dY=maxY-minY+2*pad||1;
-    const toC = (x,y) => ({
-        cx:((x-minX+pad)/dX)*W,
-        cy:H-((y-minY+pad)/dY)*H
+    const rangeX=maxX-minX||0.01, rangeY=maxY-minY||0.01;
+    const range=Math.max(rangeX,rangeY);
+    const pad=range*0.15;
+    const x0=minX-pad, y0=minY-pad, span=range+2*pad;
+    const plotW=W-2*PAD, plotH=H-2*PAD-24;
+    const toC=(x,y)=>({
+        cx:PAD+((parseFloat(x)-x0)/span)*plotW,
+        cy:PAD+plotH-((parseFloat(y)-y0)/span)*plotH
     });
-
-    // Trajectory line gradient
+    ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=0.8;
+    for(let i=0;i<=8;i++){
+        const gx=PAD+i*plotW/8, gy=PAD+i*plotH/8;
+        ctx.beginPath();ctx.moveTo(gx,PAD);ctx.lineTo(gx,PAD+plotH);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(PAD,gy);ctx.lineTo(PAD+plotW,gy);ctx.stroke();
+    }
+    ctx.strokeStyle='#9ca3af'; ctx.lineWidth=1;
+    ctx.strokeRect(PAD,PAD,plotW,plotH);
     for(let i=1;i<history.length;i++){
-        const alpha=0.3+0.7*(i/history.length);
-        ctx.strokeStyle=`rgba(239,68,68,${alpha.toFixed(2)})`;
-        ctx.lineWidth=1.5; ctx.lineJoin='round'; ctx.lineCap='round';
+        const alpha=0.25+0.75*(i/history.length);
+        ctx.strokeStyle=`rgba(220,38,38,${alpha.toFixed(2)})`;
+        ctx.lineWidth=1.2; ctx.lineJoin='round'; ctx.lineCap='round';
         ctx.beginPath();
-        const p0=toC(history[i-1].x??history[i-1].roll??0, history[i-1].y??history[i-1].pitch??0);
-        const p1=toC(history[i].x??history[i].roll??0, history[i].y??history[i].pitch??0);
+        const p0=toC(history[i-1].x??history[i-1].roll??0,history[i-1].y??history[i-1].pitch??0);
+        const p1=toC(history[i].x??history[i].roll??0,history[i].y??history[i].pitch??0);
         ctx.moveTo(p0.cx,p0.cy); ctx.lineTo(p1.cx,p1.cy); ctx.stroke();
     }
-    const fp=toC(parseFloat(history[0].x??history[0].roll??0), parseFloat(history[0].y??history[0].pitch??0));
-    ctx.fillStyle='#22c55e'; ctx.strokeStyle='#ffffff'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(fp.cx,fp.cy,8,0,Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#ffffff'; ctx.font='bold 11px monospace'; ctx.textAlign='center'; ctx.fillText('S',fp.cx,fp.cy+4);
-    const lp=toC(parseFloat(history[history.length-1].x??history[history.length-1].roll??0), parseFloat(history[history.length-1].y??history[history.length-1].pitch??0));
-    ctx.fillStyle='#ef4444'; ctx.strokeStyle='#ffffff'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(lp.cx,lp.cy,8,0,Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#ffffff'; ctx.font='bold 11px monospace'; ctx.textAlign='center'; ctx.fillText('E',lp.cx,lp.cy+4);
-
-    // Scale label
-    ctx.fillStyle='#404040'; ctx.font='8px monospace'; ctx.textAlign='left';
-    ctx.fillText(`NAV SCALE: 1:${Math.ceil(range*10)/10}`,4,H-4);
-
-    // Coord label
-    const last=history[history.length-1];
-    ctx.fillStyle='#525252'; ctx.textAlign='right';
-    ctx.fillText(`LAT: ${parseFloat(last.x??last.roll??0).toFixed(4)}`,W-4,12);
-    ctx.fillText(`LNG: ${parseFloat(last.y??last.pitch??0).toFixed(4)}`,W-4,22);
-    // Bearing dari start ke end
-    const sx=history[0].x??history[0].roll??0, sy=history[0].y??history[0].pitch??0;
-    const ex=history[history.length-1].x??history[history.length-1].roll??0, ey=history[history.length-1].y??history[history.length-1].pitch??0;
-    const angleDeg=Math.atan2(ex-sx, ey-sy)*(180/Math.PI);
+    const fp=toC(history[0].x??history[0].roll??0,history[0].y??history[0].pitch??0);
+    ctx.fillStyle='#16a34a'; ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(fp.cx,fp.cy,8,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 10px monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('S',fp.cx,fp.cy);
+    const lp=toC(history[history.length-1].x??history[history.length-1].roll??0,history[history.length-1].y??history[history.length-1].pitch??0);
+    ctx.fillStyle='#dc2626'; ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(lp.cx,lp.cy,8,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 10px monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('E',lp.cx,lp.cy);
+    ctx.fillStyle='#6b7280'; ctx.font='9px monospace'; ctx.textBaseline='top'; ctx.textAlign='center';
+    ctx.fillText('Roll (X)',W/2,PAD+plotH+4);
+    ctx.save(); ctx.translate(10,PAD+plotH/2); ctx.rotate(-Math.PI/2);
+    ctx.textAlign='center'; ctx.fillText('Pitch (Y)',0,0); ctx.restore();
+    const sx=parseFloat(history[0].x??history[0].roll??0), sy=parseFloat(history[0].y??history[0].pitch??0);
+    const ex2=parseFloat(history[history.length-1].x??history[history.length-1].roll??0);
+    const ey2=parseFloat(history[history.length-1].y??history[history.length-1].pitch??0);
+    const angleDeg=Math.atan2(ex2-sx,ey2-sy)*(180/Math.PI);
     const angleStr=(angleDeg>=0?'+':'')+angleDeg.toFixed(1)+'°';
-    const bearingLabel='Kemiringan Kecoa: '+angleStr+(angleDeg>0?' (kanan)':angleDeg<0?' (kiri)':' (lurus)');
-    ctx.fillStyle='#ffffff'; ctx.font='bold 11px monospace'; ctx.textAlign='left';
-    ctx.fillRect(0, H-20, W*0.6, 18);
-    ctx.fillStyle='#000000';
-    ctx.fillText(bearingLabel,4,H-6);
-    // Bearing dari start ke end
+    const bearingLabel='Kemiringan: '+angleStr+(angleDeg>0?' (kanan)':angleDeg<0?' (kiri)':' (lurus)');
+    ctx.fillStyle='#1f2937'; ctx.font='bold 10px monospace'; ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(bearingLabel,PAD,4);
 }
 
 // =====================
