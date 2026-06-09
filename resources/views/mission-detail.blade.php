@@ -218,6 +218,7 @@ function drawTrajectoryDetail(canvas, history) {
         const p1=toC(history[i].x??history[i].roll??0, history[i].y??history[i].pitch??0);
         ctx.moveTo(p0.cx,p0.cy); ctx.lineTo(p1.cx,p1.cy); ctx.stroke();
     }
+    const fp=toC(parseFloat(history[0].x??history[0].roll??0), parseFloat(history[0].y??history[0].pitch??0));
     ctx.fillStyle='#22c55e'; ctx.strokeStyle='#ffffff'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(fp.cx,fp.cy,8,0,Math.PI*2); ctx.fill(); ctx.stroke();
     ctx.fillStyle='#ffffff'; ctx.font='bold 11px monospace'; ctx.textAlign='center'; ctx.fillText('S',fp.cx,fp.cy+4);
     const lp=toC(parseFloat(history[history.length-1].x??history[history.length-1].roll??0), parseFloat(history[history.length-1].y??history[history.length-1].pitch??0));
