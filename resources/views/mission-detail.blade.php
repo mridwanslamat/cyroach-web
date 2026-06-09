@@ -227,7 +227,7 @@ function drawTrajectoryDetail(canvas, history) {
     ctx.fillStyle='#fff'; ctx.font='bold 10px monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
     ctx.fillText('E',lp.cx,lp.cy);
     ctx.fillStyle='#6b7280'; ctx.font='9px monospace'; ctx.textBaseline='top'; ctx.textAlign='center';
-    ctx.fillText('Roll (X)',W/2,H-4);
+    ctx.fillText('Roll (X)',W/2,PAD+plotH-4);
     ctx.save(); ctx.translate(10,PAD+plotH/2); ctx.rotate(-Math.PI/2);
     ctx.textAlign='center'; ctx.fillText('Pitch (Y)',0,0); ctx.restore();
     const sx=parseFloat(history[0].x??history[0].roll??0), sy=parseFloat(history[0].y??history[0].pitch??0);
