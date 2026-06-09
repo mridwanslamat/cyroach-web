@@ -175,7 +175,7 @@ function drawTrajectoryDetail(canvas, history) {
     const H = Math.min(W, 400);
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
-    const PAD = 36;
+    const PAD = 50;
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0,0,W,H);
     if (!history || history.length < 2) {
