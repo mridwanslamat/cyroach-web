@@ -194,7 +194,7 @@ function drawTrajectoryDetail(canvas, history) {
     const range=Math.max(rangeX,rangeY);
     const pad=range*0.15;
     const x0=minX-pad, y0=minY-pad, span=range+2*pad;
-    const plotW=W-2*PAD, plotH=H-2*PAD;
+    const plotW=W-2*PAD, plotH=H-2*PAD-20;
     const toC=(x,y)=>({
         cx:PAD+((parseFloat(x)-x0)/span)*plotW,
         cy:PAD+plotH-((parseFloat(y)-y0)/span)*plotH
@@ -227,7 +227,7 @@ function drawTrajectoryDetail(canvas, history) {
     ctx.fillStyle='#fff'; ctx.font='bold 10px monospace'; ctx.textAlign='center'; ctx.textBaseline='middle';
     ctx.fillText('E',lp.cx,lp.cy);
     ctx.fillStyle='#6b7280'; ctx.font='9px monospace'; ctx.textBaseline='top'; ctx.textAlign='center';
-    ctx.fillText('Roll (X)',W/2,PAD+plotH-4);
+    ctx.fillText('Roll (X)',W/2,PAD+plotH+14);
     ctx.save(); ctx.translate(10,PAD+plotH/2); ctx.rotate(-Math.PI/2);
     ctx.textAlign='center'; ctx.fillText('Pitch (Y)',0,0); ctx.restore();
     const sx=parseFloat(history[0].x??history[0].roll??0), sy=parseFloat(history[0].y??history[0].pitch??0);
