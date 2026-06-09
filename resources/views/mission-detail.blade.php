@@ -239,8 +239,8 @@ function drawTrajectoryDetail(canvas, history) {
     // Coord label
     const last=history[history.length-1];
     ctx.fillStyle='#525252'; ctx.textAlign='right';
-    ctx.fillText(`LAT: ${(last.x??last.roll??0).toFixed(4)}`,W-4,12);
-    ctx.fillText(`LNG: ${(last.y??last.pitch??0).toFixed(4)}`,W-4,22);
+    ctx.fillText(`LAT: ${parseFloat(last.x??last.roll??0).toFixed(4)}`,W-4,12);
+    ctx.fillText(`LNG: ${parseFloat(last.y??last.pitch??0).toFixed(4)}`,W-4,22);
     // Bearing dari start ke end
     const sx=history[0].x??history[0].roll??0, sy=history[0].y??history[0].pitch??0;
     const ex=history[history.length-1].x??history[history.length-1].roll??0, ey=history[history.length-1].y??history[history.length-1].pitch??0;
