@@ -95,25 +95,29 @@ class SensorController extends Controller
             cache([$cacheKey => now()->timestamp], 60);
         }
 
-        // 5. Broadcast ke browser via Pusher
-        event(new SensorDataReceived([
-            'device_id'        => $deviceId,
-            'suhu_max'         => $suhuMax,
-            'suhu_min'         => $request->suhu_min,
-            'thermal'          => $request->thermal_grid,
-            'pitch'            => $request->pitch,
-            'roll'             => $request->roll,
-            'yaw'              => $request->yaw,
-            'gyro_x'           => $request->gyro_x ?? 0,
-            'gyro_y'           => $request->gyro_y ?? 0,
-            'gyro_z'           => $request->gyro_z ?? 0,
-            'battery'          => $request->battery ?? 0,
-            'signal_strength'  => $request->signal_strength ?? 0,
-            'distance_total_m' => $distanceTotalM,
-            'dx'               => $request->dx ?? 0, // ← BARU: untuk trajectory di web
-            'dy'               => $request->dy ?? 0, // ← BARU: untuk trajectory di web
-            'thermal_image_b64' => $thermalBase64ForBroadcast,
-        ]));
+        // 5. Broadcast ke browser via Pusher (jangan sampai error Pusher menggagalkan response ke Android)
+        try {
+            event(new SensorDataReceived([
+                'device_id'        => $deviceId,
+                'suhu_max'         => $suhuMax,
+                'suhu_min'         => $request->suhu_min,
+                'thermal'          => $request->thermal_grid,
+                'pitch'            => $request->pitch,
+                'roll'             => $request->roll,
+                'yaw'              => $request->yaw,
+                'gyro_x'           => $request->gyro_x ?? 0,
+                'gyro_y'           => $request->gyro_y ?? 0,
+                'gyro_z'           => $request->gyro_z ?? 0,
+                'battery'          => $request->battery ?? 0,
+                'signal_strength'  => $request->signal_strength ?? 0,
+                'distance_total_m' => $distanceTotalM,
+                'dx'               => $request->dx ?? 0,
+                'dy'               => $request->dy ?? 0,
+                'thermal_image_b64' => $thermalBase64ForBroadcast,
+            ]));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Broadcast Pusher gagal: ' . $e->getMessage());
+        }
 
         // 6. Cek threshold deteksi korban
         if ($suhuMax >= $threshold) {
