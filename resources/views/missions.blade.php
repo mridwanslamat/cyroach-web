@@ -182,7 +182,7 @@ function renderTable(missions) {
     tbody.innerHTML = pageData.map((m, i) => {
         const isSelesai = m.status === 'selesai';
         const korban = m.detections_count ?? 0;
-        const suhuMax = m.max_temperature ? m.max_temperature.toFixed(1) + '°C' : '—';
+        const suhuMax = m.max_temperature ? parseFloat(m.max_temperature).toFixed(1) + '°C' : '—';
         const rowBg = i % 2 === 0 ? '' : 'style="background-color: var(--bg-raised);"';
         return `
         <tr class="border-b cyroach-border hover:opacity-80 transition-opacity cursor-pointer" ${rowBg}
