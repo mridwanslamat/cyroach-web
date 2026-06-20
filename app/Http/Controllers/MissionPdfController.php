@@ -17,8 +17,8 @@ class MissionPdfController extends Controller
         // Generate heatmap base64 untuk tiap deteksi
         $heatmaps = [];
         foreach ($mission->detections as $d) {
-            if ($d->thermal_image_path && file_exists(public_path('storage/' . $d->thermal_image_path))) {
-                $heatmaps[$d->id] = 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path('storage/' . $d->thermal_image_path)));
+            if ($d->thermal_image_path && file_exists('/home/cyrx6347/public_html/storage/' . $d->thermal_image_path)) {
+                $heatmaps[$d->id] = 'data:image/jpeg;base64,' . base64_encode(file_get_contents('/home/cyrx6347/public_html/storage/' . $d->thermal_image_path));
             } elseif ($d->thermal_snapshot) {
                 $heatmaps[$d->id] = $this->generateHeatmapBase64($d->thermal_snapshot);
                 // Hitung ulang suhu_min dari thermal_snapshot
