@@ -49,10 +49,12 @@ class DeviceController extends Controller
             ->latest('notified_at')
             ->take(20)
             ->get();
+        $detectionsCount = \App\Models\Detection::where('mission_id', $activeMission->id)->count();
 
         return response()->json([
-            'devices'       => $devices,
-            'notifications' => $notifications,
+            'devices'          => $devices,
+            'notifications'    => $notifications,
+            'detections_count' => $detectionsCount,
         ]);
     }
 }
