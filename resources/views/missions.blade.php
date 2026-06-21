@@ -17,7 +17,7 @@
                 </svg>
             </div>
             <div>
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Total Missions</div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Total Misi</div>
                 <div class="text-2xl font-display font-bold cyroach-text leading-none" id="stat-total-misi">—</div>
             </div>
         </div>
@@ -31,10 +31,9 @@
                 </svg>
             </div>
             <div>
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Victims Rescued</div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Total Korban Terdeteksi</div>
                 <div class="flex items-baseline gap-1.5">
                     <div class="text-2xl font-bold text-red-400 leading-none" id="stat-total-korban" style="font-variant-numeric: normal; font-feature-settings: normal;">—</div>
-                    <div class="text-xs cyroach-muted" id="stat-korban-sub" style="font-family:var(--font-mono);">total detected</div>
                 </div>
             </div>
         </div>
@@ -46,7 +45,7 @@
                 </svg>
             </div>
             <div>
-                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Operating Hours</div>
+                <div class="text-xs cyroach-muted uppercase tracking-widest mb-0.5" style="font-family:var(--font-mono);font-size:10px;">Total Jam Beroperasi</div>
                 <div class="text-2xl font-display font-bold cyroach-text leading-none" id="stat-hours">—</div>
             </div>
         </div>

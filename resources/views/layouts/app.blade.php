@@ -64,7 +64,7 @@
 
     {{-- Mission Context (bawah sidebar) --}}
     <div class="px-4 pb-5 pt-3 border-t cyroach-border">
-        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">Mission Context</div>
+        <div class="text-xs cyroach-muted uppercase tracking-widest mb-3" style="font-family:var(--font-mono);font-size:10px;">Mission</div>
         <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.2);">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="cyroach-accent-text">
