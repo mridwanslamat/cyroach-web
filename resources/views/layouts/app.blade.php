@@ -54,9 +54,9 @@
         <a href="{{ route('about') }}"
            class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all {{ request()->routeIs('about') ? 'sidebar-link-active' : '' }}">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <line x1="12" y1="10" x2="12" y2="14"/>
-                <circle cx="12" cy="8" r="0.5" fill="currentColor"/>
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="11" x2="12" y2="16"/>
+                <circle cx="12" cy="7.5" r="0.6" fill="currentColor" stroke="none"/>
             </svg>
             About Project
         </a>
