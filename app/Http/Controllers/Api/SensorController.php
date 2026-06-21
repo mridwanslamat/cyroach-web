@@ -95,6 +95,11 @@ class SensorController extends Controller
             cache([$cacheKey => now()->timestamp], 60);
         }
 
+        $detectionsCount = \App\Models\Detection::where('mission_id', $mission->id)->count();
+        if ($suhuMax >= $threshold) {
+            $alreadyDetected = \App\Models\Detection::where('device_id', $deviceId)->where('mission_id', $mission->id)->where('detected_at', '>=', now()->subMinutes(5))->exists();
+            if (!$alreadyDetected) { $detectionsCount++; }
+        }
         // 5. Broadcast ke browser via Pusher (jangan sampai error Pusher menggagalkan response ke Android)
         try {
             event(new SensorDataReceived([
@@ -114,6 +119,7 @@ class SensorController extends Controller
                 'dx'               => $request->dx ?? 0,
                 'dy'               => $request->dy ?? 0,
                 'thermal_image_b64' => $thermalBase64ForBroadcast,
+                'detections_count' => $detectionsCount,
             ]));
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::warning('Broadcast Pusher gagal: ' . $e->getMessage());
