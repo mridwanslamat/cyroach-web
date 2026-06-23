@@ -780,3 +780,19 @@ fetch('/api/mission-status')
     .catch(err => console.error('Gagal load data awal:', err));
 
 trajectoryAnimLoop();
+
+// Load trajectory dari DB saat pertama buka
+fetch('/api/trajectory')
+    .then(r => r.json())
+    .then(data => {
+        Object.keys(data).forEach(deviceId => {
+            if (!trajectoryHistory[deviceId]) {
+                trajectoryHistory[deviceId] = [{ x: 0, y: 0 }];
+            }
+            const points = data[deviceId];
+            if (points && points.length > 0) {
+                trajectoryHistory[deviceId] = [{ x: 0, y: 0 }].concat(points);
+            }
+        });
+    })
+    .catch(err => console.error('Gagal load trajectory:', err));

@@ -26,32 +26,26 @@ class SensorController extends Controller
             'gyro_x'           => 'nullable|numeric',
             'gyro_y'           => 'nullable|numeric',
             'gyro_z'           => 'nullable|numeric',
-            'battery'          => 'nullable|integer',
+            'battery'          => 'nullable|numeric',
             'signal_strength'  => 'nullable|integer',
             'distance_cm'      => 'nullable|numeric',
-            'dx'               => 'nullable|numeric', // ← BARU: delta posisi X dari Android
-            'dy'               => 'nullable|numeric', // ← BARU: delta posisi Y dari Android
-            'distance_total_m' => 'nullable|numeric', // ← BARU: jarak total dari Android
+            'dx'               => 'nullable|numeric',
+            'dy'               => 'nullable|numeric',
+            'distance_total_m' => 'nullable|numeric',
         ]);
 
         $deviceId  = $request->device_id;
-        // Tidak simpan file — hanya siapkan base64 untuk broadcast realtime
-        $thermalImagePath = null;
         $thermalBase64ForBroadcast = $request->thermal_image ?? null;
         $suhuMax   = $request->suhu_max;
         $threshold = 37.5;
 
-        // 1. Update atau daftarkan device
         Device::updateOrCreate(
             ['device_id' => $deviceId],
             ['status' => 'online', 'last_seen' => now()]
         );
 
-        // 2. Cek apakah ada misi yang sedang berlangsung
         $mission = Mission::where('status', 'berlangsung')->latest()->first();
 
-        // 3. Kalau belum ada misi, buat misi baru otomatis
-        // Tapi jangan buat misi baru kalau device baru saja di-end (cooldown 60 detik)
         if (!$mission) {
             $endCooldownKey = 'end_mission_cooldown_' . $deviceId;
             if (cache($endCooldownKey, false)) {
@@ -65,15 +59,25 @@ class SensorController extends Controller
             ]);
         }
 
-        // 4. Simpan data sensor (throttle: hanya setiap 5 detik per device)
         $distanceCm     = $request->distance_cm ?? 0;
         $distanceTotalM = $request->distance_total_m ?? 0;
+        $dx = (float)($request->dx ?? 0);
+        $dy = (float)($request->dy ?? 0);
 
         $cacheKey    = "last_insert_{$deviceId}";
         $lastInsert  = cache($cacheKey, 0);
         $shouldInsert = (now()->timestamp - $lastInsert) >= 5;
 
         if ($shouldInsert) {
+            // Ambil posisi terakhir dari DB
+            $lastPos = SensorData::where('mission_id', $mission->id)
+                ->where('device_id', $deviceId)
+                ->latest('recorded_at')
+                ->select('pos_x', 'pos_y')
+                ->first();
+            $posX = ($lastPos->pos_x ?? 0) + $dx;
+            $posY = ($lastPos->pos_y ?? 0) + $dy;
+
             SensorData::create([
                 'mission_id'       => $mission->id,
                 'device_id'        => $deviceId,
@@ -90,17 +94,21 @@ class SensorController extends Controller
                 'signal_strength'  => $request->signal_strength ?? 0,
                 'distance_cm'      => $distanceCm,
                 'distance_total_m' => $distanceTotalM,
+                'dx'               => $dx,
+                'dy'               => $dy,
+                'pos_x'            => $posX,
+                'pos_y'            => $posY,
                 'recorded_at'      => now(),
             ]);
             cache([$cacheKey => now()->timestamp], 60);
         }
 
-        $detectionsCount = \App\Models\Detection::where('mission_id', $mission->id)->count();
+        $detectionsCount = Detection::where('mission_id', $mission->id)->count();
         if ($suhuMax >= $threshold) {
-            $alreadyDetected = \App\Models\Detection::where('device_id', $deviceId)->where('mission_id', $mission->id)->where('detected_at', '>=', now()->subMinutes(5))->exists();
+            $alreadyDetected = Detection::where('device_id', $deviceId)->where('mission_id', $mission->id)->where('detected_at', '>=', now()->subMinutes(5))->exists();
             if (!$alreadyDetected) { $detectionsCount++; }
         }
-        // 5. Broadcast ke browser via Pusher (jangan sampai error Pusher menggagalkan response ke Android)
+
         try {
             event(new SensorDataReceived([
                 'device_id'        => $deviceId,
@@ -116,8 +124,8 @@ class SensorController extends Controller
                 'battery'          => $request->battery ?? 0,
                 'signal_strength'  => $request->signal_strength ?? 0,
                 'distance_total_m' => $distanceTotalM,
-                'dx'               => $request->dx ?? 0,
-                'dy'               => $request->dy ?? 0,
+                'dx'               => $dx,
+                'dy'               => $dy,
                 'thermal_image_b64' => $thermalBase64ForBroadcast,
                 'detections_count' => $detectionsCount,
             ]));
@@ -125,7 +133,6 @@ class SensorController extends Controller
             \Illuminate\Support\Facades\Log::warning('Broadcast Pusher gagal: ' . $e->getMessage());
         }
 
-        // 6. Cek threshold deteksi korban
         if ($suhuMax >= $threshold) {
             $sudahDeteksi = Detection::where('device_id', $deviceId)
                 ->where('mission_id', $mission->id)
@@ -168,72 +175,47 @@ class SensorController extends Controller
 
         return response()->json(['message' => 'Data diterima'], 200);
     }
-    
-    
+
     public function getTrajectory()
     {
-        $mission = \App\Models\Mission::where("status", "berlangsung")->latest()->first();
-        if (!$mission) {
-            return response()->json([]);
-        }
+        $mission = Mission::where('status', 'berlangsung')->latest()->first();
+        if (!$mission) return response()->json([]);
 
-        $rows = \App\Models\SensorData::where("mission_id", $mission->id)
-            ->orderBy("recorded_at", "asc")
-            ->get(["device_id", "dx", "dy"]);
+        $rows = SensorData::where('mission_id', $mission->id)
+            ->orderBy('recorded_at', 'asc')
+            ->get(['device_id', 'pos_x', 'pos_y']);
 
         $trajectories = [];
         foreach ($rows as $row) {
-            if (!isset($trajectories[$row->device_id])) {
-                $trajectories[$row->device_id] = [["x" => 0, "y" => 0]];
-            }
-            $last = end($trajectories[$row->device_id]);
-            $dx = (float)($row->dx ?? 0);
-            $dy = (float)($row->dy ?? 0);
-            if ($dx !== 0.0 || $dy !== 0.0) {
-                $trajectories[$row->device_id][] = [
-                    "x" => $last["x"] + $dx,
-                    "y" => $last["y"] + $dy,
-                ];
-            }
+            $trajectories[$row->device_id][] = [
+                'x' => (float)$row->pos_x,
+                'y' => (float)$row->pos_y,
+            ];
         }
 
         return response()->json($trajectories);
     }
+
     public function endMission(Request $request)
     {
-        $request->validate([
-            'device_id' => 'required|string',
-        ]);
-
+        $request->validate(['device_id' => 'required|string']);
         $deviceId = $request->device_id;
 
-        // Tandai device sebagai offline
-        Device::where('device_id', $deviceId)
-            ->update(['status' => 'offline']);
+        Device::where('device_id', $deviceId)->update(['status' => 'offline']);
 
-        // Cek misi yang sedang berlangsung
         $mission = Mission::where('status', 'berlangsung')->latest()->first();
-
         if (!$mission) {
             return response()->json(['message' => 'Tidak ada misi yang berlangsung'], 200);
         }
 
-        // Cek apakah semua device di misi ini sudah offline
         $allOffline = Device::where('status', 'online')->count() === 0;
-
         if ($allOffline) {
-            $mission->update([
-                'status'   => 'selesai',
-                'ended_at' => now(),
-            ]);
-            // Set cooldown agar tidak buat misi baru selama 60 detik
+            $mission->update(['status' => 'selesai', 'ended_at' => now()]);
             cache(['end_mission_cooldown_' . $deviceId => true], 60);
-
             event(new \App\Events\MissionEnded(['status' => 'selesai']));
             return response()->json(['message' => 'Misi selesai'], 200);
         }
 
         return response()->json(['message' => 'Device selesai, menunggu kecoa lain'], 200);
     }
-
 }
