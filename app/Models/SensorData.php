@@ -24,6 +24,10 @@ class SensorData extends Model
         'distance_total_m',
         'thermal_image_path',
         'recorded_at',
+        'dx',
+        'dy',
+        'pos_x',
+        'pos_y',
     ];
 
     protected $casts = [
