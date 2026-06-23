@@ -69,14 +69,17 @@ class SensorController extends Controller
         $shouldInsert = (now()->timestamp - $lastInsert) >= 5;
 
         if ($shouldInsert) {
-            // Ambil posisi terakhir dari DB
-            $lastPos = SensorData::where('mission_id', $mission->id)
+            // Hitung pos_x/pos_y dari distance_total_m + yaw
+            $lastSensor = SensorData::where('mission_id', $mission->id)
                 ->where('device_id', $deviceId)
                 ->latest('recorded_at')
-                ->select('pos_x', 'pos_y')
+                ->select('pos_x', 'pos_y', 'distance_total_m')
                 ->first();
-            $posX = ($lastPos->pos_x ?? 0) + $dx;
-            $posY = ($lastPos->pos_y ?? 0) + $dy;
+            $lastDist = (float)($lastSensor->distance_total_m ?? 0);
+            $deltaDist = $distanceTotalM - $lastDist;
+            $yawRad = deg2rad((float)$request->yaw);
+            $posX = ($lastSensor->pos_x ?? 0) + $deltaDist * sin($yawRad);
+            $posY = ($lastSensor->pos_y ?? 0) + $deltaDist * cos($yawRad);
 
             SensorData::create([
                 'mission_id'       => $mission->id,
