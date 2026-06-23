@@ -1,5 +1,0 @@
-[04-Jun-2026 15:15:27 Asia/Jakarta] PHP Fatal error:  Uncaught TypeError: Pusher\Pusher::__construct(): Argument #3 ($app_id) must be of type string, array given, called in /tmp/test_pusher.php on line 4 and defined in /home/cyrx6347/cyroach-web/vendor/pusher/pusher-php-server/src/Pusher.php:63
-Stack trace:
-#0 /tmp/test_pusher.php(4): Pusher\Pusher->__construct()
-#1 {main}
-  thrown in /home/cyrx6347/cyroach-web/vendor/pusher/pusher-php-server/src/Pusher.php on line 63
