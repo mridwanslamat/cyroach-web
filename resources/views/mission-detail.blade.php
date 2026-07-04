@@ -353,7 +353,7 @@ function renderDetections(detections) {
                         </svg>
                         <div>
                             <div class="text-xs font-semibold text-red-400">Korban Terdeteksi</div>
-                            <div class="text-xs cyroach-muted" style="font-size:10px;">Suhu melebihi ambang batas 37.5°C</div>
+                            <div class="text-xs cyroach-muted" style="font-size:10px;">Suhu 35-42\u00b0C, terindikasi korban manusia</div>
                         </div>
                     </div>
                 </div>
