@@ -15,10 +15,9 @@ class MissionController extends Controller
             ->withMax('sensorData', 'suhu_max')
             ->orderBy('mission_number', 'desc')
             ->get()->map(function ($m) {
-                $maxSuhu = \App\Models\SensorData::where('mission_id', $m->id)
-                    ->whereBetween('suhu_max', [0, 100])
-                    ->max('suhu_max');
-                $m->max_temperature = $maxSuhu;
+                $maxSensor = \App\Models\SensorData::where('mission_id', $m->id)->whereBetween('suhu_max', [0, 100])->max('suhu_max');
+                $maxDeteksi = \App\Models\Detection::where('mission_id', $m->id)->whereBetween('suhu_max', [0, 100])->max('suhu_max');
+                $m->max_temperature = max($maxSensor ?? 0, $maxDeteksi ?? 0) ?: null;
                 return $m;
             });
         return response()->json($missions);
