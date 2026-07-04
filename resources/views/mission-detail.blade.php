@@ -355,8 +355,8 @@ function renderDetections(detections) {
                             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
                         </svg>
                         <div>
-                            <div class="text-xs font-semibold text-red-400">Korban Terdeteksi</div>
-                            <div class="text-xs cyroach-muted" style="font-size:10px;">Suhu 35-42\u00b0C, terindikasi korban manusia</div>
+                            <div class="text-xs font-semibold" style="color:${d.detection_type==='panas' ? '#fb923c' : '#f87171'}">${d.detection_type==='panas' ? 'Sumber Panas Terdeteksi' : 'Korban Terdeteksi'}</div>
+                            <div class="text-xs cyroach-muted" style="font-size:10px;">${d.detection_type==='panas' ? 'Suhu >42\u00b0C, bukan korban manusia' : 'Suhu 35-42\u00b0C, terindikasi korban manusia'}</div>
                         </div>
                     </div>
                 </div>
