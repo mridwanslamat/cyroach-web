@@ -37,7 +37,8 @@ class SensorController extends Controller
         $deviceId  = $request->device_id;
         $thermalBase64ForBroadcast = $request->thermal_image ?? null;
         $suhuMax   = $request->suhu_max;
-        $threshold = 37.5;
+        $threshold_bawah = 35.0;
+        $threshold_atas  = 42.0;
 
         Device::updateOrCreate(
             ['device_id' => $deviceId],
@@ -106,8 +107,8 @@ class SensorController extends Controller
             cache([$cacheKey => now()->timestamp], 60);
         }
 
-        $detectionsCount = Detection::where('mission_id', $mission->id)->count();
-        if ($suhuMax >= $threshold) {
+        $detectionsCount = Detection::where('mission_id', $mission->id)->where('detection_type', 'korban')->count();
+        if ($suhuMax >= $threshold_bawah && $suhuMax <= $threshold_atas) {
             $alreadyDetected = Detection::where('device_id', $deviceId)->where('mission_id', $mission->id)->where('detected_at', '>=', now()->subMinutes(5))->exists();
             if (!$alreadyDetected) { $detectionsCount++; }
         }
@@ -136,7 +137,8 @@ class SensorController extends Controller
             \Illuminate\Support\Facades\Log::warning('Broadcast Pusher gagal: ' . $e->getMessage());
         }
 
-        if ($suhuMax >= $threshold) {
+        if ($suhuMax >= $threshold_bawah) {
+            $detectionType = ($suhuMax <= $threshold_atas) ? 'korban' : 'panas';
             $sudahDeteksi = Detection::where('device_id', $deviceId)
                 ->where('mission_id', $mission->id)
                 ->where('detected_at', '>=', now()->subMinutes(5))
@@ -146,6 +148,7 @@ class SensorController extends Controller
                 Detection::create([
                     'mission_id'       => $mission->id,
                     'device_id'        => $deviceId,
+                    'detection_type'   => $detectionType,
                     'thermal_snapshot' => $request->thermal_grid,
                     'thermal_image_path' => (function() use ($request, $deviceId, $thermalBase64ForBroadcast) {
                         $b64 = $request->thermal_image ?? $thermalBase64ForBroadcast;
@@ -170,7 +173,9 @@ class SensorController extends Controller
                 Notification::create([
                     'mission_id'  => $mission->id,
                     'device_id'   => $deviceId,
-                    'message'     => "Kecoa #" . ltrim(str_replace('kecoa_', '', $deviceId), '0') . " menemukan korban",
+                    'message'     => $detectionType === 'korban'
+                        ? "Kecoa #" . ltrim(str_replace('kecoa_', '', $deviceId), '0') . " menemukan korban"
+                        : "Kecoa #" . ltrim(str_replace('kecoa_', '', $deviceId), '0') . " mendeteksi sumber panas (bukan korban)",
                     'notified_at' => now(),
                 ]);
             }

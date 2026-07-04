@@ -9,6 +9,7 @@ class Detection extends Model
     protected $fillable = [
         'mission_id',
         'device_id',
+        'detection_type',
         'thermal_snapshot',
         'thermal_image_path',
         'suhu_max',
