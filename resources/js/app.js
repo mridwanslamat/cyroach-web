@@ -39,6 +39,11 @@ const STATUS_MAP = {
         cls: "",
         style: "background-color:var(--bg-raised);color:var(--text-muted);border:1px solid var(--border);",
     },
+    panas: {
+        label: "Sumber Panas",
+        cls: "",
+        style: "background-color:rgba(249,115,22,0.15);color:#fb923c;border:1px solid rgba(249,115,22,0.3);",
+    },
 };
 
 // =====================
@@ -322,9 +327,10 @@ function getStatus(device) {
     if (device.suhu_max === undefined || device.suhu_max === null)
         return "nosig";
     const t = device.suhu_max;
-    if (t >= 37.5) return "confirmed";
-    if (t >= 36.0) return "probable";
-    if (t >= 34.0) return "possible";
+    if (t > 42.0) return "panas";
+    if (t >= 35.0) return "confirmed";
+    if (t >= 33.0) return "probable";
+    if (t >= 30.0) return "possible";
     return "nosig";
 }
 
@@ -547,8 +553,11 @@ function _populateModal(device) {
     const deteksiEl = document.getElementById("modal-deteksi-status");
     if (deteksiEl) {
         if (status === "confirmed") {
-            deteksiEl.textContent = "Korban Terdeteksi";
+            deteksiEl.textContent = "Korban Terdeteksi (35-42\u00b0C)";
             deteksiEl.className = "text-xs font-mono cyroach-accent-text";
+        } else if (status === "panas") {
+            deteksiEl.textContent = "Sumber Panas (>42\u00b0C, bukan korban)";
+            deteksiEl.className = "text-xs font-mono text-orange-400";
         } else {
             deteksiEl.textContent = "Tidak ada deteksi";
             deteksiEl.className = "text-xs font-mono cyroach-muted";
@@ -678,7 +687,7 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
         devices[data.device_id].yaw              = data.yaw;
     }
 
-    if (data.suhu_max >= 37.5) {
+    if (data.suhu_max >= 35.0) {
         const num = data.device_id.replace("kecoa_", "").replace(/^0+/, "");
         const existing = notifications.find(
             (n) => n.device_id === data.device_id,
@@ -686,7 +695,9 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
         if (!existing || Date.now() - existing.ts > 300000) {
             notifications.unshift({
                 device_id: data.device_id,
-                message: `Kecoa #${num} menemukan korban`,
+                message: data.suhu_max <= 42.0
+                    ? `Kecoa #${num} menemukan korban`
+                    : `Kecoa #${num} mendeteksi sumber panas (bukan korban)`,
                 time: new Date().toLocaleTimeString("id-ID"),
                 ts: Date.now(),
             });
