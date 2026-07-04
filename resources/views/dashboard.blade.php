@@ -77,7 +77,7 @@
                 <div class="text-sm font-semibold cyroach-text mb-1.5">Cara Deteksi Korban</div>
                 <div class="text-sm cyroach-muted leading-relaxed">
                     Cyborg kecoa dilengkapi kamera thermal 8×8 untuk mendeteksi panas tubuh manusia.
-                    Ketika suhu terdeteksi melebihi ambang batas <span class="text-red-400 font-medium">37.5°C</span>, sistem secara otomatis mencatat waktu dan data sensor.
+                    Ketika suhu terdeteksi melebihi ambang batas <span class="text-red-400 font-medium">35–42°C</span>, sistem secara otomatis mencatat waktu dan data sensor.
                     Indikasi keberadaan korban ditentukan berdasarkan pola distribusi panas yang terdeteksi oleh grid sensor.
                 </div>
             </div>

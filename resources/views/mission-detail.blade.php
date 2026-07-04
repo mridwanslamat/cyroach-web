@@ -275,7 +275,8 @@ function renderSummary(m) {
         ? 'background-color:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.35);'
         : 'background-color:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.35);';
     document.getElementById('sum-durasi').textContent = formatDurasi(m.started_at, m.ended_at);
-    document.getElementById('sum-korban').textContent = m.detections?.length ?? 0;
+    const korbanCount = (m.detections ?? []).filter(d => d.detection_type !== 'panas').length;
+    document.getElementById('sum-korban').textContent = korbanCount;
     document.getElementById('sum-status').innerHTML = `
         <span class="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full font-medium"
             style="font-family:var(--font-mono);${badgeStyle}">
@@ -303,8 +304,10 @@ function renderDetections(detections) {
         <div class="cy-card p-4 mb-3">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
-                    <div class="w-0.5 h-4 rounded" style="background-color:var(--accent);"></div>
-                    <span class="text-sm font-semibold cyroach-text">Deteksi #${idx+1} — Kecoa #${devNum}</span>
+                    <div class="w-0.5 h-4 rounded" style="background-color:${d.detection_type==='panas' ? '#fb923c' : 'var(--accent)'};"></div>
+                    <span class="text-sm font-semibold cyroach-text">
+                        ${d.detection_type==='panas' ? 'Sumber Panas' : 'Deteksi'} #${idx+1} — Kecoa #${devNum}
+                    </span>
                 </div>
                 <div class="text-xs font-mono cyroach-muted">${new Date(d.detected_at).toLocaleString('id-ID')}</div>
             </div>

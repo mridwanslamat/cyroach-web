@@ -66,7 +66,7 @@
                             </svg>
                         </div>
                         <div class="text-sm font-semibold cyroach-text mb-2">Thermal Imaging</div>
-                        <div class="text-xs cyroach-muted leading-relaxed">Deteksi keberadaan korban secara real-time melalui sensor panas tubuh dengan threshold <strong class="cyroach-text">37.5°C</strong>, membedakan manusia dari objek lain di bawah reruntuhan.</div>
+                        <div class="text-xs cyroach-muted leading-relaxed">Deteksi keberadaan korban secara real-time melalui sensor panas tubuh dengan threshold <strong class="cyroach-text">35–42°C</strong>, membedakan manusia dari objek lain di bawah reruntuhan.</div>
                     </div>
 
                     <div class="cy-card p-4">

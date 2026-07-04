@@ -14,7 +14,13 @@ class MissionController extends Controller
             ->withCount(['detections as panas_count' => function($q) { $q->where('detection_type', 'panas'); }])
             ->withMax('sensorData', 'suhu_max')
             ->orderBy('mission_number', 'desc')
-            ->get()->map(function ($m) { $m->max_temperature = $m->sensor_data_max_suhu_max; return $m; });
+            ->get()->map(function ($m) {
+                $maxSuhu = \App\Models\SensorData::where('mission_id', $m->id)
+                    ->whereBetween('suhu_max', [0, 100])
+                    ->max('suhu_max');
+                $m->max_temperature = $maxSuhu;
+                return $m;
+            });
         return response()->json($missions);
     }
 
