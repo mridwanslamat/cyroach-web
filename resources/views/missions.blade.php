@@ -146,7 +146,7 @@ function pad(n) { return String(n).padStart(3, '0'); }
 
 function renderStats(missions) {
     const total = missions.length;
-    const korban = missions.reduce((s, m) => s + parseInt(m.detections_count ?? 0), 0);
+    const korban = missions.reduce((s, m) => s + parseInt(m.korban_count ?? 0), 0);
     let totalSec = 0;
     missions.forEach(m => {
         if (m.started_at && m.ended_at) {
