@@ -180,7 +180,8 @@ function renderTable(missions) {
 
     tbody.innerHTML = pageData.map((m, i) => {
         const isSelesai = m.status === 'selesai';
-        const korban = m.detections_count ?? 0;
+        const korban = m.korban_count ?? 0;
+        const panas = m.panas_count ?? 0;
         const suhuMax = m.max_temperature ? parseFloat(m.max_temperature).toFixed(1) + '°C' : '—';
         const rowBg = i % 2 === 0 ? '' : 'style="background-color: var(--bg-raised);"';
         return `
@@ -199,7 +200,7 @@ function renderTable(missions) {
                     style="${korban > 0
                         ? 'background-color:var(--accent);color:#fff;'
                         : 'background-color:var(--bg-raised);border:1px solid var(--border);color:var(--text-muted);'}">
-                    ${korban}
+                    ${korban > 0 ? korban : (panas > 0 ? "!" : 0)}
                 </span>
             </td>
             <td class="px-4 py-3 font-mono cyroach-text">${suhuMax}</td>

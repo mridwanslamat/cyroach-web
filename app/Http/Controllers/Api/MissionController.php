@@ -10,6 +10,8 @@ class MissionController extends Controller
     public function index()
     {
         $missions = Mission::withCount('detections')
+            ->withCount(['detections as korban_count' => function($q) { $q->where('detection_type', 'korban'); }])
+            ->withCount(['detections as panas_count' => function($q) { $q->where('detection_type', 'panas'); }])
             ->withMax('sensorData', 'suhu_max')
             ->orderBy('mission_number', 'desc')
             ->get()->map(function ($m) { $m->max_temperature = $m->sensor_data_max_suhu_max; return $m; });
