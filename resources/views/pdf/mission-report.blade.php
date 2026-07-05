@@ -372,8 +372,11 @@
         <table class="alert-table">
             <tr>
                 <td>
-                    @if($d->detection_type === 'panas')[!] Sumber panas terdeteksi &mdash; suhu >42&deg;C, bukan korban manusia@else[!] Terindikasi keberadaan korban hidup &mdash;
-                    suhu tubuh terdeteksi melebihi ambang batas 35&ndash;42&deg;C@endif
+                    @if($d->detection_type === 'panas')
+                    [!] Sumber panas terdeteksi &mdash; suhu &gt;42&deg;C, bukan korban manusia
+                    @else
+                    [!] Terindikasi keberadaan korban hidup &mdash; suhu tubuh terdeteksi melebihi ambang batas 35&ndash;42&deg;C
+                    @endif
                 </td>
             </tr>
         </table>
