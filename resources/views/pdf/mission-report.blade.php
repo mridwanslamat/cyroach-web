@@ -203,6 +203,26 @@
         <td class="label">Nomor Misi</td>
         <td class="sep">:</td>
         <td class="value">Misi #{{ $misiNo }}</td>
+    <tr>
+        <td class="label">Lokasi Operasi</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $formData['lokasi'] ?? '—' }}</td>
+    </tr>
+    <tr>
+        <td class="label">Instansi / Unit SAR</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $formData['instansi'] ?? '—' }}</td>
+    </tr>
+    <tr>
+        <td class="label">Komandan Operasi</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $formData['komandan'] ?? '—' }}</td>
+    </tr>
+    <tr>
+        <td class="label">Operator Kecoa</td>
+        <td class="sep">:</td>
+        <td class="value">{{ $formData['operator'] ?? '—' }}</td>
+    </tr>
     </tr>
     <tr>
         <td class="label">Tanggal Operasi</td>
@@ -232,7 +252,7 @@
     <tr>
         <td class="label">Ambang Batas Suhu</td>
         <td class="sep">:</td>
-        <td class="value">37,5&deg;C</td>
+        <td class="value">35&ndash;42&deg;C</td>
     </tr>
 </table>
 
@@ -353,7 +373,7 @@
             <tr>
                 <td>
                     [!] Terindikasi keberadaan korban hidup &mdash;
-                    suhu tubuh terdeteksi melebihi ambang batas 37,5&deg;C
+                    suhu tubuh terdeteksi melebihi ambang batas 35&ndash;42&deg;C
                 </td>
             </tr>
         </table>

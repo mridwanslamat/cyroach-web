@@ -8,8 +8,16 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class MissionPdfController extends Controller
 {
-    public function export($id)
+    public function export($id, \Illuminate\Http\Request $request)
     {
+        $formData = [
+            'lokasi'   => $request->get('lokasi', '—'),
+            'komandan' => $request->get('komandan', '—'),
+            'operator' => $request->get('operator', '—'),
+            'instansi' => $request->get('instansi', '—'),
+            'catatan'  => $request->get('catatan', ''),
+        ];
+        
         $mission = Mission::with(['detections', 'notifications'])
             ->withCount('detections')
             ->findOrFail($id);
@@ -86,6 +94,7 @@ class MissionPdfController extends Controller
             'trajectories' => $trajectories,
             'telemetryPdf' => $telemetryPdf,
             'kecoaCount'   => count($trajectories),
+            'formData'     => $formData,
         ])->setPaper('a4', 'portrait');
 
         $filename = 'Berita_Acara_Misi_' . str_pad($mission->mission_number, 3, '0', STR_PAD_LEFT) . '.pdf';

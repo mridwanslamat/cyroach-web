@@ -481,7 +481,27 @@ fetch(`/api/missions/${missionId}`)
     });
 </script>
 @endpush
-
+<div id="modal-export" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.6);">
+    <div class="cy-card p-6 w-full max-w-md mx-4">
+        <form method="GET" action="/missions/{{ $id }}/export-pdf">
+            <div class="flex justify-between mb-4">
+                <h3 class="text-sm font-bold cyroach-text">Export Berita Acara SAR</h3>
+                <button type="button" onclick="document.getElementById('modal-export').classList.add('hidden')">x</button>
+            </div>
+            <div class="space-y-3">
+                <div><label class="text-xs cyroach-muted">Lokasi Operasi</label><input type="text" name="lokasi" placeholder="Gedung A, Jl. Sudirman" class="w-full mt-1 px-3 py-2 text-sm rounded-lg border cyroach-text" style="background:var(--bg-raised);border-color:var(--border);"></div>
+                <div><label class="text-xs cyroach-muted">Nama Komandan</label><input type="text" name="komandan" placeholder="Nama dan pangkat" class="w-full mt-1 px-3 py-2 text-sm rounded-lg border cyroach-text" style="background:var(--bg-raised);border-color:var(--border);"></div>
+                <div><label class="text-xs cyroach-muted">Nama Operator</label><input type="text" name="operator" placeholder="Nama operator kecoa" class="w-full mt-1 px-3 py-2 text-sm rounded-lg border cyroach-text" style="background:var(--bg-raised);border-color:var(--border);"></div>
+                <div><label class="text-xs cyroach-muted">Instansi / Unit SAR</label><input type="text" name="instansi" placeholder="Basarnas Semarang" class="w-full mt-1 px-3 py-2 text-sm rounded-lg border cyroach-text" style="background:var(--bg-raised);border-color:var(--border);"></div>
+                <div><label class="text-xs cyroach-muted">Catatan</label><textarea name="catatan" rows="2" class="w-full mt-1 px-3 py-2 text-sm rounded-lg border cyroach-text" style="background:var(--bg-raised);border-color:var(--border);resize:none;"></textarea></div>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <button type="button" onclick="document.getElementById('modal-export').classList.add('hidden')" class="flex-1 px-3 py-2 text-xs rounded-lg border cyroach-muted" style="border-color:var(--border);">Batal</button>
+                <button type="submit" class="flex-1 px-3 py-2 text-xs rounded-lg font-semibold" style="background:var(--accent);color:white;">Generate PDF</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 
