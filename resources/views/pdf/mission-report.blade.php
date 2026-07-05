@@ -262,7 +262,7 @@
     <tr>
         <td style="width:33%;">
             <div class="sum-label">Total Deteksi Korban</div>
-            <div class="sum-value">{{ $mission->detections->count() }}</div>
+            <div class="sum-value">{{ $mission->detections->where('detection_type', 'korban')->count() }}</div>
         </td>
         <td style="width:33%;">
             <div class="sum-label">Kecoa Terlibat</div>
@@ -293,7 +293,7 @@
         {{-- Header --}}
         <table class="det-header-table">
             <tr>
-                <td class="det-title">Deteksi #{{ $i + 1 }} &mdash; Kecoa #{{ $devNum }}</td>
+                <td class="det-title">{{ $d->detection_type === 'panas' ? 'Sumber Panas' : 'Deteksi' }} #{{ $i + 1 }} &mdash; Kecoa #{{ $devNum }}</td>
                 <td class="det-time">{{ $fmtWkt($detAt) }} WIB</td>
             </tr>
         </table>
@@ -372,8 +372,8 @@
         <table class="alert-table">
             <tr>
                 <td>
-                    [!] Terindikasi keberadaan korban hidup &mdash;
-                    suhu tubuh terdeteksi melebihi ambang batas 35&ndash;42&deg;C
+                    @if($d->detection_type === 'panas')[!] Sumber panas terdeteksi &mdash; suhu >42&deg;C, bukan korban manusia@else[!] Terindikasi keberadaan korban hidup &mdash;
+                    suhu tubuh terdeteksi melebihi ambang batas 35&ndash;42&deg;C@endif
                 </td>
             </tr>
         </table>
