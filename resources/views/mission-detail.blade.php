@@ -476,8 +476,8 @@ fetch(`/api/missions/${missionId}`)
     });
 </script>
 @endpush
-<div id="modal-export" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.6);">
-    <div class="cy-card p-6 w-full max-w-md mx-4">
+<div id="modal-export" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.6);padding:16px;">
+    <div class="cy-card p-6 mx-auto" style="width:100%;max-width:480px;">
         <form method="GET" action="/missions/{{ $id }}/export-pdf">
             <div class="flex justify-between mb-4">
                 <h3 class="text-sm font-bold cyroach-text">Export Berita Acara SAR</h3>
