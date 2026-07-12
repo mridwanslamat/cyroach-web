@@ -202,14 +202,37 @@ function drawTrajectoryDetail(canvas, history) {
     }
     ctx.strokeStyle='#9ca3af'; ctx.lineWidth=1;
     ctx.strokeRect(PAD,PAD,plotW,plotH);
-    for(let i=1;i<history.length;i++){
-        const alpha=0.25+0.75*(i/history.length);
+    // Label skala di sumbu X dan Y
+    ctx.fillStyle='#9ca3af'; ctx.font='7px monospace';
+    for(let i=0;i<=8;i+=2){
+        const gx=PAD+i*plotW/8, gy=PAD+i*plotH/8;
+        const valX=(x0+i*span/8).toFixed(2);
+        const valY=(y0+span-i*span/8).toFixed(2);
+        ctx.textAlign='center'; ctx.textBaseline='top';
+        ctx.fillText(valX+'m', gx, PAD+plotH+2);
+        ctx.textAlign='right'; ctx.textBaseline='middle';
+        ctx.fillText(valY+'m', PAD-4, gy);
+    }
+    const cellSize=(span/8).toFixed(2);
+    ctx.fillStyle='#6b7280'; ctx.font='bold 8px monospace'; ctx.textAlign='right'; ctx.textBaseline='top';
+    ctx.fillText(`Skala: ${cellSize} m/kotak`, W-4, 4);
+    const pts = history.map(pt => toC(pt.x??pt.roll??0, pt.y??pt.pitch??0));
+    for(let i=0;i<pts.length-1;i++){
+        const p0 = pts[i-1] || pts[i];
+        const p1 = pts[i];
+        const p2 = pts[i+1];
+        const p3 = pts[i+2] || pts[i+1];
+        const cp1x = p1.cx + (p2.cx - p0.cx)/6;
+        const cp1y = p1.cy + (p2.cy - p0.cy)/6;
+        const cp2x = p2.cx - (p3.cx - p1.cx)/6;
+        const cp2y = p2.cy - (p3.cy - p1.cy)/6;
+        const alpha=0.25+0.75*((i+1)/pts.length);
         ctx.strokeStyle=`rgba(220,38,38,${alpha.toFixed(2)})`;
-        ctx.lineWidth=1.2; ctx.lineJoin='round'; ctx.lineCap='round';
+        ctx.lineWidth=1.5; ctx.lineJoin='round'; ctx.lineCap='round';
         ctx.beginPath();
-        const p0=toC(history[i-1].x??history[i-1].roll??0,history[i-1].y??history[i-1].pitch??0);
-        const p1=toC(history[i].x??history[i].roll??0,history[i].y??history[i].pitch??0);
-        ctx.moveTo(p0.cx,p0.cy); ctx.lineTo(p1.cx,p1.cy); ctx.stroke();
+        ctx.moveTo(p1.cx,p1.cy);
+        ctx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,p2.cx,p2.cy);
+        ctx.stroke();
     }
     const fp=toC(history[0].x??history[0].roll??0,history[0].y??history[0].pitch??0);
     ctx.fillStyle='#16a34a'; ctx.strokeStyle='#fff'; ctx.lineWidth=2;

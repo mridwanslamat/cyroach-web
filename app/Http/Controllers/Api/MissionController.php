@@ -31,7 +31,7 @@ class MissionController extends Controller
 
         // Ambil data sensor untuk trajectory + telemetri, dikelompokkan per device
         $sensorData = \App\Models\SensorData::where('mission_id', $id)
-            ->select('device_id', 'pitch', 'roll', 'yaw',
+            ->select('device_id', 'pitch', 'roll', 'yaw', 'pos_x', 'pos_y',
                     'signal_strength', 'distance_total_m', 'recorded_at')
             ->orderBy('recorded_at', 'asc')
             ->get();
@@ -43,6 +43,8 @@ class MissionController extends Controller
         foreach ($sensorData as $s) {
             // Trajectory
             $trajectoryByDevice[$s->device_id][] = [
+                'x'     => (float)($s->pos_x ?? 0),
+                'y'     => (float)($s->pos_y ?? 0),
                 'pitch' => $s->pitch,
                 'roll'  => $s->roll,
                 'yaw'   => $s->yaw,

@@ -646,15 +646,13 @@ window.Echo.channel("cyroach-channel").listen(".sensor-data", (e) => {
     if (!trajectoryHistory[data.device_id]) {
         trajectoryHistory[data.device_id] = [{ x: 0, y: 0 }];
     }
-    if (
-        data.dx !== undefined &&
-        data.dy !== undefined &&
-        (data.dx !== 0 || data.dy !== 0)
-    ) {
+    if (data.pos_x !== undefined && data.pos_y !== undefined) {
         const hist = trajectoryHistory[data.device_id];
         const last = hist[hist.length - 1];
-        hist.push({ x: last.x + data.dx, y: last.y + data.dy });
-        if (hist.length > 300) hist.shift();
+        if (last.x !== data.pos_x || last.y !== data.pos_y) {
+            hist.push({ x: data.pos_x, y: data.pos_y });
+            if (hist.length > 300) hist.shift();
+        }
     }
 
     // Hanya update field yang tidak datang dari ESP32 WebSocket langsung

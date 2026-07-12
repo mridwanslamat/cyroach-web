@@ -65,22 +65,24 @@ class SensorController extends Controller
         $dx = (float)($request->dx ?? 0);
         $dy = (float)($request->dy ?? 0);
 
+       // Hitung pos_x/pos_y dari distance_total_m + yaw — dilakukan SETIAP request
+        // (bukan hanya saat throttle insert) supaya bisa dibroadcast realtime ke Pusher.
+        $lastSensor = SensorData::where('mission_id', $mission->id)
+            ->where('device_id', $deviceId)
+            ->latest('recorded_at')
+            ->select('pos_x', 'pos_y', 'distance_total_m')
+            ->first();
+        $lastDist = (float)($lastSensor->distance_total_m ?? 0);
+        $deltaDist = $distanceTotalM - $lastDist;
+        $yawRad = deg2rad((float)$request->yaw);
+        $posX = ($lastSensor->pos_x ?? 0) + $deltaDist * sin($yawRad);
+        $posY = ($lastSensor->pos_y ?? 0) + $deltaDist * cos($yawRad);
+
         $cacheKey    = "last_insert_{$deviceId}";
         $lastInsert  = cache($cacheKey, 0);
         $shouldInsert = (now()->timestamp - $lastInsert) >= 5;
 
         if ($shouldInsert) {
-            // Hitung pos_x/pos_y dari distance_total_m + yaw
-            $lastSensor = SensorData::where('mission_id', $mission->id)
-                ->where('device_id', $deviceId)
-                ->latest('recorded_at')
-                ->select('pos_x', 'pos_y', 'distance_total_m')
-                ->first();
-            $lastDist = (float)($lastSensor->distance_total_m ?? 0);
-            $deltaDist = $distanceTotalM - $lastDist;
-            $yawRad = deg2rad((float)$request->yaw);
-            $posX = ($lastSensor->pos_x ?? 0) + $deltaDist * sin($yawRad);
-            $posY = ($lastSensor->pos_y ?? 0) + $deltaDist * cos($yawRad);
 
             SensorData::create([
                 'mission_id'       => $mission->id,
@@ -130,6 +132,8 @@ class SensorController extends Controller
                 'distance_total_m' => $distanceTotalM,
                 'dx'               => $dx,
                 'dy'               => $dy,
+                'pos_x'            => $posX,
+                'pos_y'            => $posY,
                 'thermal_image_b64' => $thermalBase64ForBroadcast,
                 'detections_count' => $detectionsCount,
             ]));
