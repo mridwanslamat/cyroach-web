@@ -43,14 +43,26 @@ class MissionPdfController extends Controller
         $trajectories = [];
         $sensorRows = SensorData::where('mission_id', $mission->id)
             ->orderBy('recorded_at')
-            ->get(['device_id', 'pitch', 'roll', 'recorded_at']);
+            ->get(['device_id', 'pos_x', 'pos_y', 'recorded_at']);
 
         $grouped = [];
         foreach ($sensorRows as $row) {
-            $grouped[$row->device_id][] = ['pitch' => $row->pitch, 'roll' => $row->roll];
+            $grouped[$row->device_id][] = [
+                'x'    => (float)($row->pos_x ?? 0),
+                'y'    => (float)($row->pos_y ?? 0),
+                'time' => $row->recorded_at,
+            ];
         }
+
+        // Kelompokkan deteksi per device untuk marker di trajectory
+        $detectionsByDevice = [];
+        foreach ($mission->detections as $d) {
+            $detectionsByDevice[$d->device_id][] = $d;
+        }
+
         foreach ($grouped as $deviceId => $points) {
-            $trajectories[$deviceId] = $this->generateTrajectoryBase64($points);
+            $deviceDetections = $detectionsByDevice[$deviceId] ?? [];
+            $trajectories[$deviceId] = $this->generateTrajectoryBase64($points, $deviceDetections);
         }
 
         // Agregasi telemetri per device: rata-rata signal & total jarak
@@ -186,80 +198,122 @@ class MissionPdfController extends Controller
     // =====================
     // TRAJECTORY — plot 2D pitch vs roll
     // =====================
-    private function generateTrajectoryBase64(array $points): string
+    private function findNearestPdfPoint(array $points, $targetTime)
+    {
+        $best = null; $bestDiff = INF;
+        $target = \Carbon\Carbon::parse($targetTime)->timestamp;
+        foreach ($points as $pt) {
+            if (empty($pt['time'])) continue;
+            $diff = abs(\Carbon\Carbon::parse($pt['time'])->timestamp - $target);
+            if ($diff < $bestDiff) { $bestDiff = $diff; $best = $pt; }
+        }
+        return $best;
+    }
+
+    // =====================
+    // TRAJECTORY — plot 2D posisi X/Y (meter), dengan skala & marker deteksi
+    // =====================
+    private function generateTrajectoryBase64(array $points, array $detections = []): string
     {
         $W = 600; $H = 320;
-        $scale = 4;
+        $PAD = 40;
 
         $img = imagecreatetruecolor($W, $H);
 
-        $white   = imagecolorallocate($img, 255, 255, 255);
-        $grid    = imagecolorallocate($img, 204, 204, 204);
-        $axis    = imagecolorallocate($img, 153, 153, 153);
-        $red     = imagecolorallocate($img, 239, 68,  68 );
-        $green   = imagecolorallocate($img, 34,  197, 94 );
-        $txtClr  = imagecolorallocate($img, 102, 102, 102);
+        $white     = imagecolorallocate($img, 255, 255, 255);
+        $gridClr   = imagecolorallocate($img, 224, 224, 224);
+        $axis      = imagecolorallocate($img, 153, 153, 153);
+        $red       = imagecolorallocate($img, 239, 68,  68 );
+        $green     = imagecolorallocate($img, 34,  197, 94 );
+        $txtClr    = imagecolorallocate($img, 102, 102, 102);
+        $korbanClr = imagecolorallocate($img, 234, 179, 8);
+        $panasClr  = imagecolorallocate($img, 194, 65,  12);
 
         imagefill($img, 0, 0, $white);
 
-        // Grid
-        for ($x = 0; $x <= $W; $x += $W/4) {
-            imageline($img, (int)$x, 0, (int)$x, $H, $grid);
+        if (count($points) < 2) {
+            imagestring($img, 3, (int)($W/2 - 90), (int)($H/2), 'Tidak ada data trajectory', $txtClr);
+            ob_start(); imagepng($img); $pngData = ob_get_clean(); imagedestroy($img);
+            return 'data:image/png;base64,' . base64_encode($pngData);
         }
-        for ($y = 0; $y <= $H; $y += $H/4) {
-            imageline($img, 0, (int)$y, $W, (int)$y, $grid);
-        }
-        // Sumbu tengah
-        imageline($img, $W/2, 0, $W/2, $H, $axis);
-        imageline($img, 0, $H/2, $W, $H/2, $axis);
 
-        // Auto-rescale bounding box
-        $allX = array_map(fn($p) => (float)($p['roll'] ?? 0), $points);
-        $allY = array_map(fn($p) => (float)($p['pitch'] ?? 0), $points);
+        $plotW = $W - 2*$PAD;
+        $plotH = $H - 2*$PAD - 16;
+
+        // Auto-rescale bounding box berdasar posisi X/Y (meter)
+        $allX = array_map(fn($p) => (float)($p['x'] ?? 0), $points);
+        $allY = array_map(fn($p) => (float)($p['y'] ?? 0), $points);
         $minX = min($allX); $maxX = max($allX);
         $minY = min($allY); $maxY = max($allY);
-        $range = max($maxX - $minX, $maxY - $minY) ?: 0.01;
-        $pad = $range * 0.18;
-        $dX = ($maxX - $minX + 2*$pad) ?: 1;
-        $dY = ($maxY - $minY + 2*$pad) ?: 1;
-        $toX = fn($x) => (int)(($x - $minX + $pad) / $dX * $W);
-        $toY = fn($y) => (int)($H - ($y - $minY + $pad) / $dY * $H);
+        $rangeX = $maxX - $minX ?: 0.01;
+        $rangeY = $maxY - $minY ?: 0.01;
+        $range = max($rangeX, $rangeY);
+        $pad = $range * 0.15;
+        $x0 = $minX - $pad; $y0 = $minY - $pad; $span = $range + 2*$pad;
 
-        // Trajectory
-        if (count($points) >= 2) {
-            for ($i = 0; $i < count($points) - 1; $i++) {
-                $x1 = $toX($points[$i]['roll'] ?? 0);
-                $y1 = $toY($points[$i]['pitch'] ?? 0);
-                $x2 = $toX($points[$i+1]['roll'] ?? 0);
-                $y2 = $toY($points[$i+1]['pitch'] ?? 0);
-                imageline($img, $x1, $y1, $x2, $y2, $red);
+        $toX = fn($x) => (int)($PAD + (($x - $x0) / $span) * $plotW);
+        $toY = fn($y) => (int)($PAD + $plotH - (($y - $y0) / $span) * $plotH);
+
+        // Grid + label skala
+        for ($i = 0; $i <= 8; $i++) {
+            $gx = $PAD + $i * $plotW / 8;
+            $gy = $PAD + $i * $plotH / 8;
+            imageline($img, (int)$gx, $PAD, (int)$gx, $PAD + $plotH, $gridClr);
+            imageline($img, $PAD, (int)$gy, $PAD + $plotW, (int)$gy, $gridClr);
+            if ($i % 2 === 0) {
+                $valX = number_format($x0 + $i * $span / 8, 1);
+                $valY = number_format($y0 + $span - $i * $span / 8, 1);
+                imagestring($img, 1, (int)$gx - 8, $PAD + $plotH + 3, $valX.'m', $txtClr);
+                imagestring($img, 1, $PAD - 34, (int)$gy - 4, $valY.'m', $txtClr);
             }
+        }
+        imagerectangle($img, $PAD, $PAD, $PAD + $plotW, $PAD + $plotH, $axis);
 
-            // Titik start (hijau)
-            $sx = $toX($points[0]['roll'] ?? 0);
-            $sy = $toY($points[0]['pitch'] ?? 0);
-            imagefilledellipse($img, $sx, $sy, 12, 12, $green);
-            imagestring($img, 3, $sx-3, $sy-16, 'S', $green);
+        $cellSize = number_format($span / 8, 2);
+        imagestring($img, 2, $W - 140, 4, "Skala: {$cellSize} m/kotak", $txtClr);
 
-            // Titik end (merah)
-            $last = end($points);
-            $ex = $toX($last['roll'] ?? 0);
-            $ey = $toY($last['pitch'] ?? 0);
-            imagefilledellipse($img, $ex, $ey, 12, 12, $red);
-            imagestring($img, 3, $ex-3, $ey-16, 'E', $red);
+        // Garis trajectory
+        for ($i = 0; $i < count($points) - 1; $i++) {
+            $x1 = $toX($points[$i]['x'] ?? 0);
+            $y1 = $toY($points[$i]['y'] ?? 0);
+            $x2 = $toX($points[$i+1]['x'] ?? 0);
+            $y2 = $toY($points[$i+1]['y'] ?? 0);
+            imageline($img, $x1, $y1, $x2, $y2, $red);
         }
 
-        imagestring($img, 1, 4, $H - 12, 'Roll (X) | Pitch (Y)', $txtClr);
-        if (count($points) >= 2) {
-            $first = $points[0];
-            $lastP = end($points);
-            $dx = ($lastP['roll'] ?? 0) - ($first['roll'] ?? 0);
-            $dy = ($lastP['pitch'] ?? 0) - ($first['pitch'] ?? 0);
-            $angle = rad2deg(atan2($dx, $dy));
-            $dir = $angle > 0 ? 'kanan' : ($angle < 0 ? 'kiri' : 'lurus');
-            $label = 'Kemiringan: '.($angle >= 0 ? '+' : '').number_format($angle, 1).'deg ('.$dir.')';
-            imagestring($img, 3, 4, 4, $label, $txtClr);
+        // Titik start (hijau) & end (merah)
+        $sx = $toX($points[0]['x'] ?? 0);
+        $sy = $toY($points[0]['y'] ?? 0);
+        imagefilledellipse($img, $sx, $sy, 12, 12, $green);
+        imagestring($img, 3, $sx-3, $sy-16, 'S', $green);
+
+        $last = end($points);
+        $ex = $toX($last['x'] ?? 0);
+        $ey = $toY($last['y'] ?? 0);
+        imagefilledellipse($img, $ex, $ey, 12, 12, $red);
+        imagestring($img, 3, $ex-3, $ey-16, 'E', $red);
+
+        // Marker deteksi korban/panas
+        foreach ($detections as $d) {
+            $nearest = $this->findNearestPdfPoint($points, $d->detected_at);
+            if (!$nearest) continue;
+            $mx = $toX($nearest['x'] ?? 0);
+            $my = $toY($nearest['y'] ?? 0);
+            $isKorban = $d->detection_type !== 'panas';
+            $clr = $isKorban ? $korbanClr : $panasClr;
+            imagefilledellipse($img, $mx, $my, 10, 10, $clr);
+            imagestring($img, 2, $mx-3, $my-6, $isKorban ? '!' : 'H', $white);
         }
+
+        imagestring($img, 1, 4, $H - 12, 'X (m) | Y (m)', $txtClr);
+
+        $first = $points[0];
+        $dx = ($last['x'] ?? 0) - ($first['x'] ?? 0);
+        $dy = ($last['y'] ?? 0) - ($first['y'] ?? 0);
+        $angle = rad2deg(atan2($dx, $dy));
+        $dir = $angle > 0 ? 'kanan' : ($angle < 0 ? 'kiri' : 'lurus');
+        $label = 'Kemiringan: '.($angle >= 0 ? '+' : '').number_format($angle, 1).'deg ('.$dir.')';
+        imagestring($img, 3, $PAD, 4, $label, $txtClr);
 
         ob_start();
         imagepng($img);
