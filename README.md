@@ -1,58 +1,120 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="public/images/hero-cockroach.png" alt="Cyborg cockroach with onboard sensor rig" width="100%">
 </p>
 
-## About Laravel
+<h1 align="center">Cyroach — Real-Time Cyborg Monitoring Dashboard</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  A real-time web dashboard for visualizing thermal-camera and navigation-sensor data streamed from an ESP32-C6-equipped cyborg cockroach.
+  <br>Built as an Undergraduate Thesis project — Electrical Engineering, Universitas Diponegoro.
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white">
+  <img src="https://img.shields.io/badge/MySQL-database-4479A1?logo=mysql&logoColor=white">
+  <img src="https://img.shields.io/badge/ESP32--C6-hardware-000000?logo=espressif&logoColor=white">
+  <img src="https://img.shields.io/badge/Pusher-realtime-300D4F?logo=pusher&logoColor=white">
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## About
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Cyroach is a real-time web monitoring system built for a biobotics research project: a cockroach fitted with a lightweight sensor backpack (thermal camera + navigation/motion sensors) sends live telemetry over Wi-Fi to this dashboard, where it's visualized as thermal heatmaps and movement trajectories.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The system was designed to let researchers observe a "mission", a live exploration run, in real time from a browser, then review the recorded data afterward, including exportable PDF mission reports.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+**Key results**
+- 9 REST API endpoints connecting the ESP32-C6 hardware to the dashboard
+- ~211.6 ms average data transmission latency, end to end
+- Real-time channel updates via Pusher, no manual refresh needed
 
-## Agentic Development
+## Features
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- 📡 **Live device telemetry** ingest sensor readings (thermal + position) from the ESP32-C6 over a REST endpoint
+- 🔴 **Real-time dashboard** WebSocket-powered live view of the current mission via Pusher channels
+- 🗺️ **Trajectory mapping & thermal heatmap** rendered with the HTML5 Canvas API
+- 🧭 **Mission history** browse past missions and drill into a specific run's detail page
+- 📄 **PDF export** generate a shareable mission report straight from the dashboard
+- 👀 **Active viewer counter** see how many people are watching a mission live
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 13 (PHP) |
+| Database | MySQL |
+| Real-time | Pusher (WebSocket channels) |
+| Hardware | ESP32-C6 (thermal camera + navigation sensors) |
+| Frontend rendering | HTML5 Canvas API |
+
+## Getting Started
+
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js & npm
+- MySQL
+- A [Pusher](https://pusher.com) account (or compatible WebSocket driver) for real-time channels
+
+### Installation
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone the repository
+git clone https://github.com/mridwanslamat/cyroach-web.git
+cd cyroach-web
 
-php artisan boost:install
+# 2. Install dependencies
+composer install
+npm install
+
+# 3. Configure environment
+cp .env.example .env
+php artisan key:generate
+# → fill in DB_* and PUSHER_* credentials in .env
+
+# 4. Run migrations
+php artisan migrate
+
+# 5. Build frontend assets
+npm run build
+
+# 6. Serve the app
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+The dashboard will be available at `http://localhost:8000`.
 
-## Contributing
+### Sending sensor data (ESP32-C6)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The hardware posts readings to:
 
-## Code of Conduct
+```
+POST /api/sensor-data
+POST /api/end-mission
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+See `routes/api.php` for the full list of endpoints, including mission listing, live device status, and trajectory retrieval.
 
-## Security Vulnerabilities
+## Project Structure
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+app/
+ ├─ Http/Controllers/Api/   # Sensor, Mission, Device API controllers
+ ├─ Http/Controllers/       # Mission PDF export controller
+ ├─ Models/                 # Detection, Device, Mission, Notification, SensorData, User
+ └─ Events/                 # Real-time broadcast events
+resources/views/            # Dashboard, missions list & detail, about pages
+routes/
+ ├─ web.php                 # Dashboard routes + broadcasting auth
+ └─ api.php                 # Sensor ingestion & mission API
+```
 
-## License
+## Author
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Muhammad Ridwan Slamat**
+Electrical Engineering, Universitas Diponegoro
+[LinkedIn](https://linkedin.com/in/ridwanslamat/) · [mridwans466@gmail.com](mailto:mridwans466@gmail.com)
+
+---
+<sub>Built on the Laravel framework.</sub>
